@@ -1,6 +1,7 @@
 {
   "name": "ERIC 專屬禮物",
   "short_name": "愛心魔法盒",
+  "id": "eric-heart-magic-box",
   "description": "愛心魔法盒 - ERIC 專屬禮物系統，爸媽發放愛心與經驗值，小朋友申請禮物",
   "start_url": "https://sukmff-oss.github.io/heart-reward-system/",
   "display": "standalone",
