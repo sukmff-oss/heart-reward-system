@@ -465,7 +465,7 @@ function cloudRead(callback) {
  if (!url) { callback(false, 'No URL'); return; }
  var xhr = new XMLHttpRequest();
  xhr.open('GET', url + '?action=read&type=heart', true);
- xhr.timeout = 8000;
+ xhr.timeout = 5000;
  xhr.onload = function() {
   try {
    var r = JSON.parse(xhr.responseText);
@@ -482,7 +482,7 @@ function cloudWrite(data, callback) {
  if (!url) { if (callback) callback(false); return; }
  var xhr = new XMLHttpRequest();
  xhr.open('GET', url + '?action=write&type=heart&data=' + encodeURIComponent(JSON.stringify(data)), true);
- xhr.timeout = 8000;
+ xhr.timeout = 5000;
  xhr.onload = function() {
   try {
    var r = JSON.parse(xhr.responseText);
@@ -833,6 +833,7 @@ function doAdd() {
  boxBounce();
  spawnFlyingHeart(qty);
  spawnConfetti();
+ showExpGain('+' + qty + ' ❤️');
 }
 
 // ===== 申請領取 =====
