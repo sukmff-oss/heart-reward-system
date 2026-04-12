@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎁 愛心魔法盒</title>
+<title>🎁 ERIC 專屬禮物</title>
 <style>
-:root { --pink: #ff6b9d; --red: #e74c3c; --purple: #9b59b6; --green: #27ae60; }
+:root { --pink: #ff6b9d; --red: #e74c3c; --purple: #9b59b6; --green: #27ae60; --blue: #3498db; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
  font-family: "Microsoft JhengHei", "PingFang TC", Arial, sans-serif;
@@ -24,7 +24,7 @@ body {
  color: #fff; padding: 15px 18px; text-align: center;
  box-shadow: 0 4px 20px rgba(196,69,105,0.3); position: sticky; top: 0; z-index: 100;
 }
-.header h1 { font-size: 23px; font-weight: 900; letter-spacing: 2px; }
+.header h1 { font-size: 22px; font-weight: 900; letter-spacing: 2px; }
 .header p { font-size: 11px; opacity: 0.85; margin-top: 2px; }
 .header .mode-tag { display: inline-block; background: rgba(255,255,255,0.25); border-radius: 999px; padding: 3px 12px; font-size: 11px; font-weight: 700; margin-top: 3px; }
 .header .logout-btn {
@@ -33,9 +33,10 @@ body {
  padding: 5px 10px; color: #fff; font-size: 11px; font-weight: 700; cursor: pointer;
 }
 .container { max-width: 560px; margin: 0 auto; padding: 16px 12px; position: relative; z-index: 1; }
-.heart-box-wrap { display: flex; flex-direction: column; align-items: center; margin-bottom: 18px; }
+
+.heart-box-wrap { display: flex; flex-direction: column; align-items: center; margin-bottom: 14px; }
 .heart-box {
- width: 160px; height: 160px;
+ width: 150px; height: 150px;
  background: linear-gradient(135deg, #c44569, #ff6b9d, #ff8fab);
  border-radius: 50%; display: flex; align-items: center; justify-content: center;
  box-shadow: 0 10px 36px rgba(196,69,105,0.4), inset 0 -5px 18px rgba(0,0,0,0.15), inset 0 5px 18px rgba(255,255,255,0.3);
@@ -44,7 +45,7 @@ body {
 }
 @keyframes boxBounce { 0%,100% { transform: scale(1) rotate(-2deg); } 50% { transform: scale(1.05) rotate(2deg); } }
 .heart-box:hover { animation-play-state: paused; transform: scale(1.08); }
-.heart-box svg { width: 84px; height: 84px; }
+.heart-box svg { width: 80px; height: 80px; }
 .heart-box .count-overlay {
  position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%);
  background: #fff; border-radius: 999px; padding: 4px 18px; font-size: 18px; font-weight: 900; color: var(--red);
@@ -52,6 +53,87 @@ body {
 }
 .money-line { text-align: center; margin-top: 7px; font-size: 14px; font-weight: 700; color: #c44569; }
 
+/* 等級系統 */
+.level-section {
+ background: rgba(255,255,255,0.88); backdrop-filter: blur(12px);
+ border-radius: 16px; padding: 14px; margin-bottom: 12px;
+ box-shadow: 0 5px 22px rgba(196,69,105,0.1); border: 2px solid rgba(255,107,157,0.14);
+}
+.level-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.level-left { display: flex; align-items: center; gap: 8px; }
+.level-badge {
+ width: 48px; height: 48px; border-radius: 50%;
+ background: linear-gradient(135deg, #ff6b9d, #c44569);
+ display: flex; align-items: center; justify-content: center;
+ font-size: 14px; font-weight: 900; color: #fff;
+ box-shadow: 0 4px 12px rgba(196,69,105,0.3);
+ flex-shrink: 0;
+}
+.level-info h3 { font-size: 14px; font-weight: 800; color: #c44569; }
+.level-info p { font-size: 10px; color: #999; margin-top: 1px; }
+.level-reward { text-align: right; }
+.level-reward .next-label { font-size: 9px; color: #999; }
+.level-reward .next-hearts { font-size: 16px; font-weight: 900; color: var(--green); }
+.level-progress-wrap { position: relative; }
+.level-bar-bg {
+ height: 14px; background: #f0e8ff; border-radius: 999px; overflow: hidden;
+ border: 1px solid rgba(196,69,105,0.15);
+}
+.level-bar-fill {
+ height: 100%; border-radius: 999px;
+ background: linear-gradient(90deg, #ff6b9d, #ff8fab, #c44569);
+ transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+ min-width: 4px;
+}
+.level-bar-shine {
+ position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+ background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%);
+ animation: barShine 2s ease-in-out infinite;
+}
+@keyframes barShine { 0%,100% { transform: translateX(-100%); } 50% { transform: translateX(200%); } }
+.level-exp-text { display: flex; justify-content: space-between; font-size: 9px; color: #aaa; margin-top: 4px; font-weight: 700; }
+.level-max-tag { display: inline-block; background: linear-gradient(135deg, #f39c12, #e67e22); color: #fff; font-size: 9px; font-weight: 900; padding: 2px 8px; border-radius: 999px; margin-left: 6px; }
+
+/* 升級動畫 */
+@keyframes levelUpPop {
+ 0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+ 50% { transform: scale(1.3) rotate(5deg); opacity: 1; }
+ 70% { transform: scale(0.95) rotate(-2deg); }
+ 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+@keyframes heartBurst {
+ 0% { transform: translateY(0) scale(1); opacity: 1; }
+ 100% { transform: translateY(-120px) scale(0.3); opacity: 0; }
+}
+@keyframes expGainFloat {
+ 0% { transform: translateY(0); opacity: 1; }
+ 100% { transform: translateY(-60px); opacity: 0; }
+}
+.levelup-overlay {
+ position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(6px);
+ display: none; align-items: center; justify-content: center; z-index: 9999;
+}
+.levelup-overlay.active { display: flex; }
+.levelup-box {
+ background: linear-gradient(135deg, #fff0f5, #fff); border-radius: 24px;
+ padding: 32px 28px; width: 90%; max-width: 320px; text-align: center;
+ box-shadow: 0 20px 60px rgba(196,69,105,0.3); border: 3px solid #ff6b9d;
+ animation: levelUpPop 0.7s ease-out;
+}
+.levelup-box .lu-level { font-size: 52px; font-weight: 900; background: linear-gradient(135deg, #ff6b9d, #c44569); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.levelup-box .lu-title { font-size: 18px; font-weight: 800; color: #c44569; margin: 8px 0; }
+.levelup-box .lu-hearts { font-size: 28px; font-weight: 900; color: var(--green); margin: 6px 0; }
+.levelup-box .lu-close { margin-top: 14px; padding: 10px 28px; background: linear-gradient(135deg, #ff6b9d, #c44569); color: #fff; border: none; border-radius: 11px; font-size: 13px; font-weight: 800; cursor: pointer; }
+
+/* EXP 獲得彈出 */
+.exp-gain-popup {
+ position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+ background: rgba(0,0,0,0.75); color: #fff; font-size: 20px; font-weight: 900;
+ padding: 12px 28px; border-radius: 16px; z-index: 5000;
+ animation: expGainFloat 1.2s ease-out forwards; pointer-events: none;
+}
+
+/* 飛行愛心 */
 @keyframes heartFlyIn {
  0% { transform: translateY(-200px) scale(1.5) rotate(-20deg); opacity: 1; }
  60% { transform: translateY(0) scale(0.6) rotate(10deg); opacity: 0.9; }
@@ -60,10 +142,8 @@ body {
 }
 .flying-heart { position: fixed; font-size: 48px; pointer-events: none; z-index: 9999; animation: heartFlyIn 0.8s ease-out forwards; top: 30%; left: 50%; transform: translateX(-50%); }
 
-@keyframes confettiFall {
- 0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
- 100% { transform: translateY(100vh) rotate(720deg); opacity: 0.5; }
-}
+/* 彩紙 */
+@keyframes confettiFall { 0% { transform: translateY(-20px) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0.5; } }
 .confetti-piece { position: fixed; width: 10px; height: 14px; top: -20px; z-index: 9999; animation: confettiFall 2.5s ease-out forwards; pointer-events: none; }
 
 .btn-row { display: flex; gap: 12px; margin-bottom: 16px; }
@@ -104,6 +184,7 @@ body {
 .history-item .delta { font-size: 17px; font-weight: 900; }
 .delta.plus { color: #27ae60; }
 .delta.minus { color: #9b59b6; }
+.delta.exp { color: #f39c12; font-size: 13px; }
 
 .tab-bar { display: flex; background: rgba(255,255,255,0.9); border-radius: 11px; padding: 4px; box-shadow: 0 4px 14px rgba(196,69,105,0.1); margin-bottom: 11px; gap: 3px; }
 .tab-btn { flex: 1; padding: 8px; border-radius: 7px; font-size: 11px; font-weight: 800; border: none; background: transparent; color: #c44569; cursor: pointer; transition: 0.2s; }
@@ -122,6 +203,7 @@ body {
 .modal .btn-confirm { flex: 1; padding: 12px; border-radius: 11px; font-size: 14px; font-weight: 800; border: none; color: #fff; cursor: pointer; }
 .modal .btn-confirm.purple { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
 .modal .btn-confirm.green { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+.modal .btn-confirm.blue { background: linear-gradient(135deg, #3498db, #2980b9); }
 .modal .btn-cancel { flex: 1; padding: 12px; border-radius: 11px; font-size: 14px; font-weight: 800; border: 2px solid #ffd0e0; background: #fff; color: #c44569; cursor: pointer; }
 .modal .btn-cancel:hover { background: #fff5f8; }
 
@@ -133,22 +215,22 @@ body {
 .login-box input { width: 100%; padding: 14px; border: 2px solid #ffd0e0; border-radius: 11px; font-size: 18px; font-weight: 800; text-align: center; letter-spacing: 4px; outline: none; margin-bottom: 12px; box-sizing: border-box; transition: 0.2s; }
 .login-box input:focus { border-color: #ff6b9d; }
 .login-box button { width: 100%; padding: 14px; background: linear-gradient(135deg, #ff6b9d, #c44569); color: #fff; border: none; border-radius: 11px; font-size: 16px; font-weight: 800; cursor: pointer; }
-.login-box .child-btn { margin-top: 8px; width: 100%; padding: 12px; background: linear-gradient(135deg, #3498db, #2980b9); border: none; color: #fff; border-radius: 11px; font-size: 14px; font-weight: 700; cursor: pointer; }
+.login-box .child-btn { margin-top: 8px; width: 100%; padding: 12px; background: linear-gradient(135deg, #3498db, #2980b9); border: none; color: #fff; border-radius: 11px; font-size: 16px; font-weight: 800; cursor: pointer; }
 .login-box .error { color: #e74c3c; font-size: 10px; margin-top: 6px; font-weight: 700; display: none; }
 
 .empty-state { text-align: center; padding: 24px 12px; color: #c9a0b0; font-size: 12px; }
 .empty-state .emoji { font-size: 36px; display: block; margin-bottom: 6px; }
 .badge { background: #e74c3c; color: #fff; width: 18px; height: 18px; border-radius: 50%; font-size: 9px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; margin-left: 4px; }
 
-@keyframes openBox {
- 0% { transform: scale(1) rotate(0deg); }
- 20% { transform: scale(1.15) rotate(-8deg); }
- 40% { transform: scale(1.2) rotate(8deg); }
- 60% { transform: scale(1.1) rotate(-4deg); }
- 80% { transform: scale(1.05) rotate(2deg); }
- 100% { transform: scale(1) rotate(0deg); }
-}
+@keyframes openBox { 0% { transform: scale(1) rotate(0deg); } 20% { transform: scale(1.15) rotate(-8deg); } 40% { transform: scale(1.2) rotate(8deg); } 60% { transform: scale(1.1) rotate(-4deg); } 80% { transform: scale(1.05) rotate(2deg); } 100% { transform: scale(1) rotate(0deg); } }
 .box-opening { animation: openBox 0.6s ease-out; }
+
+/* 家長經驗彈窗 */
+.exp-info-box { background: linear-gradient(135deg, #fff5f8, #fce4ec); border-radius: 11px; padding: 12px; margin-top: 8px; border: 1px solid #ffcdd9; }
+.exp-info-box h4 { font-size: 12px; font-weight: 800; color: #c44569; margin-bottom: 6px; }
+.exp-info-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.exp-info-row input { flex: 1; padding: 8px 10px; border: 2px solid #ffd0e0; border-radius: 8px; font-size: 13px; font-weight: 700; font-family: inherit; outline: none; }
+.exp-info-row .exp-hint { font-size: 9px; color: #aaa; }
 </style>
 </head>
 <body>
@@ -159,7 +241,7 @@ body {
  <div class="login-box">
   <span class="emoji-big">🎁 ❤️</span>
   <h2>ERIC 專屬禮物</h2>
-  <p>爸媽請輸入密碼，小朋友直接點下方按鈕</p>
+  <p>爸媽請輸入密碼</p>
   <input type="password" id="pwdInput" placeholder="家長密碼" maxlength="20">
   <button onclick="doParentLogin()">🔐 爸媽登入</button>
   <button class="child-btn" onclick="enterChildMode()">ERIC❤️專屬禮物</button>
@@ -191,7 +273,34 @@ body {
    <div class="money-line">= $ <span id="moneyValue">0</span></div>
   </div>
 
-  <!-- 小朋友功能按鈕 -->
+  <!-- 等級系統 -->
+  <div class="level-section" id="levelSection">
+   <div class="level-top">
+    <div class="level-left">
+     <div class="level-badge" id="levelBadge">Lv<br><span id="levelNum">1</span></div>
+     <div class="level-info">
+      <h3 id="levelTitle">新手魔法師</h3>
+      <p id="levelSubtitle">再獲得 <span id="expToNextText">100</span> EXP 即可升級</p>
+     </div>
+    </div>
+    <div class="level-reward">
+     <div class="next-label">升級獎勵</div>
+     <div class="next-hearts" id="nextRewardHearts">+1 ❤️</div>
+    </div>
+   </div>
+   <div class="level-progress-wrap">
+    <div class="level-bar-bg">
+     <div class="level-bar-fill" id="levelBar" style="width:0%"></div>
+    </div>
+    <div class="level-bar-shine"></div>
+   </div>
+   <div class="level-exp-text">
+    <span>EXP: <span id="currentExp">0</span></span>
+    <span id="expGoalText">0 / 100</span>
+   </div>
+  </div>
+
+  <!-- 小朋友功能 -->
   <div id="childSection">
    <div class="btn-row">
     <button class="big-btn redeem" onclick="openModal('request')">
@@ -203,7 +312,7 @@ body {
    </div>
   </div>
 
-  <!-- 家長專區提示（小朋友看不到家長功能） -->
+  <!-- 家長提示（小） -->
   <div id="parentHint" style="display:none">
    <div class="btn-row">
     <button class="big-btn admin-only" onclick="switchToParent()">
@@ -218,6 +327,17 @@ body {
     <button class="big-btn admin-only" onclick="openModal('add')">
      <span>✨</span> 發放愛心
     </button>
+   </div>
+   <!-- 家長給EXP -->
+   <div class="card">
+    <h3>⭐ 給予經驗值（家長）</h3>
+    <div class="exp-info-box">
+     <div class="exp-info-row">
+      <input type="number" id="expQty" placeholder="EXP 數值" min="1" value="10">
+      <button class="btn-confirm blue" style="padding:8px 16px;font-size:12px;border-radius:8px;" onclick="doAddExp()">給予 EXP</button>
+     </div>
+     <p style="font-size:9px;color:#aaa;font-weight:700;">💡 等級N = 需 N×100 EXP，升至 N 級獎勵 N 顆愛心</p>
+    </div>
    </div>
    <div class="tab-bar">
     <button class="tab-btn active" onclick="showTab('pending')">⏳ 待核准<span class="badge" id="pendingBadge" style="display:none">0</span></button>
@@ -236,6 +356,17 @@ body {
     </div>
    </div>
   </div>
+ </div>
+</div>
+
+<!-- 升級彈窗 -->
+<div class="levelup-overlay" id="levelupOverlay">
+ <div class="levelup-box">
+  <div class="lu-level" id="luLevel">Lv.2</div>
+  <div class="lu-title">升級了！🎉</div>
+  <div class="lu-hearts" id="luHearts">+2 ❤️</div>
+  <p style="font-size:12px;color:#999;margin-bottom:8px;">達到新等級！</p>
+  <button class="lu-close" onclick="closeLevelUp()">太棒了！</button>
  </div>
 </div>
 
@@ -266,24 +397,152 @@ body {
 </div>
 
 <script>
+// ===== 等級系統 =====
+var MAX_LEVEL = 1000;
+var DATA_KEY = 'heart_v5';
 var PASSWORD = '7788';
-var DATA_KEY = 'heart_v4';
 var isParent = false;
+
+function expForLevel(lv) { return lv * 100; }
+function totalExpForLevel(lv) { return (lv * (lv + 1) / 2) * 100; }
+function levelFromTotalExp(total) {
+ var lv = 1;
+ while (lv < MAX_LEVEL && totalExpForLevel(lv) <= total) { lv++; }
+ return Math.min(lv - 1, MAX_LEVEL);
+}
+function expInCurrentLevel(total, lv) {
+ return total - totalExpForLevel(lv - 1);
+}
+function expNeededForLevel(lv) { return lv * 100; }
+
+var LEVEL_TITLES = [
+ '', '新手魔法師', '見習魔法師', '小魔法師', '見習巫師', '巫師',
+ '大巫師', '魔導士', '大魔導士', '聖魔導士', '傳說魔法師'
+];
+function getLevelTitle(lv) {
+ if (lv <= 10) return LEVEL_TITLES[lv] || '傳說魔法師';
+ if (lv <= 50) return '黃金魔法師';
+ if (lv <= 100) return '白銀魔法師';
+ if (lv <= 300) return '鑽石魔法師';
+ if (lv <= 500) return '星耀魔法師';
+ if (lv <= 800) return '至尊魔法師';
+ return '神級魔法師';
+}
 
 function getData() {
  try { var x = localStorage.getItem(DATA_KEY); if (x) return JSON.parse(x); } catch(e) {}
- return { hearts: 0, history: [], requests: [] };
+ return { hearts: 0, history: [], requests: [], totalExp: 0, level: 1 };
 }
 function saveData(d) { localStorage.setItem(DATA_KEY, JSON.stringify(d)); }
+
 function updateDisplay() {
  var d = getData();
  document.getElementById('heartCount').textContent = d.hearts;
  document.getElementById('moneyValue').textContent = d.hearts * 100;
+ renderLevel();
  renderPending();
  renderHistory();
 }
 
-// 小朋友模式進入
+function renderLevel() {
+ var d = getData();
+ var lv = d.level || 1;
+ var total = d.totalExp || 0;
+ var currentLvExp = expInCurrentLevel(total, lv);
+ var needed = expNeededForLevel(lv);
+ var pct = Math.min((currentLvExp / needed) * 100, 100);
+
+ document.getElementById('levelNum').textContent = lv;
+ document.getElementById('levelTitle').textContent = getLevelTitle(lv);
+ document.getElementById('levelBar').style.width = pct + '%';
+ document.getElementById('currentExp').textContent = currentLvExp;
+ document.getElementById('expGoalText').textContent = currentLvExp + ' / ' + needed;
+ document.getElementById('nextRewardHearts').textContent = '+' + lv + ' ❤️';
+ document.getElementById('expToNextText').textContent = needed - currentLvExp;
+
+ if (lv >= MAX_LEVEL) {
+  document.getElementById('expToNextText').parentNode.innerHTML = '<span class="level-max-tag">MAX 等級</span>';
+  document.getElementById('levelBar').style.width = '100%';
+ }
+}
+
+function checkLevelUp(oldLv, newLv, d) {
+ if (newLv > oldLv) {
+  var reward = newLv - oldLv;
+  d.hearts += reward;
+  showLevelUp(newLv, reward);
+ }
+}
+
+// ===== 愛心特效 =====
+function spawnFlyingHeart(qty) {
+ for (var i = 0; i < qty; i++) {
+ setTimeout(function(){
+ var el = document.createElement('div');
+ el.className = 'flying-heart';
+ el.innerHTML = '<svg viewBox="0 0 100 100" width="48" height="48"><defs><linearGradient id="fh2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#ff9a9e"/><stop offset="100%" style="stop-color:#c44569"/></linearGradient></defs><path d="M50 88 C20 60, 0 40, 0 25 C0 10, 12 0, 25 0 C35 0, 43 6, 50 15 C57 6, 65 0, 75 0 C88 0, 100 10, 100 25 C100 40, 80 60, 50 88Z" fill="url(#fh2)"/></svg>';
+ el.style.left = (28 + Math.random() * 44) + '%';
+ document.body.appendChild(el);
+ setTimeout(function(){ el.remove(); }, 1000);
+ }, i * 220);
+ }
+}
+
+function spawnConfetti() {
+ var colors = ['#ff6b9d','#f39c12','#27ae60','#9b59b6','#3498db','#e74c3c','#1abc9c'];
+ for (var i = 0; i < 50; i++) {
+ var el = document.createElement('div');
+ el.className = 'confetti-piece';
+ el.style.left = Math.random() * 100 + '%';
+ el.style.background = colors[Math.floor(Math.random() * colors.length)];
+ el.style.animationDelay = Math.random() * 0.5 + 's';
+ el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+ document.body.appendChild(el);
+ setTimeout(function(){ el.remove(); }, 3000);
+ }
+}
+
+function boxBounce() {
+ var box = document.getElementById('heartBox');
+ box.classList.remove('box-opening');
+ void box.offsetWidth;
+ box.classList.add('box-opening');
+}
+
+function showExpGain(amount) {
+ var el = document.createElement('div');
+ el.className = 'exp-gain-popup';
+ el.textContent = '+' + amount + ' EXP ⭐';
+ document.body.appendChild(el);
+ setTimeout(function(){ el.remove(); }, 1300);
+}
+
+function showLevelUp(lv, hearts) {
+ document.getElementById('luLevel').textContent = 'Lv.' + lv;
+ document.getElementById('luHearts').textContent = '+' + hearts + ' ❤️';
+ document.getElementById('levelupOverlay').classList.add('active');
+ spawnFlyingHeart(Math.min(hearts, 10));
+ spawnConfetti();
+}
+function closeLevelUp() {
+ document.getElementById('levelupOverlay').classList.remove('active');
+}
+
+// ===== 漂浮愛心背景 =====
+(function(){
+ var c = document.getElementById('floatingHearts');
+ var icons = ['❤️','💕','💗','💖','✨','🌟','💫'];
+ for (var i = 0; i < 12; i++) {
+ var el = document.createElement('span');
+ el.textContent = icons[Math.floor(Math.random() * icons.length)];
+ el.style.left = Math.random() * 100 + '%';
+ el.style.animationDelay = Math.random() * 6 + 's';
+ el.style.fontSize = (12 + Math.random() * 14) + 'px';
+ c.appendChild(el);
+ }
+})();
+
+// ===== 模式切換 =====
 function enterChildMode() {
  document.getElementById('loginScreen').style.display = 'none';
  document.getElementById('mainApp').style.display = 'block';
@@ -296,27 +555,25 @@ function enterChildMode() {
  updateDisplay();
 }
 
-// 爸媽登入
 function doParentLogin() {
  var pw = document.getElementById('pwdInput').value;
  if (pw === PASSWORD) {
- document.getElementById('loginScreen').style.display = 'none';
- document.getElementById('mainApp').style.display = 'block';
- isParent = true;
- document.getElementById('modeTag').textContent = '👨‍👩‍👧 家長模式';
- document.getElementById('logoutBtn').style.display = 'block';
- document.getElementById('adminSection').style.display = 'block';
- document.getElementById('childSection').style.display = 'none';
- document.getElementById('parentHint').style.display = 'none';
- updateDisplay();
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('mainApp').style.display = 'block';
+  isParent = true;
+  document.getElementById('modeTag').textContent = '👨‍👩‍👧 家長模式';
+  document.getElementById('logoutBtn').style.display = 'block';
+  document.getElementById('adminSection').style.display = 'block';
+  document.getElementById('childSection').style.display = 'none';
+  document.getElementById('parentHint').style.display = 'none';
+  updateDisplay();
  } else {
- document.getElementById('loginError').style.display = 'block';
- document.getElementById('pwdInput').value = '';
- document.getElementById('pwdInput').focus();
+  document.getElementById('loginError').style.display = 'block';
+  document.getElementById('pwdInput').value = '';
+  document.getElementById('pwdInput').focus();
  }
 }
 
-// 從小朋友模式切換到家長
 function switchToParent() {
  document.getElementById('childSection').style.display = 'none';
  document.getElementById('adminSection').style.display = 'block';
@@ -335,127 +592,28 @@ function logout() {
  document.getElementById('pwdInput').value = '';
 }
 
-// 漂浮愛心
-(function(){
- var c = document.getElementById('floatingHearts');
- var icons = ['❤️','💕','💗','💖','✨','🌟','💫'];
- for (var i = 0; i < 12; i++) {
- var el = document.createElement('span');
- el.textContent = icons[Math.floor(Math.random() * icons.length)];
- el.style.left = Math.random() * 100 + '%';
- el.style.animationDelay = Math.random() * 6 + 's';
- el.style.fontSize = (12 + Math.random() * 14) + 'px';
- c.appendChild(el);
- }
-})();
-
-// 彩紙
-function spawnConfetti() {
- var colors = ['#ff6b9d','#f39c12','#27ae60','#9b59b6','#3498db','#e74c3c','#1abc9c'];
- for (var i = 0; i < 50; i++) {
- var el = document.createElement('div');
- el.className = 'confetti-piece';
- el.style.left = Math.random() * 100 + '%';
- el.style.background = colors[Math.floor(Math.random() * colors.length)];
- el.style.animationDelay = Math.random() * 0.5 + 's';
- el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
- document.body.appendChild(el);
- setTimeout(function(){ el.remove(); }, 3000);
- }
-}
-
-// 飛入愛心
-function spawnFlyingHeart(qty) {
- for (var i = 0; i < qty; i++) {
- setTimeout(function(){
- var el = document.createElement('div');
- el.className = 'flying-heart';
- el.innerHTML = '<svg viewBox="0 0 100 100" width="48" height="48"><defs><linearGradient id="fh" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#ff9a9e"/><stop offset="100%" style="stop-color:#c44569"/></linearGradient></defs><path d="M50 88 C20 60, 0 40, 0 25 C0 10, 12 0, 25 0 C35 0, 43 6, 50 15 C57 6, 65 0, 75 0 C88 0, 100 10, 100 25 C100 40, 80 60, 50 88Z" fill="url(#fh)"/></svg>';
- el.style.left = (28 + Math.random() * 44) + '%';
- document.body.appendChild(el);
- setTimeout(function(){ el.remove(); }, 1000);
- }, i * 220);
- }
-}
-
-// 盒子彈跳
-function boxBounce() {
- var box = document.getElementById('heartBox');
- box.classList.remove('box-opening');
- void box.offsetWidth;
- box.classList.add('box-opening');
-}
-
-function renderPending() {
+// ===== 家長：給予EXP =====
+function doAddExp() {
+ var qty = parseInt(document.getElementById('expQty').value);
+ if (!qty || qty <= 0) { alert('請輸入正確的 EXP 數值！'); return; }
  var d = getData();
- var el = document.getElementById('pendingList');
- var badge = document.getElementById('pendingBadge');
- if (d.requests.length === 0) {
- el.innerHTML = '<div class="empty-state"><span class="emoji">🌸</span>目前沒有等待核准的申請</div>';
- badge.style.display = 'none';
- } else {
- badge.style.display = 'inline-flex';
- badge.textContent = d.requests.length;
- el.innerHTML = d.requests.map(function(r) {
- return '<div class="apply-item">' +
- '<span class="icon">🎁</span>' +
- '<div class="info">' +
- '<div class="reason">'+r.qty+'顆 — '+r.reason+'</div>' +
- '<div class="meta">申請時間：'+r.time+'</div>' +
- '</div>' +
- '<div class="action">' +
- '<button class="ok" onclick="approveRequest('+r.id+')">✓ 核准</button>' +
- '<button class="no" onclick="rejectRequest('+r.id+')">✗ 拒絕</button>' +
- '</div>' +
- '</div>';
- }).join('');
- }
-}
-
-function renderHistory() {
- var d = getData();
- var el = document.getElementById('historyList');
- if (d.history.length === 0) {
- el.innerHTML = '<div class="empty-state"><span class="emoji">📒</span>還沒有任何記錄</div>';
- return;
- }
- el.innerHTML = d.history.map(function(h) {
- var icon = h.type === 'in' ? '✨' : '🎁';
- var delta = h.type === 'in' ? '+'+h.qty : '-'+h.qty;
- var cls = h.type === 'in' ? 'plus' : 'minus';
- return '<div class="history-item">' +
- '<span class="icon" style="font-size:26px;">'+icon+'</span>' +
- '<div class="info">' +
- '<div class="reason">'+h.reason+'</div>' +
- '<div class="date">'+h.date+'</div>' +
- '</div>' +
- '<span class="delta '+cls+'">'+delta+'</span>' +
- '</div>';
- }).join('');
-}
-
-function showTab(tab) {
- document.querySelectorAll('.page-section').forEach(function(s){ s.classList.remove('active'); });
- document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
- document.getElementById('page-'+tab).classList.add('active');
- event.target.classList.add('active');
-}
-
-function openModal(type) { document.getElementById('modal-'+type).classList.add('active'); }
-function closeModal(type) { document.getElementById('modal-'+type).classList.remove('active'); }
-
-function doRequest() {
- var qty = parseInt(document.getElementById('reqQty').value);
- var reason = document.getElementById('reqReason').value.trim() || '🎁 禮物兌換 🎁';
- if (!qty || qty <= 0) { alert('請輸入正確的愛心數量！'); return; }
- var d = getData();
- d.requests.push({ id: Date.now(), qty: qty, reason: reason, time: new Date().toLocaleString('zh-Hant-TW') });
+ var oldLv = d.level || 1;
+ d.totalExp = (d.totalExp || 0) + qty;
+ var newLv = levelFromTotalExp(d.totalExp);
+ d.level = newLv;
  saveData(d);
  updateDisplay();
- closeModal('request');
- alert('📨 申請已送出！等爸媽核准後就可以領取禮物囉～');
+ showExpGain(qty);
+ document.getElementById('expQty').value = '10';
+ if (newLv > oldLv) {
+  setTimeout(function(){ checkLevelUp(oldLv, newLv, d); }, 800);
+ } else {
+  boxBounce();
+  spawnFlyingHeart(1);
+ }
 }
 
+// ===== 家長：發放愛心 =====
 function doAdd() {
  var qty = parseInt(document.getElementById('addQty').value);
  var reason = document.getElementById('addReason').value.trim() || '✨ 特別獎勵 ✨';
@@ -469,6 +627,19 @@ function doAdd() {
  boxBounce();
  spawnFlyingHeart(qty);
  spawnConfetti();
+}
+
+// ===== 申請領取 =====
+function doRequest() {
+ var qty = parseInt(document.getElementById('reqQty').value);
+ var reason = document.getElementById('reqReason').value.trim() || '🎁 禮物兌換 🎁';
+ if (!qty || qty <= 0) { alert('請輸入正確的愛心數量！'); return; }
+ var d = getData();
+ d.requests.push({ id: Date.now(), qty: qty, reason: reason, time: new Date().toLocaleString('zh-Hant-TW') });
+ saveData(d);
+ updateDisplay();
+ closeModal('request');
+ alert('📨 申請已送出！等爸媽核准後就可以領取禮物囉～');
 }
 
 function approveRequest(id) {
@@ -486,7 +657,7 @@ function approveRequest(id) {
  updateDisplay();
  boxBounce();
  spawnConfetti();
- alert('✅ 核准成功！快讓小朋友去領禮物吧～🎁');
+ alert('✅ 核准成功！快讓 ERIC 去領禮物吧～🎁');
 }
 
 function rejectRequest(id) {
@@ -499,6 +670,65 @@ function rejectRequest(id) {
  updateDisplay();
  alert('已拒絕該申請');
 }
+
+// ===== UI =====
+function renderPending() {
+ var d = getData();
+ var el = document.getElementById('pendingList');
+ var badge = document.getElementById('pendingBadge');
+ if (d.requests.length === 0) {
+  el.innerHTML = '<div class="empty-state"><span class="emoji">🌸</span>目前沒有等待核准的申請</div>';
+  badge.style.display = 'none';
+ } else {
+  badge.style.display = 'inline-flex';
+  badge.textContent = d.requests.length;
+  el.innerHTML = d.requests.map(function(r) {
+   return '<div class="apply-item">' +
+    '<span class="icon">🎁</span>' +
+    '<div class="info">' +
+     '<div class="reason">'+r.qty+'顆 — '+r.reason+'</div>' +
+     '<div class="meta">申請時間：'+r.time+'</div>' +
+    '</div>' +
+    '<div class="action">' +
+     '<button class="ok" onclick="approveRequest('+r.id+')">✓ 核准</button>' +
+     '<button class="no" onclick="rejectRequest('+r.id+')">✗ 拒絕</button>' +
+    '</div>' +
+   '</div>';
+  }).join('');
+ }
+}
+
+function renderHistory() {
+ var d = getData();
+ var el = document.getElementById('historyList');
+ if (d.history.length === 0) {
+  el.innerHTML = '<div class="empty-state"><span class="emoji">📒</span>還沒有任何記錄</div>';
+  return;
+ }
+ el.innerHTML = d.history.map(function(h) {
+  var icon = h.type === 'in' ? '✨' : '🎁';
+  var delta = h.type === 'in' ? '+'+h.qty : '-'+h.qty;
+  var cls = h.type === 'in' ? 'plus' : 'minus';
+  return '<div class="history-item">' +
+   '<span class="icon" style="font-size:26px;">'+icon+'</span>' +
+   '<div class="info">' +
+    '<div class="reason">'+h.reason+'</div>' +
+    '<div class="date">'+h.date+'</div>' +
+   '</div>' +
+   '<span class="delta '+cls+'">'+delta+'</span>' +
+  '</div>';
+ }).join('');
+}
+
+function showTab(tab) {
+ document.querySelectorAll('.page-section').forEach(function(s){ s.classList.remove('active'); });
+ document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+ document.getElementById('page-'+tab).classList.add('active');
+ event.target.classList.add('active');
+}
+
+function openModal(type) { document.getElementById('modal-'+type).classList.add('active'); }
+function closeModal(type) { document.getElementById('modal-'+type).classList.remove('active'); }
 </script>
 </body>
 </html>
