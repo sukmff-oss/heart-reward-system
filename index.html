@@ -612,7 +612,9 @@ function totalExpForLevel(lv) { return (lv * (lv + 1) / 2) * 100; }
 function levelFromTotalExp(total) {
  var lv = 1;
  while (lv < MAX_LEVEL && totalExpForLevel(lv) <= total) { lv++; }
- return Math.min(lv - 1, MAX_LEVEL);
+
+
+function forceLevelFromExp(total) { var lv = 1; while(lv < MAX_LEVEL && totalExpForLevel(lv) <= total) { lv++; } return Math.min(lv - 1, MAX_LEVEL);} return Math.min(lv - 1, MAX_LEVEL);
 }
 function expInCurrentLevel(total, lv) {
  return total - totalExpForLevel(lv - 1);
