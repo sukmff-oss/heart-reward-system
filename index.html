@@ -646,7 +646,7 @@ function updateDisplay() { renderAll(); }
 
 function renderAll() {
  var d = getData();
- var lv = d.level || 1;
+ var lv = forceLevelFromExp(d.totalExp || 0);
  var total = d.totalExp || 0;
  var currentLvExp = expInCurrentLevel(total, lv);
  var needed = expNeededForLevel(lv);
