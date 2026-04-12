@@ -246,9 +246,10 @@ body {
 <div style="display:none" id="mainApp">
  <!-- 同步狀態列 -->
  <div class="sync-banner" id="syncBanner">☁️ 同步中...</div>
+<div style="position:fixed;bottom:20px;right:20px;z-index:5000;"><button onclick="toggleSettings()" style="background:linear-gradient(135deg,#3498db,#2980b9);color:#fff;border:none;border-radius:999px;padding:14px 22px;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 6px 20px rgba(52,152,219,0.5);display:flex;align-items:center;gap:6px;">⚙️ 雲端同步設定</button></div>
 
  <div class="header" style="position:relative;">
-  <button class="settings-btn" onclick="toggleSettings()">⚙️</button>
+  <button class="settings-btn" onclick="toggleSettings()" style="background:linear-gradient(135deg,#3498db,#2980b9);border-radius:999px;padding:8px 16px;font-size:16px;font-weight:900;box-shadow:0 4px 14px rgba(52,152,219,0.4);border:none;cursor:pointer;">⚙️ 雲端設定</button>
   <h1>🎁 ERIC 專屬禮物</h1>
   <p>每顆愛心 = $100</p>
   <span class="mode-tag" id="modeTag">👧 小朋友模式</span>
