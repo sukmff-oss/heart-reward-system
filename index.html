@@ -750,7 +750,17 @@ function enterChildMode() {
  document.getElementById('adminSection').style.display = 'none';
  document.getElementById('childSection').style.display = 'block';
  document.getElementById('parentHint').style.display = 'none';
+ // Force immediate cloud sync on enter
+ stopSync();
  renderAll();
+ cloudRead(function(ok, result) {
+   if (ok && result && result.data) {
+     var local = getData();
+     var merged = mergeData(local, result.data);
+     saveDataNoSync(merged);
+     renderAll();
+   }
+ });
  startSync();
 }
 
@@ -765,7 +775,18 @@ function doParentLogin() {
   document.getElementById('adminSection').style.display = 'block';
   document.getElementById('childSection').style.display = 'none';
   document.getElementById('parentHint').style.display = 'none';
-  renderAll();
+  // Force immediate cloud sync on enter
+  stopSync();
+  cloudRead(function(ok, result) {
+    if (ok && result && result.data) {
+      var local = getData();
+      var merged = mergeData(local, result.data);
+      saveDataNoSync(merged);
+      renderAll();
+    } else {
+      renderAll();
+    }
+  });
   startSync();
  } else {
   document.getElementById('loginError').style.display = 'block';
