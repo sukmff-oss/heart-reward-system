@@ -601,7 +601,7 @@ function doAdd() {
 function doRequest() {
  var qty = parseInt(document.getElementById('reqQty').value);
  var reason = document.getElementById('reqReason').value.trim() || '🎁 禮物兌換 🎁';
- if (!qty || qty <= 0) { alert('請輸入正確的愛心數量！'); return; }
+ if (!qty || qty <= 0) { alert('請輸入正確的���心數量！'); return; }
  var d = getData();
  d.requests.push({ id: Date.now(), qty: qty, reason: reason, time: new Date().toLocaleString('zh-Hant-TW') });
  saveData(d);
