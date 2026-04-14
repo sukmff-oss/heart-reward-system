@@ -3,77 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#ff6b9d">
-<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ERIC 專屬禮物">
-<meta name="application-name" content="ERIC 專屬禮物">
-<meta name="description" content="愛心魔法盒 - ERIC 專屬禮物系統，爸媽發放愛心與經驗值，小朋友申請禮物">
-<link rel="manifest" href="manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="pink">
 <title>❤️ ERIC 專屬禮物</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;overflow:hidden}
-body{
- display:flex;flex-direction:column;align-items:center;justify-content:center;
- background:linear-gradient(135deg,#ff6b9d 0%,#c44569 50%,#9b59b6 100%);
- min-height:100vh;
- font-family:"Microsoft JhengHei",Arial,sans-serif;
- cursor:pointer;user-select:none;-webkit-user-select:none;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; }
+body {
+ display: flex; flex-direction: column; align-items: center; justify-content: center;
+ background: #1a1a2e;
+ min-height: 100vh; font-family: "Microsoft JhengHei", Arial, sans-serif;
+ cursor: pointer; user-select: none; -webkit-user-select: none;
 }
-.container{
- display:flex;flex-direction:column;align-items:center;gap:24px;
- animation:fadeIn 0.6s ease;
+body::before {
+ content: "";
+ position: fixed; inset: 0;
+ background: radial-gradient(ellipse at center, #16213e 0%, #0f0f23 100%);
+ z-index: -1;
 }
-@keyframes fadeIn{from{opacity:0;transform:scale(0.8)}to{opacity:1;transform:scale(1)}}
-.heart-wrap{
- width:140px;height:140px;
- background:linear-gradient(135deg,#ff6b9d,#ff8fab,#c44569);
- border-radius:50%;
- display:flex;align-items:center;justify-content:center;
- box-shadow:0 12px 40px rgba(0,0,0,0.3),inset 0 -6px 18px rgba(0,0,0,0.15),inset 0 6px 18px rgba(255,255,255,0.3);
- cursor:pointer;
- animation:heartbeat 1.5s ease-in-out infinite;
+.container {
+ display: flex; flex-direction: column; align-items: center; gap: 20px;
+ animation: fadeIn 0.5s ease;
 }
-@keyframes heartbeat{
- 0%,100%{transform:scale(1)}
- 15%{transform:scale(1.12)}
- 30%{transform:scale(1)}
- 45%{transform:scale(1.08)}
- 60%{transform:scale(1)}
+@keyframes fadeIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+
+.heart-btn {
+ width: 120px; height: 120px;
+ background: linear-gradient(180deg, #ffd700 0%, #ff8c00 50%, #e07000 100%);
+ border-radius: 50%;
+ display: flex; align-items: center; justify-content: center;
+ box-shadow: 0 8px 0 #8B5a00, 0 12px 30px rgba(0,0,0,0.5), inset 0 2px 0 rgba(255,255,255,0.3);
+ cursor: pointer; transition: transform 0.2s;
+ animation: bounce 2s ease-in-out infinite;
+ position: relative;
+ border: 3px solid #1a1a1a;
 }
-.heart-wrap:active{transform:scale(0.92);animation:none}
-.heart-wrap svg{width:80px;height:80px}
-.title{
- color:#fff;font-size:22px;font-weight:900;
- text-shadow:0 3px 10px rgba(0,0,0,0.3);
- letter-spacing:1px;text-align:center;
+@keyframes bounce {
+ 0%,100% { transform: scale(1); }
+ 50% { transform: scale(1.08); }
 }
-.subtitle{
- color:rgba(255,255,255,0.8);font-size:13px;font-weight:600;
- text-align:center;margin-top:4px;
+.heart-btn:active { transform: scale(0.95) translateY(4px); animation-play-state: paused; box-shadow: 0 4px 0 #8B5a00; }
+
+.heart-btn svg { width: 70px; height: 70px; }
+
+.label {
+ color: #ffd700; font-size: 18px; font-weight: 900;
+ text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+ letter-spacing: 1px;
 }
-.bg-heart{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:0;overflow:hidden;}
-.bg-heart span{position:absolute;font-size:24px;animation:floatup 8s linear infinite;opacity:0.3;}
-@keyframes floatup{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:0.3}90%{opacity:0.3}100%{transform:translateY(-50px) rotate(360deg);opacity:0}}
-.loading{display:none;color:#fff;font-size:14px;font-weight:700;margin-top:16px;animation:pulse 1s infinite;}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
-.install-banner{
- position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
- background:#fff;color:#c44569;padding:12px 20px;border-radius:12px;
- font-size:12px;font-weight:700;box-shadow:0 4px 20px rgba(0,0,0,0.2);
- display:none;cursor:pointer;z-index:100;animation:slideUp 0.5s ease;
+.hint {
+ color: rgba(255,255,255,0.7); font-size: 11px; margin-top: 8px;
+ text-align: center; font-weight: 600;
 }
-@keyframes slideUp{from{bottom:-60px;opacity:0}to{bottom:20px;opacity:1}}
+
+/* iOS Add to Home Screen instruction */
+.ios-hint {
+ display: none; color: rgba(255,255,255,0.8); font-size: 10px;
+ text-align: center; margin-top: 16px; line-height: 1.6;
+}
+@media screen and (max-width: 480px) {
+ .ios-hint { display: block; }
+}
+
+/* Android instruction */
+.android-btn {
+ display: none; color: rgba(255,255,255,0.8); font-size: 10px;
+ text-align: center; margin-top: 16px; line-height: 1.6;
+}
 </style>
 </head>
 <body>
-
-<div class="bg-heart" id="bgHearts"></div>
-
 <div class="container">
- <div class="heart-wrap" id="heartBtn" onclick="openApp()">
+ <div class="heart-btn" onclick="openApp()">
   <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
    <defs>
     <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -81,60 +83,19 @@ body{
      <stop offset="100%" style="stop-color:#fff"/>
     </linearGradient>
    </defs>
-   <path d="M50 88 C20 60, 0 40, 0 25 C0 10, 12 0, 25 0 C35 0, 43 6, 50 15 C57 6, 65 0, 75 0 C88 0, 100 10, 100 25 C100 40, 80 60, 50 88Z" fill="url(#hg)"/>
-   <ellipse cx="30" cy="22" rx="10" ry="8" fill="rgba(255,107,157,0.4)"/>
+   <path d="M50 88 C20 60, 0 40, 0 25 C0 10, 12 0, 25 0 C35 0, 43 6, 50 15 C57 6, 65 0, 75 0 C88 0, 100 10, 100 25 C100 40, 80 60, 50 88Z" fill="#fff"/>
+   <ellipse cx="30" cy="22" rx="10" ry="8" fill="rgba(255,107,157,0.3)"/>
   </svg>
  </div>
- <div class="title">❤️ ERIC 專屬禮物</div>
- <div class="subtitle">點愛心開啟</div>
- <div class="loading" id="loading">載入中...</div>
-</div>
-
-<div class="install-banner" id="installBanner" onclick="installApp()">
- 📱 點此安裝到桌面
+ <div class="label">❤️ ERIC 專屬禮物</div>
+ <div class="hint">點愛心開啟</div>
+ <div class="ios-hint">iOS: 點分享按鈕 → 加到主畫面</div>
+ <div class="android-btn">Android: 點瀏覽器選單 → 加入主畫面</div>
 </div>
 
 <script>
-var APP_URL = 'https://sukmff-oss.github.io/heart-reward-system/';
-var deferredPrompt = null;
-
-(function(){
- var c = document.getElementById('bgHearts');
- var icons = ['❤️','💕','💗','💖','✨'];
- for(var i=0;i<10;i++){
-  var el = document.createElement('span');
-  el.textContent = icons[Math.floor(Math.random()*icons.length)];
-  el.style.left = Math.random()*100+'%';
-  el.style.animationDelay = Math.random()*7+'s';
-  el.style.fontSize = (14+Math.random()*16)+'px';
-  c.appendChild(el);
- }
-})();
-
-function openApp(){
- document.getElementById('loading').style.display='block';
- window.location.href = APP_URL;
-}
-
-window.addEventListener('beforeinstallprompt', function(e){
- e.preventDefault();
- deferredPrompt = e;
- document.getElementById('installBanner').style.display = 'block';
-});
-
-function installApp(){
- if(!deferredPrompt) return;
- deferredPrompt.prompt();
- deferredPrompt.userChoice.then(function(choice){
-  if(choice.outcome==='accepted'){
-   document.getElementById('installBanner').style.display='none';
-  }
-  deferredPrompt = null;
- });
-}
-
-if(window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches){
- document.getElementById('installBanner').style.display='none';
+function openApp() {
+ window.location.href = 'https://sukmff-oss.github.io/heart-reward-system/';
 }
 </script>
 </body>
