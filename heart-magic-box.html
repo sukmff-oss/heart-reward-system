@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎁 愛心魔法盒</title>
+<style>
+:root {
+ --pink: #ff6b9d;
+ --red: #e74c3c;
+ --purple: #9b59b6;
+ --green: #27ae60;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+ font-family: "Microsoft JhengHei", "PingFang TC", Arial, sans-serif;
+ background: linear-gradient(180deg, #ffe8f0 0%, #fff0fa 50%, #f0e8ff 100%);
+ min-height: 100vh;
+ color: #333;
+ overflow-x: hidden;
+}
+
+/* 漂浮愛心背景 */
+.floating-hearts {
+ position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+ pointer-events: none; z-index: 0; overflow: hidden;
+}
+.floating-hearts span {
+ position: absolute; font-size: 20px;
+ animation: floatUp 7s ease-in infinite; opacity: 0.4;
+}
+@keyframes floatUp {
+ 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+ 10% { opacity: 0.4; }
+ 90% { opacity: 0.4; }
+ 100% { transform: translateY(-20px) rotate(360deg); opacity: 0; }
+}
+
+/* 頂部 */
+.header {
+ background: linear-gradient(135deg, #ff6b9d, #ff8fab, #c44569);
+ color: #fff; padding: 16px 20px;
+ text-align: center;
+ box-shadow: 0 4px 20px rgba(196,69,105,0.3);
+ position: sticky; top: 0; z-index: 100;
+}
+.header h1 { font-size: 24px; font-weight: 900; letter-spacing: 2px; }
+.header p { font-size: 12px; opacity: 0.85; margin-top: 2px; }
+.header .mode-tag {
+ display: inline-block;
+ background: rgba(255,255,255,0.25);
+ border-radius: 999px;
+ padding: 4px 14px;
+ font-size: 12px;
+ font-weight: 700;
+ margin-top: 4px;
+}
+.header .logout-btn {
+ position: absolute;
+ right: 16px; top: 50%;
+ transform: translateY(-50%);
+ background: rgba(255,255,255,0.2);
+ border: none;
+ border-radius: 8px;
+ padding: 6px 12px;
+ color: #fff;
+ font-size: 12px;
+ font-weight: 700;
+ cursor: pointer;
+}
+
+/* 主容器 */
+.container { max-width: 580px; margin: 0 auto; padding: 18px 14px; position: relative; z-index: 1; }
+
+/* 愛心盒子 */
+.heart-box-wrap { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
+.heart-box {
+ width: 170px; height: 170px;
+ background: linear-gradient(135deg, #c44569, #ff6b9d, #ff8fab);
+ border-radius: 50%;
+ display: flex; align-items: center; justify-content: center;
+ box-shadow: 0 12px 40px rgba(196,69,105,0.4), inset 0 -6px 20px rgba(0,0,0,0.15), inset 0 6px 20px rgba(255,255,255,0.3);
+ cursor: pointer; position: relative; transition: transform 0.3s;
+ animation: boxBounce 3s ease-in-out infinite;
+}
+@keyframes boxBounce {
+ 0%, 100% { transform: scale(1) rotate(-2deg); }
+ 50% { transform: scale(1.05) rotate(2deg); }
+}
+.heart-box:hover { animation-play-state: paused; transform: scale(1.08); }
+.heart-box svg { width: 90px; height: 90px; }
+.heart-box .count-overlay {
+ position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+ background: #fff; border-radius: 999px;
+ padding: 5px 20px; font-size: 20px; font-weight: 900; color: var(--red);
+ box-shadow: 0 4px 16px rgba(0,0,0,0.15); white-space: nowrap;
+}
+.money-line { text-align: center; margin-top: 8px; font-size: 15px; font-weight: 700; color: #c44569; }
+
+/* 飛入動畫 */
+@keyframes heartFlyIn {
+ 0% { transform: translateY(-200px) scale(1.5) rotate(-20deg); opacity: 1; }
+ 60% { transform: translateY(0) scale(0.6) rotate(10deg); opacity: 0.9; }
+ 80% { transform: translateY(-20px) scale(1.1); opacity: 1; }
+ 100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+.flying-heart {
+ position: fixed; font-size: 48px; pointer-events: none; z-index: 9999;
+ animation: heartFlyIn 0.8s ease-out forwards;
+ top: 30%; left: 50%; transform: translateX(-50%);
+}
+
+/* 彩紙 */
+@keyframes confettiFall {
+ 0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+ 100% { transform: translateY(100vh) rotate(720deg); opacity: 0.5; }
+}
+.confetti-piece {
+ position: fixed; width: 10px; height: 14px; top: -20px; z-index: 9999;
+ animation: confettiFall 2.5s ease-out forwards; pointer-events: none;
+}
+
+/* 按鈕 */
+.btn-row { display: flex; gap: 12px; margin-bottom: 18px; }
+.big-btn {
+ flex: 1; padding: 18px 14px; border-radius: 18px;
+ font-size: 16px; font-weight: 800; border: none; cursor: pointer;
+ display: flex; align-items: center; justify-content: center; gap: 8px;
+ transition: 0.2s; box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+.big-btn:active { transform: scale(0.96); }
+.big-btn.add { background: linear-gradient(135deg, #27ae60, #2ecc71); color: #fff; }
+.big-btn.redeem { background: linear-gradient(135deg, #9b59b6, #8e44ad); color: #fff; }
+.big-btn.admin { background: linear-gradient(135deg, #e67e22, #f39c12); color: #fff; }
+.big-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.18); }
+
+/* 卡片 */
+.card {
+ background: rgba(255,255,255,0.85); backdrop-filter: blur(12px);
+ border-radius: 18px; padding: 16px;
+ box-shadow: 0 6px 24px rgba(196,69,105,0.1);
+ border: 2px solid rgba(255,107,157,0.15); margin-bottom: 12px;
+}
+.card h3 { font-size: 16px; font-weight: 800; color: #c44569; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+
+/* 申請 */
+.apply-item {
+ display: flex; align-items: center; gap: 10px;
+ padding: 12px; background: linear-gradient(135deg, #fff5f8, #fce4ec);
+ border-radius: 12px; border: 1px solid #ffcdd9; margin-bottom: 8px;
+}
+.apply-item .icon { font-size: 28px; }
+.apply-item .info { flex: 1; }
+.apply-item .info .reason { font-size: 14px; font-weight: 700; }
+.apply-item .info .meta { font-size: 11px; color: #888; margin-top: 2px; }
+.apply-item .action { display: flex; gap: 5px; }
+.apply-item button { padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; border: none; color: #fff; cursor: pointer; }
+.apply-item .ok { background: #27ae60; }
+.apply-item .no { background: #bbb; }
+
+/* 歷史 */
+.history-item {
+ display: flex; align-items: center; gap: 10px; padding: 11px 0;
+ border-bottom: 1px dashed #f8c0d8;
+}
+.history-item:last-child { border-bottom: none; }
+.history-item .icon { font-size: 26px; width: 38px; text-align: center; }
+.history-item .info { flex: 1; }
+.history-item .info .reason { font-size: 13px; font-weight: 700; }
+.history-item .info .date { font-size: 10px; color: #aaa; }
+.history-item .delta { font-size: 18px; font-weight: 900; }
+.delta.plus { color: #27ae60; }
+.delta.minus { color: #9b59b6; }
+
+/* 分頁 */
+.tab-bar {
+ display: flex; background: rgba(255,255,255,0.9); border-radius: 12px;
+ padding: 4px; box-shadow: 0 4px 16px rgba(196,69,105,0.1); margin-bottom: 12px; gap: 4px;
+}
+.tab-btn {
+ flex: 1; padding: 9px; border-radius: 8px;
+ font-size: 12px; font-weight: 800; border: none; background: transparent;
+ color: #c44569; cursor: pointer; transition: 0.2s;
+}
+.tab-btn.active { background: linear-gradient(135deg, #ff6b9d, #c44569); color: #fff; }
+.page-section { display: none; }
+.page-section.active { display: block; }
+
+/* 彈窗 */
+.modal-overlay {
+ position: fixed; inset: 0;
+ background: rgba(0,0,0,0.4); backdrop-filter: blur(6px);
+ display: none; align-items: center; justify-content: center;
+ z-index: 2000; padding: 16px;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+ background: #fff; border-radius: 22px; padding: 26px 22px;
+ width: 100%; max-width: 390px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); text-align: center;
+}
+.modal h3 { font-size: 20px; font-weight: 900; color: #c44569; margin-bottom: 16px; }
+.modal input, .modal textarea {
+ width: 100%; padding: 13px 15px;
+ border: 2px solid #ffd0e0; border-radius: 12px;
+ font-size: 15px; font-weight: 700; font-family: inherit; outline: none;
+ margin-bottom: 10px; box-sizing: border-box; transition: 0.2s;
+}
+.modal input:focus, .modal textarea:focus { border-color: #ff6b9d; background: #fff5f8; }
+.modal textarea { resize: vertical; min-height: 76px; }
+.modal .btn-row { display: flex; gap: 10px; margin-top: 4px; }
+.modal .btn-confirm {
+ flex: 1; padding: 13px; border-radius: 12px; font-size: 15px; font-weight: 800;
+ border: none; color: #fff; cursor: pointer;
+}
+.modal .btn-confirm.green { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+.modal .btn-confirm.purple { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+.modal .btn-cancel {
+ flex: 1; padding: 13px; border-radius: 12px; font-size: 15px; font-weight: 800;
+ border: 2px solid #ffd0e0; background: #fff; color: #c44569; cursor: pointer;
+}
+.modal .btn-cancel:hover { background: #fff5f8; }
+
+/* 登入 */
+.login-screen {
+ position: fixed; inset: 0;
+ background: linear-gradient(135deg, #ff6b9d, #c44569, #9b59b6);
+ display: flex; align-items: center; justify-content: center; z-index: 3000; padding: 20px;
+}
+.login-box {
+ background: #fff; border-radius: 26px; padding: 38px 26px; width: 100%; max-width: 330px;
+ box-shadow: 0 20px 60px rgba(0,0,0,0.25); text-align: center;
+}
+.login-box .emoji-big { font-size: 56px; display: block; margin-bottom: 10px; }
+.login-box h2 { font-size: 22px; color: #c44569; margin-bottom: 4px; }
+.login-box p { font-size: 12px; color: #aaa; margin-bottom: 20px; }
+.login-box input {
+ width: 100%; padding: 15px; border: 2px solid #ffd0e0;
+ border-radius: 12px; font-size: 20px; font-weight: 800; text-align: center;
+ letter-spacing: 5px; outline: none; margin-bottom: 12px; box-sizing: border-box; transition: 0.2s;
+}
+.login-box input:focus { border-color: #ff6b9d; }
+.login-box button {
+ width: 100%; padding: 15px; background: linear-gradient(135deg, #ff6b9d, #c44569);
+ color: #fff; border: none; border-radius: 12px; font-size: 17px; font-weight: 800; cursor: pointer;
+}
+.login-box .error { color: #e74c3c; font-size: 11px; margin-top: 7px; font-weight: 700; display: none; }
+.login-box .hint { font-size: 11px; color: #aaa; margin-top: 14px; line-height: 1.5; }
+
+/* 空狀態 */
+.empty-state { text-align: center; padding: 26px 14px; color: #c9a0b0; font-size: 13px; }
+.empty-state .emoji { font-size: 38px; display: block; margin-bottom: 7px; }
+
+/* 通知 */
+.badge {
+ background: #e74c3c; color: #fff; width: 20px; height: 20px;
+ border-radius: 50%; font-size: 10px; font-weight: 700;
+ display: inline-flex; align-items: center; justify-content: center; margin-left: 5px;
+}
+
+/* 盒子動畫 */
+@keyframes openBox {
+ 0% { transform: scale(1) rotate(0deg); }
+ 20% { transform: scale(1.15) rotate(-8deg); }
+ 40% { transform: scale(1.2) rotate(8deg); }
+ 60% { transform: scale(1.1) rotate(-4deg); }
+ 80% { transform: scale(1.05) rotate(2deg); }
+ 100% { transform: scale(1) rotate(0deg); }
+}
+.box-opening { animation: openBox 0.6s ease-out; }
+
+/* 家長PIN提示 */
+.pin-hint {
+ text-align: center;
+ padding: 12px;
+ background: linear-gradient(135deg, rgba(230,126,34,0.1), rgba(243,156,18,0.1));
+ border: 1px solid rgba(230,126,34,0.3);
+ border-radius: 12px;
+ font-size: 13px;
+ color: #c44569;
+ margin-bottom: 14px;
+ font-weight: 700;
+ cursor: pointer;
+}
+.pin-hint:hover { background: linear-gradient(135deg, rgba(230,126,34,0.15), rgba(243,156,18,0.15)); }
+</style>
+</head>
+<body>
+
+<!-- 漂浮愛心 -->
+<div class="floating-hearts" id="floatingHearts"></div>
+
+<!-- 登入畫面 -->
+<div class="login-screen" id="loginScreen">
+ <div class="login-box">
+ <span class="emoji-big">🎁</span>
+ <h2>愛心魔法盒</h2>
+ <p>這是小朋友的專屬禮物盒</p>
+ <input type="password" id="pwdInput" placeholder="家長密碼" maxlength="20">
+ <button onclick="doLogin()">✨ 開啟 ✨</button>
+ <div class="error" id="loginError">密碼錯誤！</div>
+ <div class="hint">沒有密碼？直接點下方按鈕進入小朋友模式</div>
+ <button onclick="enterChildMode()" style="margin-top:10px;background:transparent;border:2px solid rgba(255,255,255,0.5);color:#fff;border-radius:12px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%;">👧 我是小朋友</button>
+ </div>
+</div>
+
+<!-- 主體 -->
+<div style="display:none" id="mainApp">
+ <div class="header">
+  <h1>🎁 愛心魔法盒</h1>
+  <p>每顆愛心 = $100</p>
+  <span class="mode-tag" id="modeTag">👧 小朋友模式</span>
+  <button class="logout-btn" id="logoutBtn" onclick="logout()" style="display:none">家長登出</button>
+ </div>
+
+ <div class="container">
+  <!-- 愛心盒子 -->
+  <div class="heart-box-wrap">
+   <div class="heart-box" id="heartBox" onclick="boxBounce()">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+     <defs>
+      <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
+       <stop offset="0%" style="stop-color:#ff9a9e"/>
+       <stop offset="50%" style="stop-color:#ff6b9d"/>
+       <stop offset="100%" style="stop-color:#c44569"/>
+      </linearGradient>
+     </defs>
+     <path d="M50 88 C20 60, 0 40, 0 25 C0 10, 12 0, 25 0 C35 0, 43 6, 50 15 C57 6, 65 0, 75 0 C88 0, 100 10, 100 25 C100 40, 80 60, 50 88Z" fill="url(#hg)" stroke="#c44569" stroke-width="1.5"/>
+     <ellipse cx="30" cy="22" rx="12" ry="10" fill="rgba(255,255,255,0.3)"/>
+     <path d="M15 20 Q18 10 28 18" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <div class="count-overlay">× <span id="heartCount">0</span></div>
+   </div>
+   <div class="money-line">= $ <span id="moneyValue">0</span></div>
+  </div>
+
+  <!-- 功能按鈕 - 根據模式顯示不同 -->
+  <div class="btn-row" id="childActions">
+   <button class="big-btn add" onclick="openModal('add')">
+    <span>✨</span> 投入愛心
+   </button>
+   <button class="big-btn redeem" onclick="openModal('request')">
+    <span>🎁</span> 領取禮物
+   </button>
+  </div>
+
+  <!-- 家長專區提示（小孩模式） -->
+  <div class="pin-hint" id="parentHint" onclick="showParentLogin()">
+   👨‍👩‍👧 爸媽請點這裡進入管理專區
+  </div>
+
+  <!-- 分頁（家長模式才有） -->
+  <div id="adminSection" style="display:none">
+   <div class="tab-bar">
+    <button class="tab-btn active" onclick="showTab('pending')">⏳ 待核准<span class="badge" id="pendingBadge" style="display:none">0</span></button>
+    <button class="tab-btn" onclick="showTab('history')">📜 歷史</button>
+   </div>
+
+   <div class="page-section active" id="page-pending">
+    <div class="card">
+     <h3>📋 等待你核准的申請</h3>
+     <div id="pendingList"></div>
+    </div>
+   </div>
+
+   <div class="page-section" id="page-history">
+    <div class="card">
+     <h3>📖 所有愛心記錄</h3>
+     <div id="historyList"></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- 投入愛心彈窗 -->
+<div class="modal-overlay" id="modal-add">
+ <div class="modal">
+  <h3>✨ 投入愛心 ✨</h3>
+  <input type="number" id="addQty" placeholder="幾顆愛心？" min="1" value="1">
+  <input type="text" id="addReason" placeholder="為什麼得到獎勵？（選填）">
+  <div class="btn-row">
+   <button class="btn-confirm green" onclick="doAdd()">💝 確認投入</button>
+   <button class="btn-cancel" onclick="closeModal('add')">取消</button>
+  </div>
+ </div>
+</div>
+
+<!-- 領取禮物彈窗 -->
+<div class="modal-overlay" id="modal-request">
+ <div class="modal">
+  <h3>🎁 領取禮物 🎁</h3>
+  <input type="number" id="reqQty" placeholder="想要幾顆愛心？" min="1" value="1">
+  <textarea id="reqReason" placeholder="想要買什麼呢？"></textarea>
+  <div class="btn-row">
+   <button class="btn-confirm purple" onclick="doRequest()">📨 送出申請</button>
+   <button class="btn-cancel" onclick="closeModal('request')">取消</button>
+  </div>
+ </div>
+</div>
+
+<script>
+var PASSWORD = '1234';
+var DATA_KEY = 'heart_v3';
+var isParent = false;
+
+function getData() {
+ try { var x = localStorage.getItem(DATA_KEY); if (x) return JSON.parse(x); } catch(e) {}
+ return { hearts: 0, history: [], requests: [] };
+}
+function saveData(d) { localStorage.setItem(DATA_KEY, JSON.stringify(d)); }
+function updateDisplay() {
+ var d = getData();
+ document.getElementById('heartCount').textContent = d.hearts;
+ document.getElementById('moneyValue').textContent = d.hearts * 100;
+ renderPending();
+ renderHistory();
+}
+
+function enterChildMode() {
+ document.getElementById('loginScreen').style.display = 'none';
+ document.getElementById('mainApp').style.display = 'block';
+ isParent = false;
+ document.getElementById('modeTag').textContent = '👧 小朋友模式';
+ document.getElementById('logoutBtn').style.display = 'none';
+ document.getElementById('adminSection').style.display = 'none';
+ document.getElementById('childActions').style.display = 'flex';
+ document.getElementById('parentHint').style.display = 'block';
+ updateDisplay();
+}
+
+function showParentLogin() {
+ var p = document.getElementById('pwdInput');
+ p.value = '';
+ p.focus();
+ alert('請輸入家長密碼（預設 1234）');
+}
+
+function doLogin() {
+ var pw = document.getElementById('pwdInput').value;
+ if (pw === PASSWORD) {
+ document.getElementById('loginScreen').style.display = 'none';
+ document.getElementById('mainApp').style.display = 'block';
+ isParent = true;
+ document.getElementById('modeTag').textContent = '👨‍👩‍👧 家長模式';
+ document.getElementById('logoutBtn').style.display = 'block';
+ document.getElementById('adminSection').style.display = 'block';
+ document.getElementById('childActions').style.display = 'none';
+ document.getElementById('parentHint').style.display = 'none';
+ updateDisplay();
+ } else {
+ document.getElementById('loginError').style.display = 'block';
+ document.getElementById('pwdInput').value = '';
+ document.getElementById('pwdInput').focus();
+ }
+}
+
+function logout() {
+ isParent = false;
+ document.getElementById('mainApp').style.display = 'none';
+ document.getElementById('loginScreen').style.display = 'flex';
+ document.getElementById('loginError').style.display = 'none';
+ document.getElementById('pwdInput').value = '';
+}
+
+// 漂浮愛心
+function spawnFloatingHearts() {
+ var container = document.getElementById('floatingHearts');
+ var icons = ['❤️','💕','💗','💖','✨','🌟','💫'];
+ for (var i = 0; i < 12; i++) {
+ var el = document.createElement('span');
+ el.textContent = icons[Math.floor(Math.random() * icons.length)];
+ el.style.left = Math.random() * 100 + '%';
+ el.style.animationDelay = Math.random() * 6 + 's';
+ el.style.fontSize = (13 + Math.random() * 15) + 'px';
+ container.appendChild(el);
+ }
+}
+spawnFloatingHearts();
+
+// 彩紙爆炸
+function spawnConfetti() {
+ var colors = ['#ff6b9d','#f39c12','#27ae60','#9b59b6','#3498db','#e74c3c','#1abc9c'];
+ for (var i = 0; i < 50; i++) {
+ var el = document.createElement('div');
+ el.className = 'confetti-piece';
+ el.style.left = Math.random() * 100 + '%';
+ el.style.background = colors[Math.floor(Math.random() * colors.length)];
+ el.style.animationDelay = Math.random() * 0.5 + 's';
+ el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+ document.body.appendChild(el);
+ setTimeout(function(){ el.remove(); }, 3000);
+ }
+}
+
+// 飛入愛心
+function spawnFlyingHeart(qty) {
+ for (var i = 0; i < qty; i++) {
+ setTimeout(function(){
+ var el = document.createElement('div');
+ el.className = 'flying-heart';
+ el.innerHTML = '<svg viewBox="0 0 100 100" width="48" height="48"><defs><linearGradient id="fh" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#ff9a9e"/><stop offset="100%" style="stop-color:#c44569"/></linearGradient></defs><path d="M50 88 C20 60, 0 40, 0 25 C0 10, 12 0, 25 0 C35 0, 43 6, 50 15 C57 6, 65 0, 75 0 C88 0, 100 10, 100 25 C100 40, 80 60, 50 88Z" fill="url(#fh)"/></svg>';
+ el.style.left = (28 + Math.random() * 44) + '%';
+ document.body.appendChild(el);
+ setTimeout(function(){ el.remove(); }, 1000);
+ }, i * 220);
+ }
+}
+
+// 盒子彈跳
+function boxBounce() {
+ var box = document.getElementById('heartBox');
+ box.classList.remove('box-opening');
+ void box.offsetWidth;
+ box.classList.add('box-opening');
+}
+
+function renderPending() {
+ var d = getData();
+ var el = document.getElementById('pendingList');
+ var badge = document.getElementById('pendingBadge');
+ if (d.requests.length === 0) {
+ el.innerHTML = '<div class="empty-state"><span class="emoji">🌸</span>目前沒有等待核准的申請</div>';
+ badge.style.display = 'none';
+ } else {
+ badge.style.display = 'inline-flex';
+ badge.textContent = d.requests.length;
+ el.innerHTML = d.requests.map(function(r) {
+ return '<div class="apply-item">' +
+ '<span class="icon">🎁</span>' +
+ '<div class="info">' +
+ '<div class="reason">'+r.qty+'顆 — '+r.reason+'</div>' +
+ '<div class="meta">申請時間：'+r.time+'</div>' +
+ '</div>' +
+ '<div class="action">' +
+ '<button class="ok" onclick="approveRequest('+r.id+')">✓ 核准</button>' +
+ '<button class="no" onclick="rejectRequest('+r.id+')">✗ 拒絕</button>' +
+ '</div>' +
+ '</div>';
+ }).join('');
+ }
+}
+
+function renderHistory() {
+ var d = getData();
+ var el = document.getElementById('historyList');
+ if (d.history.length === 0) {
+ el.innerHTML = '<div class="empty-state"><span class="emoji">📒</span>還沒有任何記錄</div>';
+ return;
+ }
+ el.innerHTML = d.history.map(function(h) {
+ var icon = h.type === 'in' ? '✨' : '🎁';
+ var delta = h.type === 'in' ? '+'+h.qty : '-'+h.qty;
+ var cls = h.type === 'in' ? 'plus' : 'minus';
+ return '<div class="history-item">' +
+ '<span class="icon" style="font-size:28px;">'+icon+'</span>' +
+ '<div class="info">' +
+ '<div class="reason">'+h.reason+'</div>' +
+ '<div class="date">'+h.date+'</div>' +
+ '</div>' +
+ '<span class="delta '+cls+'">'+delta+'</span>' +
+ '</div>';
+ }).join('');
+}
+
+function showTab(tab) {
+ document.querySelectorAll('.page-section').forEach(function(s){ s.classList.remove('active'); });
+ document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+ document.getElementById('page-'+tab).classList.add('active');
+ event.target.classList.add('active');
+}
+
+function openModal(type) {
+ document.getElementById('modal-'+type).classList.add('active');
+ if (type === 'add') {
+ document.getElementById('addQty').value = '1';
+ document.getElementById('addReason').value = '';
+ document.getElementById('addQty').focus();
+ } else {
+ document.getElementById('reqQty').value = '1';
+ document.getElementById('reqReason').value = '';
+ document.getElementById('reqQty').focus();
+ }
+}
+function closeModal(type) { document.getElementById('modal-'+type).classList.remove('active'); }
+
+function doAdd() {
+ var qty = parseInt(document.getElementById('addQty').value);
+ var reason = document.getElementById('addReason').value.trim() || '✨ 特別獎勵 ✨';
+ if (!qty || qty <= 0) { alert('請輸入正確的愛心數量！'); return; }
+ var d = getData();
+ d.hearts += qty;
+ d.history.unshift({ id: Date.now(), type: 'in', qty: qty, reason: reason, date: new Date().toLocaleString('zh-Hant-TW') });
+ saveData(d);
+ updateDisplay();
+ closeModal('add');
+ boxBounce();
+ spawnFlyingHeart(qty);
+ spawnConfetti();
+}
+
+function doRequest() {
+ var qty = parseInt(document.getElementById('reqQty').value);
+ var reason = document.getElementById('reqReason').value.trim() || '🎁 禮物兌換 🎁';
+ if (!qty || qty <= 0) { alert('請輸入正確的愛心數量！'); return; }
+ var d = getData();
+ d.requests.push({ id: Date.now(), qty: qty, reason: reason, time: new Date().toLocaleString('zh-Hant-TW') });
+ saveData(d);
+ updateDisplay();
+ closeModal('request');
+ alert('📨 申請已送出！等爸媽核准後就可以領取禮物囉～');
+}
+
+function approveRequest(id) {
+ if (!confirm('確認核准這個申請？✨')) return;
+ var d = getData();
+ var req = null, idx = -1;
+ for (var i = 0; i < d.requests.length; i++) {
+ if (d.requests[i].id == id) { req = d.requests[i]; idx = i; break; }
+ }
+ if (!req) return;
+ d.hearts -= req.qty;
+ d.history.unshift({ id: Date.now(), type: 'out', qty: req.qty, reason: '【核准】'+req.reason, date: new Date().toLocaleString('zh-Hant-TW') });
+ d.requests.splice(idx, 1);
+ saveData(d);
+ updateDisplay();
+ boxBounce();
+ spawnConfetti();
+ alert('✅ 核准成功！快讓小朋友去領禮物吧～🎁');
+}
+
+function rejectRequest(id) {
+ if (!confirm('確定要拒絕這個申請？')) return;
+ var d = getData();
+ for (var i = 0; i < d.requests.length; i++) {
+ if (d.requests[i].id == id) { d.requests.splice(i, 1); break; }
+ }
+ saveData(d);
+ updateDisplay();
+ alert('已拒絕該申請');
+}
+</script>
+</body>
+</html>
