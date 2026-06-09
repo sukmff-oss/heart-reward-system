@@ -233,70 +233,12 @@ button:active{transform:translateY(3px)!important}
 
 function playCoin(dur) {
   try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    // 美國達人秀黃金按鈕音效 - 震撼轟鳴 + 勝利號角
-    const playGoldenBuzzer = () => {
-      // 1. 低沉轟鳴 BOOM
-      const boom = ctx.createOscillator();
-      const boomG = ctx.createGain();
-      boom.connect(boomG); boomG.connect(ctx.destination);
-      boom.frequency.setValueAtTime(80, ctx.currentTime);
-      boom.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.3);
-      boomG.gain.setValueAtTime(0.5, ctx.currentTime);
-      boomG.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
-      boom.start(); boom.stop(ctx.currentTime + 0.5);
-      
-      // 2. 閃光衝擊
-      const flash = ctx.createOscillator();
-      const flashG = ctx.createGain();
-      flash.connect(flashG); flashG.connect(ctx.destination);
-      flash.frequency.setValueAtTime(2000, ctx.currentTime);
-      flash.frequency.exponentialRampToValueAtTime(4000, ctx.currentTime + 0.1);
-      flashG.gain.setValueAtTime(0.3, ctx.currentTime);
-      flashG.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
-      flash.start(); flash.stop(ctx.currentTime + 0.15);
-      
-      // 3. 勝利號角 fanfares - C E G C 高音
-      setTimeout(() => {
-        const fanfares = [523, 659, 784, 1047];
-        fanfares.forEach((f, i) => {
-          setTimeout(() => {
-            const osc = ctx.createOscillator();
-            const g = ctx.createGain();
-            osc.connect(g); g.connect(ctx.destination);
-            osc.frequency.setValueAtTime(f, ctx.currentTime);
-            osc.type = 'sawtooth';
-            g.gain.setValueAtTime(0.15, ctx.currentTime);
-            g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
-            osc.start(); osc.stop(ctx.currentTime + 0.5);
-          }, i * 80);
-        });
-      }, 100);
-      
-      // 4. 最後轟鳴
-      setTimeout(() => {
-        const finale = ctx.createOscillator();
-        const fg = ctx.createGain();
-        finale.connect(fg); fg.connect(ctx.destination);
-        finale.frequency.setValueAtTime(150, ctx.currentTime);
-        fg.gain.setValueAtTime(0.4, ctx.currentTime);
-        fg.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
-        finale.start(); finale.stop(ctx.currentTime + 0.8);
-      }, 500);
-    };
-    playGoldenBuzzer();
-    // 循環播放
+    const audio = new Audio('https://files.catbox.moe/7ohcix.mp3');
+    audio.volume = 1.0;
+    audio.play().catch(() => {});
+    // 循環播放（最多5秒）
     const totalTime = Math.min(dur * 1000, 5000);
-    let elapsed = 0;
-    const interval = setInterval(() => {
-      elapsed += 1500;
-      if (elapsed >= totalTime) {
-        clearInterval(interval);
-        try { ctx.close(); } catch(e) {}
-      } else {
-        playGoldenBuzzer();
-      }
-    }, 1500);
+    setTimeout(() => { try { audio.pause(); } catch(e) {} }, totalTime);
   } catch(e) {}
 }
 function playWaitSound() {
