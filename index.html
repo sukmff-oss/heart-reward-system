@@ -127,7 +127,7 @@ button:active{transform:translateY(3px)!important}
 <div class="mbg" id="moneyBg"></div>
 <div class="hdr">
   <h1>💰 存錢發大財</h1>
-  <p>每存100元 → 30%中獎 → 額外獎勵30%</p>
+  <p>每存100元 → 30%中獎 → 額外獎勵20%</p>
   <div style="margin-top:8px">
     <button onclick="openResetModal()" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:4px 12px;border-radius:12px;font-size:11px;cursor:pointer;">🔄 重置</button>
   </div>
@@ -168,8 +168,8 @@ button:active{transform:translateY(3px)!important}
   <h3>📋 遊戲規則</h3>
   <div class="r-row"><span class="rl">基本存款</span><span class="rr">每 $100 = 1 次抽獎</span></div>
   <div class="r-row"><span class="rl">中獎機率</span><span class="rr">每單位 30%</span></div>
-  <div class="r-row"><span class="rl">獎金計算</span><span class="rr">本金 × 30%</span></div>
-  <div class="r-row"><span class="rl">實例</span><span class="rr">$100→$130、$1000→$1300</span></div>
+  <div class="r-row"><span class="rl">獎金計算</span><span class="rr">本金 × 20%</span></div>
+  <div class="r-row"><span class="rl">實例</span><span class="rr">$100→$120、$1000→$1200</span></div>
 </div>
 <div class="history">
   <div class="hhdr"><span>📜 存錢紀錄</span><span class="more" onclick="clearHistory()">🗑 清除</span></div>
@@ -181,7 +181,7 @@ button:active{transform:translateY(3px)!important}
     <div class="sub">每100元就有一次30%中獎機會！</div>
     <input type="number" id="saveAmount" placeholder="輸入金額" min="1" inputmode="numeric">
     <textarea id="saveNote" placeholder="備註（選填）" maxlength="50"></textarea>
-    <div class="tip">💡 存入 $100 → 可能變 $130！</div>
+    <div class="tip">💡 存入 $100 → 可能變 $120！</div>
     <div class="btns">
       <button class="btn yes" onclick="confirmSave()">🎰 存錢試運氣</button>
       <button class="btn no" onclick="closeModal()">取消</button>
@@ -382,7 +382,7 @@ function confirmSave() {
   let totalBonus = 0, winCount = 0;
   for (let i = 0; i < units; i++) {
     if (Math.random() < 0.3) {
-      totalBonus += Math.round(amt * 0.3);
+      totalBonus += Math.round(amt * 0.2);
       winCount++;
     }
   }
