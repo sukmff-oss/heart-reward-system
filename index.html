@@ -128,6 +128,9 @@ button:active{transform:translateY(3px)!important}
 <div class="hdr">
   <h1>💰 存錢發大財</h1>
   <p>每存100元 → 30%中獎 → 額外獎勵30%</p>
+  <div style="margin-top:8px">
+    <button onclick="openResetModal()" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:4px 12px;border-radius:12px;font-size:11px;cursor:pointer;">🔄 重置</button>
+  </div>
 </div>
 <div class="bank-card">
   <div class="bc-top">
@@ -204,24 +207,36 @@ button:active{transform:translateY(3px)!important}
     <button class="btn2" onclick="closeLoseOverlay()">下次再試 😅</button>
   </div>
 </div>
+<div class="mo" id="resetModal">
+  <div class="mb">
+    <h3>🔄 重置系統</h3>
+    <div class="sub">請輸入管理密碼</div>
+    <input type="password" id="resetPwd" placeholder="輸入密碼" maxlength="20">
+    <div class="tip">⚠️ 重置會清除所有存款資料！</div>
+    <div class="btns">
+      <button class="btn yes" onclick="confirmReset()">確認重置</button>
+      <button class="btn no" onclick="closeResetModal()">取消</button>
+    </div>
+  </div>
+</div>
 <script>
 
-const coinUrl = "https://files.catbox.moe/3jstyt.mp3";
-let audioEl = null;
-function getAudio() {
-  if (!audioEl) {
-    audioEl = new Audio(coinUrl);
-    audioEl.preload = 'auto';
-  }
-  return audioEl;
-}
 function playCoin(dur) {
   try {
-    const a = getAudio();
-    a.currentTime = 0;
-    a.volume = 0.7;
-    a.play().catch(() => {});
-    setTimeout(() => { try { a.pause(); } catch(e) {} }, Math.min(dur * 1000, 3000));
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    for (let i = 0; i < 3; i++) {
+      setTimeout(() => {
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.connect(g); g.connect(ctx.destination);
+        osc.frequency.setValueAtTime(2000 + Math.random() * 500, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(3500, ctx.currentTime + 0.08);
+        g.gain.setValueAtTime(0.15, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+        osc.start(); osc.stop(ctx.currentTime + 0.15);
+      }, i * 100);
+    }
+    setTimeout(() => { try { ctx.close(); } catch(e) {} }, 500);
   } catch(e) {}
 }
 function playLose() {
@@ -404,7 +419,20 @@ function clearHistory() {
 document.getElementById('saveModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 document.getElementById('winOverlay').addEventListener('click', function(e) { if (e.target === this) closeWinOverlay(); });
 document.getElementById('loseOverlay').addEventListener('click', function(e) { if (e.target === this) closeLoseOverlay(); });
+document.getElementById('resetModal').addEventListener('click', function(e) { if (e.target === this) closeResetModal(); });
 document.getElementById('saveAmount').addEventListener('keydown', function(e) { if (e.key === 'Enter') confirmSave(); });
+document.getElementById('resetPwd').addEventListener('keydown', function(e) { if (e.key === 'Enter') confirmReset(); });
+function openResetModal() { document.getElementById('resetModal').classList.add('active'); document.getElementById('resetPwd').value = ''; document.getElementById('resetPwd').focus(); }
+function closeResetModal() { document.getElementById('resetModal').classList.remove('active'); }
+function confirmReset() {
+  const pwd = document.getElementById('resetPwd').value.trim();
+  if (pwd !== '8888') { alert('密碼錯誤！'); return; }
+  if (!confirm('⚠️ 確定要重置嗎？所有存款資料會被清除！')) return;
+  localStorage.removeItem(DK);
+  closeResetModal();
+  renderAll();
+  alert('✅ 系統已重置！');
+}
 renderAll();
 </script>
 </body>
