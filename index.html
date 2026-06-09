@@ -1,117 +1,511 @@
-<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>❤️❤️❤️蘇子羿❤️</title><style>
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>💰 存錢發大財</title>
+<style>
 *{margin:0;padding:0;box-sizing:border-box;tap-highlight-color:transparent}
-body{font-family:Arial,Microsoft JhengHei,sans-serif;background:linear-gradient(180deg,#ffe8f0,#fff0fa,#f0e8ff);min-height:100vh;color:#333;overflow-x:hidden}
-.fh{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:0;overflow:hidden}
-.fh span{position:absolute;font-size:20px;animation:fu 7s linear infinite;opacity:0.4}
-@keyframes fu{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:0.4}90%{opacity:0.4}100%{transform:translateY(-20px) rotate(360deg);opacity:0}}
-.hdr{background:linear-gradient(135deg,#ff6b9d,#ff8fab,#c44569);color:#fff;padding:13px 15px;text-align:center;box-shadow:0 4px 20px rgba(196,69,105,0.3);position:fixed;top:0;left:0;right:0;z-index:3000}
-.hdr h1{font-size:19px;font-weight:900}
-.sbtn{position:fixed;top:12px;left:12px;z-index:5000;background:linear-gradient(135deg,#3498db,#2980b9);color:#fff;border:none;border-radius:50%;width:42px;height:42px;font-size:19px;cursor:pointer;box-shadow:0 4px 14px rgba(52,152,219,0.4);display:flex;align-items:center;justify-content:center;line-height:1}
-.sdot{position:fixed;top:16px;right:16px;z-index:5000;width:9px;height:9px;border-radius:50%}
-.sdot.ok{background:#2ecc71;box-shadow:0 0 6px #2ecc71}
-.sdot.syn{background:#f39c12;animation:pl 1s infinite}
-.sdot.err{background:#e74c3c}
-@keyframes pl{0%,100%{opacity:1}50%{opacity:0.3}}
-.ct{position:relative;z-index:1;padding:0}
-.sbanner{background:linear-gradient(135deg,#3498db,#2980b9);color:#fff;font-size:10px;font-weight:700;text-align:center;padding:4px 12px;display:none}
-.sbanner.show{display:block}
-.hbw{display:flex;flex-direction:column;align-items:center;margin-bottom:11px}
-.hb{width:150px;height:150px;background:linear-gradient(135deg,#c44569,#ff6b9d,#ff8fab);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 34px rgba(196,69,105,0.4),inset 0 -5px 18px rgba(0,0,0,0.15),inset 0 5px 18px rgba(255,255,255,0.3);cursor:pointer;animation:bb 3s ease-in-out infinite;position:relative}
-@keyframes bb{0%,100%{transform:scale(1) rotate(-2deg)}50%{transform:scale(1.05) rotate(2deg)}}
-.hb:active{transform:scale(0.95);animation:none}
-.hb svg{width:72px;height:72px}
-.hb .co{position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);background:#fff;border-radius:999px;padding:3px 15px;font-size:16px;font-weight:900;color:#e74c3c;box-shadow:0 4px 14px rgba(0,0,0,0.14);white-space:nowrap}
-.ml{text-align:center;margin-top:5px;font-size:13px;font-weight:700;color:#c44569}
-.ls{background:rgba(255,255,255,0.88);backdrop-filter:blur(12px);border-radius:0;padding:12px 15px;margin-bottom:8px;box-shadow:0 5px 22px rgba(196,69,105,0.1);border:none;border-bottom:1px solid rgba(255,107,157,0.14)}
-.lt{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.lb{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg:#ff6b9d,#c44569);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;box-shadow:0 4px 12px rgba(196,69,105,0.3);flex-shrink:0;line-height:1.2}
-.li h3{font-size:13px;font-weight:800;color:#c44569}
-.li p{font-size:10px;color:#999;margin-top:1px}
-.lr{text-align:right}
-.lr .nl{font-size:9px;color:#999}
-.lr .nh{font-size:14px;font-weight:900;color:#27ae60}
-.lbb{height:12px;background:#f0e8ff;border-radius:999px;overflow:hidden;border:1px solid rgba(196,69,105,0.15)}
-.lbf{height:100%;border-radius:999px;background:linear-gradient(90deg,#ff6b9d,#ff8fab,#c44569);transition:width 0.6s;min-width:4px}
-.lex{display:flex;justify-content:space-between;font-size:9px;color:#aaa;margin-top:3px;font-weight:700}
-.lmt{display:inline-block;background:linear-gradient(135deg,#f39c12,#e67e22);color:#fff;font-size:9px;font-weight:900;padding:2px 7px;border-radius:999px}
-.br{display:flex;gap:9px;margin:0 15px 13px}
-.bb{flex:1;padding:16px 12px;border-radius:16px;font-size:14px;font-weight:800;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:0.2s;box-shadow:0 6px 0 rgba(0,0,0,0.2),0 8px 20px rgba(0,0,0,0.15);position:relative;text-shadow:0 1px 2px rgba(0,0,0,0.2)}
-.bb:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(0,0,0,0.2),0 4px 10px rgba(0,0,0,0.1)}
-.bb.rm{background:linear-gradient(135deg,#9b59b6,#8e44ad);color:#fff}
-.bb.ad{background:linear-gradient(135deg,#27ae60,#2ecc71);color:#fff}
-.cd{background:rgba(255,255,255,0.85);backdrop-filter:blur(12px);border-radius:0;padding:12px 15px;box-shadow:0 5px 22px rgba(196,69,105,0.1);border:none;border-bottom:1px solid rgba(255,107,157,0.14);margin-bottom:8px}
-.cd h3{font-size:13px;font-weight:800;color:#c44569;margin-bottom:7px;display:flex;align-items:center;gap:4px}
-.ai{display:flex;align-items:center;gap:7px;padding:9px;background:linear-gradient(135deg,#fff5f8,#fce4ec);border-radius:10px;border:1px solid #ffcdd9;margin-bottom:6px}
-.ai .ic{font-size:23px}
-.ai .if{flex:1}
-.ai .if .rs{font-size:12px;font-weight:700}
-.ai .if .mt{font-size:10px;color:#888;margin-top:1px}
-.ai button{padding:6px 10px;border-radius:7px;font-size:11px;font-weight:700;border:none;color:#fff;cursor:pointer}
-.ai .ok{background:#27ae60;box-shadow:0 3px 0 #1e8449,0 4px 12px rgba(30,132,73,0.3);text-shadow:0 1px 1px rgba(0,0,0,0.2)}
-.ai .no{background:#bbb;box-shadow:0 3px 0 #888,0 4px 12px rgba(0,0,0,0.15);text-shadow:0 1px 1px rgba(0,0,0,0.2)}
-.hi{display:flex;align-items:center;gap:7px;padding:8px 0;border-bottom:1px dashed #f8c0d8}
-.hi:last-child{border-bottom:none}
-.hi .ic{font-size:21px;width:33px;text-align:center}
-.hi .if{flex:1}
-.hi .if .rs{font-size:11px;font-weight:700}
-.hi .if .dt{font-size:9px;color:#aaa}
-.hi .dt2{font-size:15px;font-weight:900}
-.dt2.pl{color:#27ae60}
-.dt2.mn{color:#9b59b6}
-.tb{display:flex;background:rgba(255,255,255,0.9);border-radius:10px;padding:3px;box-shadow:0 4px 14px rgba(196,69,105,0.1);margin-bottom:9px;gap:3px}
-.tb button{flex:1;padding:7px;border-radius:7px;font-size:11px;font-weight:800;border:none;background:transparent;color:#c44569;cursor:pointer;transition:0.2s}
-.tb button.active{background:linear-gradient(135deg:#ff6b9d,#c44569);color:#fff}
-.ps{display:none}
-.ps.active{display:block}
-.es{text-align:center;padding:20px 10px;color:#c9a0b0;font-size:12px}
-.es .em{font-size:33px;display:block;margin-bottom:5px}
-.bdg{background:#e74c3c;color:#fff;width:16px;height:16px;border-radius:50%;font-size:9px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-left:4px;vertical-align:middle}
-.mo{position:fixed;inset:0;background:rgba(0,0,0,0.4);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:2000;padding:14px}
-.mo.active{display:flex}
-.md{background:#fff;border-radius:19px;padding:21px 17px;width:100%;max-width:355px;box-shadow:0 18px 54px rgba(0,0,0,0.2);text-align:center}
-.md h3{font-size:17px;font-weight:900;color:#c44569;margin-bottom:12px}
-.md input,.md textarea{width:100%;padding:10px 12px;border:2px solid #ffd0e0;border-radius:10px;font-size:13px;font-weight:700;font-family:inherit;outline:none;margin-bottom:7px;box-sizing:border-box;background:#fffafc}
-.md input:focus,.md textarea:focus{border-color:#ff6b9d;background:#fff5f8}
-.md textarea{resize:vertical;min-height:65px}
-.md .br{display:flex;gap:7px;margin-top:2px}
-.md .bc{flex:1;padding:10px;border-radius:10px;font-size:13px;font-weight:800;border:none;color:#fff;cursor:pointer}
-.md .bc.pu{background:linear-gradient(135deg,#9b59b6,#8e44ad);box-shadow:0 4px 0 #6c3483,0 6px 16px rgba(155,89,182,0.3);text-shadow:0 1px 2px rgba(0,0,0,0.2)}
-.md .bc.gr{background:linear-gradient(135deg,#27ae60,#2ecc71);box-shadow:0 4px 0 #1e8449,0 6px 16px rgba(39,174,96,0.3);text-shadow:0 1px 2px rgba(0,0,0,0.2)}
-.md .bc.bl{background:linear-gradient(135deg,#3498db,#2980b9);box-shadow:0 4px 0 #1f618d,0 6px 16px rgba(52,152,219,0.3);text-shadow:0 1px 2px rgba(0,0,0,0.2)}
-.md .bc.ca{flex:1;padding:10px;border-radius:10px;font-size:13px;font-weight:800;border:2px solid #ffd0e0;background:#fff;color:#c44569;cursor:pointer;box-shadow:0 4px 0 #f5c6d6,0 6px 16px rgba(196,69,105,0.1);text-shadow:0 1px 2px rgba(0,0,0,0.1)}
-.ls2{background:linear-gradient(135deg,#fff5f8,#fce4ec);border-radius:10px;padding:10px;margin-top:6px;border:1px solid #ffcdd9}
-.ls2 .lr2{display:flex;align-items:center;gap:6px;margin-bottom:5px}
-.ls2 input{flex:1;padding:7px 9px;border:2px solid #ffd0e0;border-radius:8px;font-size:12px;font-weight:700;font-family:inherit;outline:none;box-sizing:border-box}
-.ls2 .bc{padding:7px 13px;font-size:11px;border-radius:8px;border:none;color:#fff;cursor:pointer;white-space:nowrap}
-.er2{display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px dashed #f0d0e0;font-size:11px;color:#888}
-.er2 .ed{font-weight:800;color:#f39c12}
-.ls .hp{font-size:9px;color:#aaa;font-weight:700;text-align:left}
-.lg{position:fixed;inset:0;background:linear-gradient(135deg,#ff6b9d,#c44569,#9b59b6);display:flex;align-items:flex-start;justify-content:center;z-index:3000;padding:40px 20px 20px}
-.lb2{background:#fff;border-radius:23px;padding:30px 21px;width:100%;max-width:295px;box-shadow:0 18px 54px rgba(0,0,0,0.22);text-align:center}
-.lb2 .eb{font-size:48px;display:block;margin-bottom:8px}
-.lb2 h2{font-size:19px;color:#c44569;margin-bottom:3px}
-.lb2 p{font-size:11px;color:#aaa;margin-bottom:15px}
-.lb2 input{width:100%;padding:12px;border:2px solid #ffd0e0;border-radius:10px;font-size:16px;font-weight:800;text-align:center;letter-spacing:3px;outline:none;margin-bottom:10px;box-sizing:border-box}
-.lb2 button{width:100%;padding:12px;background:linear-gradient(135deg,#ff6b9d,#c44569);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer}
-.lb2 .cb{margin-top:8px;width:100%;padding:12px;background:linear-gradient(135deg,#3498db,#2980b9);border:none;color:#fff;border-radius:14px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 4px 0 #1f618d,0 6px 16px rgba(52,152,219,0.3);text-shadow:0 1px 2px rgba(0,0,0,0.2);transition:0.15s}
-.lb2 .er{color:#e74c3c;font-size:10px;margin-top:5px;font-weight:700;display:none}
-.egp{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.75);color:#fff;font-size:18px;font-weight:900;padding:10px 25px;border-radius:15px;z-index:5000;animation:efp 1.2s ease-out forwards;pointer-events:none;text-align:center}
-@keyframes efp{0%{transform:translate(-50%,-50%);opacity:1}100%{transform:translate(-50%,-80px);opacity:0}}
-.lo{position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:9999}
-.lo.active{display:flex}
-.lx{background:linear-gradient(135deg,#fff0f5,#fff);border-radius:23px;padding:29px 25px;width:90%;max-width:305px;text-align:center;box-shadow:0 20px 60px rgba(196,69,105,0.3);border:3px solid #ff6b9d;animation:lvp 0.7s ease-out}
-@keyframes lvp{0%{transform:scale(0.5) rotate(-10deg);opacity:0}50%{transform:scale(1.3) rotate(5deg);opacity:1}70%{transform:scale(0.95) rotate(-2deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
-.lx .ll{font-size:48px;font-weight:900;background:linear-gradient(135deg,#ff6b9d,#c44569);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.lx .lt{font-size:16px;font-weight:800;color:#c44569;margin:6px 0}
-.lx .lh{font-size:25px;font-weight:900;color:#27ae60;margin:5px 0}
-.lx .lc{margin-top:12px;padding:9px 25px;background:linear-gradient(135deg,#ff6b9d,#c44569);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:800;cursor:pointer}
-@keyframes hfr{0%{transform:translateY(-170px) scale(1.5) rotate(-20deg);opacity:1}60%{transform:translateY(0) scale(0.6) rotate(10deg);opacity:0.9}80%{transform:translateY(-17px) scale(1.1);opacity:1}100%{transform:translateY(0) scale(1);opacity:1}}
-.fh2{position:fixed;font-size:44px;pointer-events:none;z-index:9999;animation:hfr 0.8s ease-out forwards;top:27%}
-@keyframes cff{0%{transform:translateY(-17px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0.5}}
-.cp{position:fixed;width:8px;height:12px;top:-17px;z-index:9999;animation:cff 2.3s ease-out forwards;pointer-events:none;border-radius:2px}
-@keyframes ban{0%{transform:scale(1)}20%{transform:scale(1.14) rotate(-8deg)}40%{transform:scale(1.19) rotate(8deg)}60%{transform:scale(1.09) rotate(-4deg)}80%{transform:scale(1.04) rotate(2deg)}100%{transform:scale(1)}}
-.bo{animation:ban 0.6s ease-out}
-button:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,0.2),0 3px 8px rgba(0,0,0,0.1)}
-</style></head><body><div class="fh" id="fH"></div><div class="lg" id="loginScr"><div class="lb2"><span class="eb">&#x1F381; &#x2764;</span><h2>❤️ERIC❤️</h2><p>爸媽請輸入密碼</p><button class="cb" onclick="doCM()">❤️蘇子羿❤️</button><button onclick="openReset()" style="margin-top:8px;width:100%;padding:12px;background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff;border:none;border-radius:14px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 4px 0 #922b21,0 6px 16px rgba(231,76,60,0.3);text-shadow:0 1px 2px rgba(0,0,0,0.2);transition:0.15s">&#x26A0; &#x7B49;&#x7D1A;&#x91CD;&#x7F6E;</button><button onclick="doPL()">🔐 爸媽登入</button><div class="er" id="loginErr">密碼錯誤！</div></div></div><div style="display:none" id="mainA"><div class="sbanner" id="syncBnr">☁️ 同步中...</div><div class="hdr"><h1>🎁 ❤️蘇子羿❤️</h1><p>每顆愛心 = $100</p><span class="sdot ok" id="syncDot"></span><button class="sbtn">⚙</button></div><div class="ct"><div class="hbw"><div class="hb" id="heartB" onclick="boxBnc()"><svg viewBox="0 0 100 100"><defs><linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#ff9a9e"/><stop offset="50%" style="stop-color:#ff6b9d"/><stop offset="100%" style="stop-color:#c44569"/></linearGradient></defs><path d="M50 88 C20 60, 0 40, 0 25 C0 10, 12 0, 25 0 C35 0, 43 6, 50 15 C57 6, 65 0, 75 0 C88 0, 100 10, 100 25 C100 40, 80 60, 50 88Z" fill="url(#hg)" stroke="#c44569" stroke-width="1.5"/><ellipse cx="30" cy="22" rx="12" ry="10" fill="rgba(255,255,255,0.3)"/></svg><div class="co">× <span id="heartCt">0</span></div></div><div class="ml">= $ <span id="moneyV">0</span></div></div><div class="ls"><div class="lt"><div style="display:flex;align-items:center;gap:7px"><div class="lb">Lv<br><span id="lvNum">1</span></div><div class="li"><h3 id="lvTtl">新手魔法師</h3><p>再獲得 <span id="expToN">100</span> EXP 即可升級</p></div></div><div class="lr"><div class="nl">升級獎勵</div><div class="nh" id="nextRH">+1 ❤️</div></div></div><div class="lbb"><div class="lbf" id="lvBar" style="width:0%"></div></div><div class="lex"><span>EXP: <span id="curExp">0</span></span><span id="expGoal">0 / 100</span></div></div><div id="childS"><div class="br"><button class="bb rm" onclick="openM('request')"><span>🎁</span> 領取禮物</button></div><div style="text-align:center;margin-top:10px;color:#c9a0b0;font-size:12px;font-weight:700;">禮物需要爸媽核准才會扣愛心喔！</div></div><div id="parentHnt" style="display:none"><div class="br"><button class="bb ad" onclick="swPP()"><span>👨‍👩</span> 家長專區</button></div></div><div id="adminS" style="display:none"><div class="br"><button class="bb ad" onclick="openM('add')"><span>✨</span> 發放愛心</button></div><div class="tb"><button class="active" onclick="shTab('pending')">⏳ 待核准<span class="bdg" id="pendBd" style="display:none">0</span></button><button onclick="shTab('history')">📜 歷史</button><button onclick="shTab('exphist')">⭐ EXP</button></div><div class="ps active" id="page-pending"><div class="cd"><h3>📋 等你核准的申請</h3><div id="pendL"></div></div></div><div class="ps" id="page-history"><div class="cd"><h3>📖 愛心記錄</h3><div id="histL"></div></div></div><div class="ps" id="page-exphist"><div class="cd"><h3>⭐ EXP 記錄</h3><div id="expHL"></div></div></div></div></div></div></div><div class="lo" id="lvupOl"><div class="lx"><div class="ll" id="luLvl">Lv.2</div><div class="lt">升級了！🎉</div><div class="lh" id="luHts">+2 ❤️</div><p style="font-size:11px;color:#999;margin-bottom:7px">達到新等級！</p><button class="lc" onclick="clsLUp()">太棒了！</button></div></div><div class="mo" id="mo-add"><div class="md"><h3>✨ 發放愛心 ✨</h3><input type="number" id="addQtyI" placeholder="幾顆愛心？" min="1" value="1"><input type="text" id="addRsnI" placeholder="原因（選填）"><div class="br"><button class="bc gr" onclick="doAHrts()">💝 確認發放</button><button class="bc ca" onclick="clsM('add')">取消</button></div></div></div><div class="mo" id="mo-request"><div class="md"><h3>🎁 領取禮物 🎁</h3><input type="number" id="reqQtyI" placeholder="想要幾顆愛心？" min="1" value="1"><textarea id="reqRsnI" placeholder="想要買什麼呢？"></textarea><div class="br"><button class="bc pu" onclick="doRqst()">📨 送出申請</button><button class="bc ca" onclick="clsM('request')">取消</button></div></div></div><div class="mo" id="mo-settings"><div class="md" style="max-width:335px"><h3>⚙️ 雲端同步設定</h3><input type="text" id="cloudUrlI" placeholder="輸入 Google Apps Script URL" style="width:100%;padding:10px 12px;border:2px solid #ffd0e0;border-radius:10px;font-size:13px;font-weight:700;font-family:inherit;outline:none;margin-bottom:7px;box-sizing:border-box;background:#fffafc"><div class="br"><button class="bc gr" onclick="saveUrl()">💾 儲存</button><button class="bc ca" onclick="clsM('settings')">關閉</button></div><p style="font-size:9px;color:#aaa;margin-top:7px;font-weight:700;text-align:left">💡 兩支手機填同一個 URL 才會同步</p></div></div><script>var ML=1000,DK="heart_v6",PW="7788",CK="https://script.google.com/macros/s/AKfycbyOfCAJJC7fNPWCzwYd9l55vvya432TfJbkZPrnjl2sdQGR65JIBpn6dDGvUw-7aMn_/exec",SI=10000;var iP=false,st=null,iS=false,lcTs=null;function eFL(l){return l*100;}function tEFL(l){return(l*(l+1)/2)*100;}function cLFE(t){var l=1;while(l<ML&&tEFL(l)<=t){l++;}return Math.min(l-1,ML);}var LT=["","新手魔法師","見習魔法師","小魔法師","見習巫師","巫師","大巫師","魔導士","大魔導士","聖魔導士","傳說魔法師"];function gLT(l){if(l<=10)return LT[l]||"傳說魔法師";if(l<=50)return "黃金魔法師";if(l<=100)return "白銀魔法師";if(l<=300)return "鑽石魔法師";if(l<=500)return "星耀魔法師";if(l<=800)return "至尊魔法師";return "神級魔法師";}function gD(){try{var x=localStorage.getItem(DK);if(x)return JSON.parse(x);}catch(e){}return{hearts:0,history:[],requests:[],totalExp:0,level:1,expHistory:[]};}function sD(d){localStorage.setItem(DK,JSON.stringify(d));cW(d);}function gCU(){return "https://script.google.com/macros/s/AKfycbyOfCAJJC7fNPWCzwYd9l55vvya432TfJbkZPrnjl2sdQGR65JIBpn6dDGvUw-7aMn_/exec";}function saveUrl(){var u=document.getElementById("cloudUrlI").value.trim();localStorage.setItem('heart_cv2',u);clsM("settings");if(u){cW(gD());shBnr("已儲存雲端 URL");}else{shBnr("已清除雲端設定");}}function cR(cb){var u=gCU();if(!u){cb(false,null);return;}var x=new XMLHttpRequest();x.open("GET",u+"?action=read&type=heart",true);x.timeout=8000;x.onload=function(){try{var r=JSON.parse(x.responseText);cb(true,r);}catch(e){cb(false,null);}};x.onerror=function(){cb(false,null);};x.ontimeout=function(){cb(false,null);};x.send();}function cW(d,cb){var u=gCU();if(!u){if(cb)cb(false);return;}var x=new XMLHttpRequest();x.open("GET",u+"?action=write&type=heart&data="+encodeURIComponent(JSON.stringify(d)),true);x.timeout=8000;x.onload=function(){if(cb)cb(true);};x.onerror=function(){if(cb)cb(false);};x.ontimeout=function(){if(cb)cb(false);};x.send();}function stSync(){stP();st=setInterval(pC,SI);cR(function(ok,r){if(!ok||!r||!r.data){uDot(gCU()?"error":"ok");return;}var cTs=r.ts||"";if(cTs!==lcTs){lcTs=cTs;var mg=mD(gD(),r.data);localStorage.setItem(DK,JSON.stringify(mg));rA();}uDot("ok");});}function stP(){if(st){clearInterval(st);st=null;}}function pC(){if(iS||!gCU())return;iS=true;uDot("syncing");cR(function(ok,r){iS=false;if(!ok||!r||!r.data){uDot("error");return;}var cTs=r.ts||"";if(cTs!==lcTs){lcTs=cTs;var mg=mD(gD(),r.data);localStorage.setItem(DK,JSON.stringify(mg));rA();}uDot("ok");});}function mD(l,c){var m={hearts:Math.max(l.hearts||0,c.hearts||0),totalExp:Math.max(l.totalExp||0,c.totalExp||0),history:[],requests:[],expHistory:[]};var hm={};(l.history||[]).forEach(function(h){hm[h.id]=h;});(c.history||[]).forEach(function(h){hm[h.id]=h;});m.history=Object.values(hm).sort(function(a,b){return b.id-a.id;}).slice(0,50);var rm={};(l.requests||[]).forEach(function(r){rm[r.id]=r;});(c.requests||[]).forEach(function(r){rm[r.id]=r;});m.requests=Object.values(rm);var em={};(l.expHistory||[]).forEach(function(e){em[e.id]=e;});(c.expHistory||[]).forEach(function(e){em[e.id]=e;});m.expHistory=Object.values(em).sort(function(a,b){return b.id-a.id;}).slice(0,50);return m;}function uDot(s){var d=document.getElementById("syncDot");if(!d)return;d.className="sdot "+(s==="syncing"?"syn":s==="ok"?"ok":"err");}function shBnr(m){var b=document.getElementById("syncBnr");if(!b)return;b.textContent=m;b.classList.add("show");setTimeout(function(){b.classList.remove("show");},3000);}function rA(){var d=gD();var lv=cLFE(d.totalExp||0);var cExp=(d.totalExp||0)-tEFL(lv-1);var nd=eFL(lv);var pct=Math.min((cExp/nd)*100,100);document.getElementById("heartCt").textContent=d.hearts;document.getElementById("moneyV").textContent=d.hearts*100;document.getElementById("lvNum").textContent=lv;document.getElementById("lvTtl").textContent=gLT(lv);document.getElementById("lvBar").style.width=pct+"%";document.getElementById("curExp").textContent=cExp;document.getElementById("expGoal").textContent=cExp+" / "+nd;document.getElementById("nextRH").textContent="+"+lv+" ❤️";document.getElementById("expToN").textContent=nd-cExp;if(lv>=ML){document.getElementById("expToN").parentNode.innerHTML="<span class=\"lmt\">MAX 等級</span>";document.getElementById("lvBar").style.width="100%";}rP();rH();rEH();}function boxBnc(){var b=document.getElementById("heartB");b.classList.remove("bo");void b.offsetWidth;b.classList.add("bo");}function sFH(q){for(var i=0;i<q;i++){setTimeout(function(){var el=document.createElement("div");el.className="fh2";el.innerHTML="<svg viewBox='0 0 100 100' width='44' height='44'><path d='M50 88 C20 60, 0 40, 0 25 C0 10, 12 0, 25 0 C35 0, 43 6, 50 15 C57 6, 65 0, 75 0 C88 0, 100 10, 100 25 C100 40, 80 60, 50 88Z' fill='#ff6b9d'/></svg>";el.style.left=(27+Math.random()*46)+"%";document.body.appendChild(el);setTimeout(function(){el.remove();},1000);},i*210);}}function sC(){var cs=["#ff6b9d","#f39c12","#27ae60","#9b59b6","#3498db","#e74c3c"];for(var i=0;i<50;i++){var el=document.createElement("div");el.className="cp";el.style.left=Math.random()*100+"%";el.style.background=cs[Math.floor(Math.random()*cs.length)];el.style.animationDelay=Math.random()*0.5+"s";el.style.borderRadius=Math.random()>0.5?"50%":"2px";document.body.appendChild(el);setTimeout(function(){el.remove();},2800);}}function sEPU(a){var el=document.createElement("div");el.className="egp";el.textContent="+"+a+" EXP ⭐";document.body.appendChild(el);setTimeout(function(){el.remove();},1250);}function sLU(lv,ht){document.getElementById("luLvl").textContent="Lv."+lv;document.getElementById("luHts").textContent="+"+ht+" ❤️";document.getElementById("lvupOl").classList.add("active");sFH(Math.min(ht,8));sC();}function doCM(){document.getElementById("loginScr").style.display="none";document.getElementById("mainA").style.display="block";iP=false;document.getElementById("adminS").style.display="none";document.getElementById("childS").style.display="block";document.getElementById("parentHnt").style.display="none";rA();stP();cR(function(ok,r){if(ok&&r&&r.data){var mg=mD(gD(),r.data);localStorage.setItem(DK,JSON.stringify(mg));rA();}stSync();});}function doPL(){var pw=prompt("請輸入家長密碼：");if(pw===null||pw===""){return;}if(pw!==PW){alert("密碼錯誤！");return;}document.getElementById("loginScr").style.display="none";document.getElementById("mainA").style.display="block";iP=true;document.getElementById("adminS").style.display="block";document.getElementById("childS").style.display="none";document.getElementById("parentHnt").style.display="none";rA();stP();cR(function(ok,r){if(ok&&r&&r.data){var mg=mD(gD(),r.data);localStorage.setItem(DK,JSON.stringify(mg));rA();}stSync();});}function swPP(){iP=true;document.getElementById("childS").style.display="none";document.getElementById("adminS").style.display="block";document.getElementById("parentHnt").style.display="none";rA();}function lgot(){stP();iP=false;document.getElementById("mainA").style.display="none";document.getElementById("loginScr").style.display="flex";document.getElementById("loginErr").style.display="none";document.getElementById("pwdI").value="";}function doAHrts(){var q=parseInt(document.getElementById("addQtyI").value);var r=document.getElementById("addRsnI").value.trim()||"✨ 特別獎勵 ✨";if(!q||q<=0){alert("請輸入正確的愛心數量！");return;}var d=gD();var oL=cLFE(d.totalExp||0);d.hearts+=q;d.totalExp=(d.totalExp||0)+q*100;var nL=cLFE(d.totalExp);d.history.unshift({id:Date.now(),type:"in",qty:q,reason:r,date:new Date().toLocaleString("zh-Hant-TW")});if(!d.expHistory)d.expHistory=[];d.expHistory.unshift({id:Date.now(),qty:q*100,date:new Date().toLocaleString("zh-Hant-TW")});sD(d);rA();clsM("add");boxBnc();sFH(q);sC();shBnr("✅ 已發放 "+q+"題愛心！ ⭐ "+q*100+" EXP");if(nL>oL){d.hearts+=(nL-oL);sD(d);setTimeout(function(){sLU(nL,nL-oL);},600);}}function doAExp(){var q=parseInt(document.getElementById("expQtyI").value);if(!q||q<=0){alert("請輸入正確的 EXP 數值！");return;}var d=gD();var oL=cLFE(d.totalExp||0);d.totalExp=(d.totalExp||0)+q;var nL=cLFE(d.totalExp);d.level=nL;if(!d.expHistory)d.expHistory=[];d.expHistory.unshift({id:Date.now(),qty:q,date:new Date().toLocaleString("zh-Hant-TW")});sD(d);rA();sEPU(q);document.getElementById("expQtyI").value="10";if(nL>oL){d.hearts+=(nL-oL);sD(d);setTimeout(function(){sLU(nL,nL-oL);},600);}else{boxBnc();sFH(1);}}function doRqst(){var q=parseInt(document.getElementById("reqQtyI").value);var r=document.getElementById("reqRsnI").value.trim()||"🎁 禮物兌換 🎁";if(!q||q<=0){alert("請輸入正確的愛心數量！");return;}var d=gD();d.requests.push({id:Date.now(),qty:q,reason:r,time:new Date().toLocaleString("zh-Hant-TW")});sD(d);rA();clsM("request");alert("📨 申請已送出！等爸媽核准後就可以領取禮物囉～");}function aprR(id){if(!confirm("確認核准這個申請？✨"))return;var d=gD();var req=null,idx=-1;for(var i=0;i<d.requests.length;i++){if(d.requests[i].id==id){req=d.requests[i];idx=i;break;}}if(!req)return;d.hearts-=req.qty;d.history.unshift({id:Date.now(),type:"out",qty:req.qty,reason:"【核准】"+req.reason,date:new Date().toLocaleString("zh-Hant-TW")});d.requests.splice(idx,1);sD(d);rA();boxBnc();sC();alert("✅ 核准成功！快讓 ❤️❤️蘇子羿❤️❤️ 去領禮物吧～🎁");}function rejR(id){if(!confirm("確定要拒絕這個申請？"))return;var d=gD();for(var i=0;i<d.requests.length;i++){if(d.requests[i].id==id){d.requests.splice(i,1);break;}}sD(d);rA();alert("已拒絕該申請");}function rP(){var d=gD();var el=document.getElementById("pendL");var bd=document.getElementById("pendBd");if(!d.requests||d.requests.length===0){el.innerHTML="<div class=\"es\"><span class=\"em\">🌸</span>目前沒有等待核准的申請</div>";bd.style.display="none";}else{bd.style.display="inline-flex";bd.textContent=d.requests.length;el.innerHTML=d.requests.map(function(r){return'<div class="ai"><span class="ic">🎁</span><div class="if"><div class="rs">'+r.qty+'顆 — '+r.reason+'</div><div class="mt">申請時間：'+r.time+'</div></div><div><button class="ok" onclick="aprR('+r.id+')">✓ 核准</button><button class="no" onclick="rejR('+r.id+')">✗ 拒絕</button></div></div>';}).join("");}}function rH(){var d=gD();var el=document.getElementById("histL");if(!d.history||d.history.length===0){el.innerHTML="<div class=\"es\"><span class=\"em\">📒</span>還沒有任何記錄</div>";return;}el.innerHTML=d.history.map(function(h){var ic=h.type==="in"?"✨":"🎁";var dl=h.type==="in"?"+ "+h.qty:"-"+h.qty;var cls=h.type==="in"?"pl":"mn";return'<div class="hi"><span class="ic" style="font-size:23px">'+ic+'</span><div class="if"><div class="rs">'+h.reason+'</div><div class="dt">'+h.date+'</div></div><span class="dt2 '+cls+'">'+dl+'</span></div>';}).join("");}function rEH(){var d=gD();var el=document.getElementById("expHL");var a=d.expHistory||[];if(a.length===0){el.innerHTML="<div class=\"es\"><span class=\"em\">⭐</span>還沒有 EXP 記錄</div>";return;}el.innerHTML=a.slice(0,30).map(function(e){return'<div class="er2"><span class="ed">+'+e.qty+' EXP</span><span style="flex:1;color:#aaa;font-size:10px">'+e.date+'</span></div>';}).join("");}function shTab(tab){document.querySelectorAll(".ps").forEach(function(s){s.classList.remove("active");});document.querySelectorAll(".tb button").forEach(function(b){b.classList.remove("active");});document.getElementById("page-"+tab).classList.add("active");event.target.classList.add("active");}function openM(t){document.getElementById("mo-"+t).classList.add("active");}function clsM(t){document.getElementById("mo-"+t).classList.remove("active");}function clsLUp(){document.getElementById("lvupOl").classList.remove("active");}function openStgs(){document.getElementById("cloudUrlI").value=gCU();openM("settings");}(function(){var c=document.getElementById("fH");var ic=["❤️","💕","💗","💖","✨","🌟","💫"];for(var i=0;i<12;i++){var el=document.createElement("span");el.textContent=ic[Math.floor(Math.random()*ic.length)];el.style.left=Math.random()*100+"%";el.style.animationDelay=Math.random()*6+"s";el.style.fontSize=(11+Math.random()*13)+"px";c.appendChild(el);}})();function openReset(){var pw=prompt("請輸入家長密碼：");if(pw===null)return;if(pw!==PW){alert("密碼錯誤！");return;}document.getElementById("mo-reset").classList.add("active");}function doReset(){var d=gD();d.totalExp=0;d.level=1;localStorage.setItem("heart_v6",JSON.stringify(d));rA();clsM("reset");alert("✅ 等級已重置！歸等級1，EXP清雷，愛心保留。");}
-</script><div class="mo" id="mo-reset"><div class="md"><h3>&#x26A0;&#xFE0F; &#x7B49;&#x7D1A;&#x91CD;&#x7F6E;</h3><p style="font-size:13px;color:#666;margin-bottom:12px">&#x786E;&#x8A8D;&#x5C07;&#x91CD;&#x7F6E;&#x4E3B;&#x6A5F;&#x7684;&#x7B49;&#x7D1A;&#xFF1F;<br><span style="color:#e74c3c;font-weight:800">&#x611B;&#x5FC3;&#x6703;&#x4FDD;&#x7559;&#xFF0C;&#x4E0D;&#x6703;&#x88AB;&#x522A;&#x9664;&#xFF01;</span></p><div class="br"><button class="bc gr" onclick="doReset()">&#x2705; &#x786E;&#x5B9A;&#x91CD;&#x7F6E;</button><button class="bc ca" onclick="clsM('reset')">&#x53D6;&#x6D88;</button></div></div></div>
-</body></html>
+body{font-family:Arial,Microsoft JhengHei,sans-serif;background:linear-gradient(180deg,#1a1a2e,#16213e,#0f3460);min-height:100vh;color:#fff;overflow-x:hidden}
+.money-bg{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:0;overflow:hidden}
+.money-bg span{position:absolute;font-size:18px;animation:mfloat 8s linear infinite;opacity:0.25}
+@keyframes mfloat{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:0.3}90%{opacity:0.3}100%{transform:translateY(-20px) rotate(360deg);opacity:0}}
+.hdr{background:linear-gradient(135deg,#f39c12,#e67e22,#d35400);color:#fff;padding:14px 15px;text-align:center;box-shadow:0 4px 20px rgba(243,156,18,0.4);position:fixed;top:0;left:0;right:0;z-index:3000}
+.hdr h1{font-size:20px;font-weight:900;text-shadow:0 2px 8px rgba(0,0,0,0.3)}
+.hdr p{font-size:11px;opacity:0.9;margin-top:2px}
+.ct{position:relative;z-index:1;padding:0;padding-top:75px}
+.bank-note{background:linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,255,255,0.06));backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.15);border-radius:20px;margin:15px;padding:25px 20px;text-align:center}
+.bank-note .icon{font-size:52px;margin-bottom:8px}
+.bank-note .label{font-size:11px;color:#f39c12;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.bank-note .amount{font-size:48px;font-weight:900;color:#ffd700;text-shadow:0 0 20px rgba(255,215,0,0.5);margin:5px 0;font-family:Arial Black,Arial;font-variant-numeric:tabular-nums}
+.bank-note .sub{font-size:11px;color:rgba(255,255,255,0.5);margin-top:4px}
+.save-btn{width:180px;height:180px;background:linear-gradient(145deg,#f1c40f,#f39c12,#e67e22);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 12px 40px rgba(243,156,18,0.5),inset 0 -6px 20px rgba(0,0,0,0.2),inset 0 6px 20px rgba(255,255,255,0.3);cursor:pointer;animation:pulse 2s ease-in-out infinite;margin:0 auto 12px;transition:transform 0.1s;user-select:none;border:none;position:relative}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+.save-btn:active{transform:scale(0.95);animation:none}
+.save-btn .si{font-size:52px;line-height:1}
+.save-btn .st{font-size:18px;font-weight:900;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,0.3);margin-top:4px}
+.save-btn .note{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);background:#27ae60;border-radius:999px;padding:3px 14px;font-size:11px;font-weight:900;color:#fff;white-space:nowrap;box-shadow:0 3px 10px rgba(39,174,96,0.4)}
+.save-hint{text-align:center;font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:18px;font-weight:700}
+.rules{background:linear-gradient(135deg,rgba(255,255,255,0.1),rgba(255,255,255,0.04));backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);border-radius:16px;margin:0 15px 15px;padding:16px}
+.rules h3{font-size:14px;font-weight:900;color:#f39c12;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.rule-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px dashed rgba(255,255,255,0.08);font-size:12px}
+.rule-row:last-child{border-bottom:none}
+.rule-row .rl{color:rgba(255,255,255,0.7)}
+.rule-row .rr{font-weight:900;color:#ffd700}
+.win-card{background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(243,156,18,0.1));border:2px solid rgba(255,215,0,0.4);border-radius:16px;margin:0 15px 15px;padding:14px 16px;text-align:center;display:none}
+.win-card.show{display:block;animation:popIn 0.4s ease-out}
+@keyframes popIn{0%{transform:scale(0.7);opacity:0}70%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+.win-card .wl{font-size:38px;font-weight:900;color:#ffd700;text-shadow:0 0 16px rgba(255,215,0,0.6)}
+.win-card .wm{font-size:13px;color:rgba(255,255,255,0.7);margin-top:4px}
+.win-card .wa{font-size:22px;font-weight:900;color:#2ecc71;margin-top:6px}
+.win-card .wre{font-size:11px;color:#f39c12;margin-top:4px;font-weight:700}
+.history{background:linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03));backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;margin:0 15px 15px;overflow:hidden}
+.history .rhdr{padding:14px 16px 10px;font-size:13px;font-weight:900;color:#f39c12;display:flex;justify-content:space-between;align-items:center}
+.history .rhdr .more{font-size:11px;color:rgba(255,255,255,0.4);cursor:pointer}
+.hl{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,0.05);transition:background 0.2s}
+.hl:last-child{border-bottom:none}
+.hl .hi{font-size:20px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hl .hi.win{background:linear-gradient(135deg,#f1c40f,#f39c12);box-shadow:0 3px 10px rgba(243,156,18,0.4)}
+.hl .hi.lose{background:rgba(255,255,255,0.1)}
+.hl .hi.save{background:rgba(39,174,96,0.3)}
+.hl .hf{flex:1}
+.hl .hf .hf1{font-size:13px;font-weight:800}
+.hl .hf .hf2{font-size:10px;color:rgba(255,255,255,0.4);margin-top:1px}
+.hl .hv{font-size:15px;font-weight:900;text-align:right}
+.hl .hv.pos{color:#2ecc71}
+.hl .hv.neu{color:#f39c12}
+.empty{text-align:center;padding:30px;color:rgba(255,255,255,0.3);font-size:13px}
+.mo-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:5000;padding:20px}
+.mo-overlay.active{display:flex}
+.mo-box{background:#1a1a2e;border:2px solid rgba(255,215,0,0.3);border-radius:24px;padding:28px 22px;width:100%;max-width:340px;box-shadow:0 20px 60px rgba(0,0,0,0.5);text-align:center;animation:moIn 0.3s ease-out}
+@keyframes moIn{0%{transform:scale(0.8);opacity:0}100%{transform:scale(1);opacity:1}}
+.mo-box h3{font-size:19px;font-weight:900;color:#f39c12;margin-bottom:6px}
+.mo-box .mo-sub{font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:18px}
+.mo-box input{width:100%;padding:14px;border:2px solid rgba(255,215,0,0.3);border-radius:14px;background:rgba(255,255,255,0.08);color:#ffd700;font-size:22px;font-weight:900;text-align:center;outline:none;box-sizing:border-box;margin-bottom:8px;font-family:Arial Black,Arial}
+.mo-box input:focus{border-color:#f39c12;background:rgba(255,215,0,0.08)}
+.mo-box .rule-tip{font-size:11px;color:#f39c12;margin-bottom:16px;font-weight:700}
+.mo-box .btns{display:flex;gap:10px}
+.mo-box .btn{flex:1;padding:13px;border-radius:14px;font-size:14px;font-weight:800;border:none;cursor:pointer;transition:transform 0.1s}
+.mo-box .btn:active{transform:translateY(3px)}
+.mo-box .btn.yes{background:linear-gradient(135deg,#f1c40f,#f39c12);color:#1a1a2e;box-shadow:0 5px 0 #c0780a,0 8px 20px rgba(243,156,18,0.3)}
+.mo-box .btn.no{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);border:2px solid rgba(255,255,255,0.15)}
+.mo-box .btn.ok{background:linear-gradient(135deg,#27ae60,#2ecc71);color:#fff;box-shadow:0 5px 0 #1a7a3a,0 8px 20px rgba(39,174,96,0.3)}
+.mo-box textarea{width:100%;padding:10px;border:2px solid rgba(255,255,255,0.15);border-radius:10px;background:rgba(255,255,255,0.06);color:#fff;font-size:12px;outline:none;resize:none;margin-bottom:8px;box-sizing:border-box;font-family:inherit}
+.win-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;z-index:9999}
+.win-overlay.active{display:flex;animation:fadeIn 0.3s}
+@keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
+.win-popup{background:linear-gradient(135deg,#1a1a2e,#16213e);border:3px solid #ffd700;border-radius:28px;padding:32px 24px;width:90%;max-width:310px;text-align:center;animation:winPop 0.5s cubic-bezier(0.34,1.56,0.64,1)}
+@keyframes winPop{0%{transform:scale(0.3) rotate(-10deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+.win-popup .wp-em{font-size:56px;margin-bottom:8px}
+.win-popup .wp-title{font-size:22px;font-weight:900;color:#ffd700;text-shadow:0 0 16px rgba(255,215,0,0.5);margin-bottom:4px}
+.win-popup .wp-sub{font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:14px}
+.win-popup .wp-amount{font-size:40px;font-weight:900;color:#2ecc71;text-shadow:0 0 16px rgba(46,204,113,0.5);margin-bottom:6px}
+.win-popup .wp-bonus{font-size:16px;color:#f39c12;font-weight:800;margin-bottom:18px}
+.win-popup .wp-btn{width:100%;padding:14px;background:linear-gradient(135deg,#f1c40f,#f39c12);color:#1a1a2e;border:none;border-radius:14px;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 #c0780a}
+@keyframes coinFall{0%{transform:translateY(-60px) rotate(0deg) scale(1);opacity:1}100%{transform:translateY(110vh) rotate(720deg) scale(0.5);opacity:0}}
+.coin-particle{position:fixed;width:28px;height:28px;z-index:8888;pointer-events:none;font-size:28px;top:-40px;animation:coinFall 2.5s ease-out forwards}
+@keyframes billFly{0%{transform:translateY(-80px) rotate(0deg) scale(1);opacity:1}100%{transform:translateY(100vh) rotate(360deg) scale(0.6);opacity:0}}
+.bill-particle{position:fixed;width:44px;height:22px;z-index:8888;pointer-events:none;background:linear-gradient(135deg,#27ae60,#2ecc71);border-radius:4px;border:2px solid #1e8449;font-size:11px;font-weight:900;color:#fff;display:flex;align-items:center;justify-content:center;top:-30px;animation:billFly 2.8s ease-out forwards}
+@keyframes spark{0%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:0.7}100%{transform:scale:1;opacity:0}}
+.spark{position:fixed;z-index:9999;pointer-events:none;font-size:32px;animation:spark 0.6s ease-out forwards}
+button:active{transform:translateY(3px)}
+</style>
+</head>
+<body>
+<div class="money-bg" id="moneyBg"></div>
+
+<!-- Header -->
+<div class="hdr">
+  <h1>💰 存錢發大財</h1>
+  <p>每存100元 → 30%中獎 → 額外獎勵30%</p>
+</div>
+
+<div class="ct">
+  <!-- Bank Note -->
+  <div class="bank-note">
+    <div class="icon">🏦</div>
+    <div class="label">MY BANK</div>
+    <div class="amount" id="totalMoney">$0</div>
+    <div class="sub">總共存了 <span id="totalSaved">0</span> 元　｜　中獎 <span id="totalWins">0</span> 次</div>
+  </div>
+
+  <!-- Save Button -->
+  <div style="text-align:center;padding:0 15px">
+    <button class="save-btn" id="saveBtn" onclick="openSaveModal()">
+      <span class="si">💰</span>
+      <span class="st">存錢</span>
+      <span class="note">🎰 30% 機會 x3</span>
+    </button>
+    <div class="save-hint">👆 點我存錢，測試你的運氣！</div>
+  </div>
+
+  <!-- Win Card -->
+  <div class="win-card" id="winCard">
+    <div class="wl" id="winLabel">🎉 中獎啦！</div>
+    <div class="wm" id="winMsg">這次好運降臨！</div>
+    <div class="wa" id="winAmount">+$130</div>
+    <div class="wre" id="winRule">100 × 30% = +30 獎金</div>
+  </div>
+
+  <!-- Rules -->
+  <div class="rules">
+    <h3>📋 遊戲規則</h3>
+    <div class="rule-row">
+      <span class="rl">基本存款</span>
+      <span class="rr">每 $100 算 1 單位</span>
+    </div>
+    <div class="rule-row">
+      <span class="rl">中獎機率</span>
+      <span class="rr">每單位 30% 機會</span>
+    </div>
+    <div class="rule-row">
+      <span class="rl">獎金計算</span>
+      <span class="rr">本金 × 30%</span>
+    </div>
+    <div class="rule-row">
+      <span class="rl">中獎實例</span>
+      <span class="rr">$100 → $130、$1000 → $1300</span>
+    </div>
+  </div>
+
+  <!-- History -->
+  <div class="history">
+    <div class="rhdr">
+      <span>📜 存錢紀錄</span>
+      <span class="more" id="clearBtn" onclick="clearHistory()">🗑 清除</span>
+    </div>
+    <div id="historyList">
+      <div class="empty">還沒有存錢紀錄<br>快去存第一筆吧！💪</div>
+    </div>
+  </div>
+</div>
+
+<!-- Save Modal -->
+<div class="mo-overlay" id="saveModal">
+  <div class="mo-box">
+    <h3>💰 存入多少？</h3>
+    <div class="mo-sub">每100元就有一次30%中獎機會！</div>
+    <input type="number" id="saveAmount" placeholder="輸入金額" min="1" inputmode="numeric">
+    <input type="text" id="saveNote" placeholder="備註（選填）" maxlength="50">
+    <div class="rule-tip">💡 存入 $100 → 可能變 $130！</div>
+    <div class="btns">
+      <button class="btn yes" onclick="confirmSave()">🎰 存錢試運氣</button>
+      <button class="btn no" onclick="closeModal()">取消</button>
+    </div>
+  </div>
+</div>
+
+<!-- Win Overlay -->
+<div class="win-overlay" id="winOverlay">
+  <div class="win-popup">
+    <div class="wp-em" id="wpEm">🎉</div>
+    <div class="wp-title" id="wpTitle">好運爆發！</div>
+    <div class="wp-sub" id="wpSub">恭喜你中獎了！</div>
+    <div class="wp-amount" id="wpAmount">+$130</div>
+    <div class="wp-bonus" id="wpBonus">+30 獎金</div>
+    <button class="wp-btn" onclick="closeWinOverlay()">太棒了！💪</button>
+  </div>
+</div>
+
+<!-- Lose Overlay (subtle) -->
+<div class="win-overlay" id="loseOverlay">
+  <div class="win-popup" style="border-color:rgba(255,255,255,0.2)">
+    <div class="wp-em">😅</div>
+    <div class="wp-title" style="color:rgba(255,255,255,0.7)">沒中獎 QQ</div>
+    <div class="wp-sub" id="loseSub">運氣留給下次！</div>
+    <div class="wp-amount" style="font-size:28px" id="loseAmount">+$100</div>
+    <div class="wp-bonus" id="loseBonus">正常存款</div>
+    <button class="wp-btn" onclick="closeLoseOverlay()" style="background:linear-gradient(135deg,#555,#666);box-shadow:0 5px 0 #333">下次再試 😅</button>
+  </div>
+</div>
+
+<script>
+// ===== Audio =====
+let audioCtx = null;
+
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function playCoinSound(duration = 2.5) {
+  try {
+    const ctx = getAudioCtx();
+    const endTime = ctx.currentTime + duration;
+    const pitches = [1200, 1400, 1600, 1800, 2000, 2200, 2400];
+    // Coin collect jingle
+    for (let i = 0; i < 12; i++) {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = 'square';
+      const t = ctx.currentTime + i * 0.18;
+      osc.frequency.setValueAtTime(pitches[i % pitches.length], t);
+      gain.gain.setValueAtTime(0.06, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+      osc.start(t);
+      osc.stop(t + 0.15);
+    }
+    // Bonus flourish
+    for (let i = 0; i < 8; i++) {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = 'sine';
+      const t = ctx.currentTime + 1.5 + i * 0.1;
+      osc.frequency.setValueAtTime(800 + i * 200, t);
+      gain.gain.setValueAtTime(0.08, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+      osc.start(t);
+      osc.stop(t + 0.2);
+    }
+  } catch(e) { console.warn('Audio error:', e); }
+}
+
+function playLoseSound() {
+  try {
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(400, ctx.currentTime);
+    osc.frequency.linearRampToValueAtTime(200, ctx.currentTime + 0.4);
+    gain.gain.setValueAtTime(0.05, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.4);
+  } catch(e) {}
+}
+
+// ===== Particles =====
+function spawnCoins(count, isBonus) {
+  const emojis = isBonus
+    ? ['💰','💰','💰','🪙','✨','🌟']
+    : ['💵','💴'];
+  for (let i = 0; i < count; i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = isBonus ? 'coin-particle' : 'bill-particle';
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      el.style.left = (5 + Math.random() * 85) + '%';
+      el.style.animationDuration = (2 + Math.random() * 1) + 's';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 3500);
+    }, i * 60);
+  }
+  // Spark at center
+  if (isBonus) {
+    for (let i = 0; i < 8; i++) {
+      setTimeout(() => {
+        const s = document.createElement('div');
+        s.className = 'spark';
+        s.textContent = '✨';
+        const angle = (i / 8) * Math.PI * 2;
+        const r = 60;
+        s.style.left = (50 + Math.cos(angle) * r) + '%';
+        s.style.top = (35 + Math.sin(angle) * r) + '%';
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 700);
+      }, i * 50);
+    }
+  }
+}
+
+function spawnFloatingText(text, color) {
+  const el = document.createElement('div');
+  el.style.cssText = `position:fixed;top:30%;left:50%;transform:translateX(-50%);z-index:9999;font-size:32px;font-weight:900;color:${color};pointer-events:none;animation:efp 1.5s ease-out forwards;text-shadow:0 2px 10px rgba(0,0,0,0.5)`;
+  el.textContent = text;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1600);
+}
+
+// Add floating text animation
+const style = document.createElement('style');
+style.textContent = `@keyframes efp{0%{transform:translateX(-50%) translateY(0) scale(1);opacity:1}100%{transform:translateX(-50%) translateY(-80px) scale(1.2);opacity:0}}`;
+document.head.appendChild(style);
+
+// ===== Background floating money =====
+(function initBg() {
+  const bg = document.getElementById('moneyBg');
+  const imgs = ['💰','🪙','💵','💴','✨'];
+  for (let i = 0; i < 15; i++) {
+    const s = document.createElement('span');
+    s.textContent = imgs[Math.floor(Math.random() * imgs.length)];
+    s.style.left = Math.random() * 100 + '%';
+    s.style.animationDelay = Math.random() * 8 + 's';
+    s.style.animationDuration = (6 + Math.random() * 4) + 's';
+    bg.appendChild(s);
+  }
+})();
+
+// ===== Data =====
+const DK = 'saveMoneyRich_v1';
+
+function gD() {
+  try {
+    const x = localStorage.getItem(DK);
+    if (x) return JSON.parse(x);
+  } catch(e) {}
+  return { total: 0, saved: 0, wins: 0, history: [] };
+}
+
+function sD(d) {
+  localStorage.setItem(DK, JSON.stringify(d));
+}
+
+// ===== Render =====
+function renderAll() {
+  const d = gD();
+  document.getElementById('totalMoney').textContent = '$' + d.total.toLocaleString();
+  document.getElementById('totalSaved').textContent = d.saved.toLocaleString();
+  document.getElementById('totalWins').textContent = d.wins;
+  renderHistory();
+}
+
+function renderHistory() {
+  const d = gD();
+  const list = document.getElementById('historyList');
+  if (d.history.length === 0) {
+    list.innerHTML = '<div class="empty">還沒有存錢紀錄<br>快去存第一筆吧！💪</div>';
+    return;
+  }
+  list.innerHTML = d.history.slice(0, 50).map(h => {
+    const isWin = h.bonus > 0;
+    const icon = isWin ? '🎉' : '💰';
+    const cls = isWin ? 'win' : 'save';
+    const amountStr = isWin
+      ? `<span style="color:#2ecc71">+$${h.total.toLocaleString()}</span>`
+      : `<span style="color:#f39c12">+$${h.total.toLocaleString()}</span>`;
+    const bonusStr = isWin ? `<br><span style="font-size:9px;color:#ffd700">獎金 +$${h.bonus}</span>` : '';
+    return `<div class="hl">
+      <div class="hi ${cls}">${icon}</div>
+      <div class="hf">
+        <div class="hf1">${h.note || '存錢'}</div>
+        <div class="hf2">${h.date}</div>
+      </div>
+      <div class="hv">${amountStr}${bonusStr}</div>
+    </div>`;
+  }).join('');
+}
+
+// ===== Save Logic =====
+function openSaveModal() {
+  document.getElementById('saveModal').classList.add('active');
+  document.getElementById('saveAmount').value = '';
+  document.getElementById('saveNote').value = '';
+  document.getElementById('saveAmount').focus();
+  // Resume audio context on user gesture
+  try { getAudioCtx(); } catch(e) {}
+}
+
+function closeModal() {
+  document.getElementById('saveModal').classList.remove('active');
+}
+
+function confirmSave() {
+  const amountInput = document.getElementById('saveAmount').value.trim();
+  const amount = parseInt(amountInput);
+  if (!amount || amount <= 0) {
+    alert('請輸入正確的金額！');
+    return;
+  }
+  const note = document.getElementById('saveNote').value.trim() || '存錢';
+  closeModal();
+
+  // Calculate units (each 100 = 1 unit)
+  const units = Math.floor(amount / 100);
+  let totalBonus = 0;
+  let winCount = 0;
+
+  if (units > 0) {
+    for (let i = 0; i < units; i++) {
+      if (Math.random() < 0.3) {
+        totalBonus += Math.round(amount * 0.3); // each unit's bonus = amount*0.3
+        winCount++;
+      }
+    }
+  }
+
+  const isWin = totalBonus > 0;
+  const finalTotal = amount + totalBonus;
+
+  // Update data
+  const d = gD();
+  d.total += finalTotal;
+  d.saved += amount;
+  d.wins += winCount;
+  d.history.unshift({
+    id: Date.now(),
+    amount,
+    bonus: totalBonus,
+    total: finalTotal,
+    winCount,
+    note,
+    date: new Date().toLocaleString('zh-Hant-TW')
+  });
+  if (d.history.length > 200) d.history = d.history.slice(0, 200);
+  sD(d);
+
+  // Animate the button
+  const btn = document.getElementById('saveBtn');
+  btn.style.transform = 'scale(0.9)';
+  setTimeout(() => btn.style.transform = '', 200);
+
+  // Spawn particles & sound
+  if (isWin) {
+    spawnCoins(40, true);
+    playCoinSound(2.8);
+    showWinOverlay(amount, totalBonus, finalTotal, winCount);
+    spawnFloatingText(`+$${finalTotal.toLocaleString()}`, '#ffd700');
+  } else {
+    spawnCoins(15, false);
+    playLoseSound();
+    showLoseOverlay(amount);
+    spawnFloatingText(`+$${amount.toLocaleString()}`, '#f39c12');
+  }
+
+  renderAll();
+
+  // Auto-hide overlays
+  if (!isWin) {
+    setTimeout(() => {
+      if (document.getElementById('loseOverlay').classList.contains('active')) {
+        closeLoseOverlay();
+      }
+    }, 2500);
+  }
+}
+
+function showWinOverlay(amount, bonus, total, winCount) {
+  document.getElementById('wpAmount').textContent = '+$' + total.toLocaleString();
+  document.getElementById('wpBonus').textContent = `+$${bonus.toLocaleString()} 獎金　(${winCount}次中獎)`;
+  document.getElementById('wpSub').textContent = `本金 $${amount} → 獎金 $${bonus}`;
+  document.getElementById('winOverlay').classList.add('active');
+}
+
+function closeWinOverlay() {
+  document.getElementById('winOverlay').classList.remove('active');
+}
+
+function showLoseOverlay(amount) {
+  document.getElementById('loseAmount').textContent = '+$' + amount.toLocaleString();
+  document.getElementById('loseOverlay').classList.add('active');
+}
+
+function closeLoseOverlay() {
+  document.getElementById('loseOverlay').classList.remove('active');
+}
+
+function clearHistory() {
+  if (!confirm('確定要清除所有紀錄嗎？金額會保留。')) return;
+  const d = gD();
+  d.history = [];
+  sD(d);
+  renderAll();
+}
+
+// Close modal on backdrop click
+document.getElementById('saveModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.getElementById('winOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeWinOverlay();
+});
+document.getElementById('loseOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeLoseOverlay();
+});
+
+// Keyboard support
+document.getElementById('saveAmount').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') confirmSave();
+});
+
+// Init
+renderAll();
+</script>
+</body>
+</html>
