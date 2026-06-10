@@ -236,8 +236,8 @@ function playCoin(dur) {
     const audio = new Audio('https://files.catbox.moe/4anp1z.mp3');
     audio.volume = 1.0;
     audio.play().catch(() => {});
-    // 循環播放（最多5秒）
-    const totalTime = Math.min(dur * 1000, 5000);
+    // 循環播放（最多20秒）
+    const totalTime = dur * 1000;
     setTimeout(() => { try { audio.pause(); } catch(e) {} }, totalTime);
   } catch(e) {}
 }
@@ -451,7 +451,7 @@ function confirmSave() {
     playResultSound(isWin);
     if (isWin) {
       spawnCoins(45, true);
-      playCoin(3);
+      playCoin(18);
       showWinOverlay(amt, totalBonus, finalTotal, winCount);
       spawnFloat('+$' + finalTotal.toLocaleString(), '#FFD700');
       showWinCard(amt, totalBonus, finalTotal, winCount);
