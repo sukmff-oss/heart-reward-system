@@ -126,7 +126,7 @@ button:active{transform:translateY(3px)!important}
 <div class="mbg" id="moneyBg"></div>
 <div class="hdr">
   <h1>💰 存錢發大財</h1>
-  <p>每存100元 → 30%中獎 → 額外獎勵10%</p>
+  <p>每存100元 → 25%中獎 → 額外獎勵15%</p>
 </div>
 <div class="bank-card">
   <div class="bc-top">
@@ -148,7 +148,7 @@ button:active{transform:translateY(3px)!important}
     <div class="sb-inner">
       <div class="sb-icon">💰</div>
       <div class="sb-text">存入鈔票</div>
-      <div class="sb-sub">🎰 30% 幸運中獎機會</div>
+      <div class="sb-sub">🎰 25% 幸運中獎機會</div>
     </div>
   </button>
 </div>
@@ -163,8 +163,8 @@ button:active{transform:translateY(3px)!important}
 <div class="rules">
   <h3>📋 遊戲規則</h3>
   <div class="r-row"><span class="rl">基本存款</span><span class="rr">每 $100 = 1 次抽獎</span></div>
-  <div class="r-row"><span class="rl">中獎機率</span><span class="rr">每單位 30%</span></div>
-  <div class="r-row"><span class="rl">獎金計算</span><span class="rr">本金 × 10%</span></div>
+  <div class="r-row"><span class="rl">中獎機率</span><span class="rr">每單位 25%</span></div>
+  <div class="r-row"><span class="rl">獎金計算</span><span class="rr">本金 × 15%</span></div>
   <div class="r-row"><span class="rl">實例</span><span class="rr">$100→$110、$1000→$1100</span></div>
 </div>
 <div class="history">
@@ -174,10 +174,10 @@ button:active{transform:translateY(3px)!important}
 <div class="mo" id="saveModal">
   <div class="mb">
     <h3>💰 存入多少？</h3>
-    <div class="sub">每100元就有一次30%中獎機會！</div>
+    <div class="sub">每100元就有一次25%中獎機會！</div>
     <input type="number" id="saveAmount" placeholder="輸入金額" min="1" inputmode="numeric">
     <textarea id="saveNote" placeholder="備註（選填）" maxlength="50"></textarea>
-    <div class="tip">💡 存入 $100 → 可能變 $110！</div>
+    <div class="tip">💡 存入 $100 → 可能變 $115！</div>
     <div class="btns">
       <button class="btn yes" onclick="confirmSave()">🎰 存錢試運氣</button>
       <button class="btn no" onclick="closeModal()">取消</button>
@@ -339,8 +339,8 @@ function confirmSave() {
   const units = Math.floor(amt / 100);
   let totalBonus = 0, winCount = 0;
   for (let i = 0; i < units; i++) {
-    if (Math.random() < 0.3) {
-      totalBonus += Math.round(amt * 0.1);
+    if (Math.random() < 0.25) {
+      totalBonus += Math.round(amt * 0.15);
       winCount++;
     }
   }
