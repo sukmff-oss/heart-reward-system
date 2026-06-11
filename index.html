@@ -223,14 +223,22 @@ button:active{transform:translateY(3px)!important}
 </div>
 <script>
 
-const coinUrl = "https://files.catbox.moe/3jstyt.mp3";
-let audioEl = null;
-function getAudio() {
-  if (!audioEl) {
-    audioEl = new Audio(coinUrl);
-    audioEl.preload = 'auto';
+const coinUrl = "https://files.catbox.moe/cfepzr.mp3";
+let winAudioEl = null;
+function getWinAudio() {
+  if (!winAudioEl) {
+    winAudioEl = new Audio(coinUrl);
+    winAudioEl.preload = 'auto';
   }
-  return audioEl;
+  return winAudioEl;
+}
+function playWinAudio() {
+  try {
+    const a = getWinAudio();
+    a.currentTime = 0;
+    a.volume = 0.8;
+    a.play().catch(() => {});
+  } catch(e) {}
 }
 function playCoin(dur) {
   try {
@@ -244,32 +252,13 @@ function playCoin(dur) {
         osc.connect(g); g.connect(ctx.destination);
         osc.frequency.setValueAtTime(1200 + j * 200, ctx.currentTime);
         osc.type = 'square';
-        g.gain.setValueAtTime(0.15, ctx.currentTime);
+        g.gain.setValueAtTime(0.12, ctx.currentTime);
         g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
         osc.start(ctx.currentTime + j * 0.05);
         osc.stop(ctx.currentTime + 0.1 + j * 0.05);
       }
       count++;
     }, 1000);
-  } catch(e) {}
-}
-function playWinSound() {
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const melody = [523, 659, 784, 1047, 1319, 1568];
-    let i = 0;
-    const interval = setInterval(() => {
-      if (i >= melody.length) { clearInterval(interval); try { ctx.close(); } catch(e) {} return; }
-      const osc = ctx.createOscillator();
-      const g = ctx.createGain();
-      osc.connect(g); g.connect(ctx.destination);
-      osc.frequency.setValueAtTime(melody[i], ctx.currentTime);
-      osc.type = 'triangle';
-      g.gain.setValueAtTime(0.2, ctx.currentTime);
-      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
-      osc.start(); osc.stop(ctx.currentTime + 0.4);
-      i++;
-    }, 200);
   } catch(e) {}
 }
 function playLose() {
@@ -284,6 +273,7 @@ function playLose() {
     g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
     osc.start(); osc.stop(ctx.currentTime + 0.5);
   } catch(e) {}
+}
 }
 function playWaitSound() {
   try {
@@ -445,7 +435,7 @@ function confirmSave() {
     if (isWin) {
       spawnCoins(45, true);
       playCoin(18);
-      playWinSound();
+      playWinAudio();
       showWinOverlay(amt, totalBonus, finalTotal, winCount);
       spawnFloat('+$' + finalTotal.toLocaleString(), '#FFD700');
       showWinCard(amt, totalBonus, finalTotal, winCount);
