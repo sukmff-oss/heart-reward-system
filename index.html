@@ -120,6 +120,15 @@ body{font-family:Arial,Microsoft JhengHei,sans-serif;background:linear-gradient(
 @keyframes floatUp{0%{transform:translateX(-50%) translateY(0) scale(1);opacity:1}100%{transform:translateX(-50%) translateY(-90px) scale(1.3);opacity:0}}
 .ftext{position:fixed;top:32%;left:50%;transform:translateX(-50%);z-index:9999;font-size:34px;font-weight:900;pointer-events:none;text-shadow:0 3px 12px rgba(0,0,0,0.5);animation:floatUp 1.6s ease-out forwards}
 button:active{transform:translateY(3px)!important}
+@keyframes shake{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+.wait-modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:9999}
+.wait-modal.active{display:flex}
+.wait-box{background:linear-gradient(145deg,#1a1a2e,#16213e);border:2px solid var(--gold);border-radius:28px;padding:36px 28px;width:90%;max-width:300px;text-align:center;animation:moIn 0.3s ease-out}
+.wait-emoji{font-size:64px;animation:shake 0.5s ease-in-out infinite}
+.wait-title{font-size:26px;font-weight:900;color:var(--gold);margin:16px 0}
+.wait-bar{width:100%;height:20px;background:rgba(255,255,255,0.1);border-radius:10px;overflow:hidden;margin:10px 0}
+.wait-progress{height:100%;background:linear-gradient(90deg,#FFD700,#FFA500);border-radius:10px;transition:width 0.1s}
+.wait-sub{font-size:14px;color:rgba(255,255,255,0.6)}
 
 </style>
 </head>
@@ -176,7 +185,7 @@ button:active{transform:translateY(3px)!important}
   <div class="mb">
     <h3>💰 存入多少？</h3>
     <div class="sub">每100元就有一次25%中獎機會！</div>
-    <input type="number" id="saveAmount" placeholder="輸入金額" min="1" inputmode="numeric">
+    <input type="number" id="saveAmount" placeholder="輸入金額" min="100" max="1000" inputmode="numeric">
     <textarea id="saveNote" placeholder="備註（選填）" maxlength="50"></textarea>
     <div class="tip">💡 存入 $100 → 可能變 $115！</div>
     <div class="btns">
@@ -202,6 +211,14 @@ button:active{transform:translateY(3px)!important}
     <div class="sub2">運氣留給下次！</div>
     <div class="amount2" id="loseAmount">+$100</div>
     <button class="btn2" onclick="closeLoseOverlay()">下次再試 😅</button>
+  </div>
+</div>
+<div class="wait-modal" id="waitOverlay">
+  <div class="wait-box">
+    <div class="wait-emoji">🎰</div>
+    <div class="wait-title">開獎中...</div>
+    <div class="wait-bar"><div class="wait-progress" id="waitProgress"></div></div>
+    <div class="wait-sub">載入幸運...</div>
   </div>
 </div>
 <script>
@@ -236,6 +253,41 @@ function playLose() {
     g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
     osc.start(); osc.stop(ctx.currentTime + 0.5);
   } catch(e) {}
+}
+function playWaitSound() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    let step = 0;
+    const notes = [523, 659, 784, 1047, 784, 659];
+    const interval = setInterval(() => {
+      if (step >= 16) { clearInterval(interval); try { ctx.close(); } catch(e) {} return; }
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.connect(g); g.connect(ctx.destination);
+      osc.frequency.setValueAtTime(notes[step % 6], ctx.currentTime);
+      osc.type = 'triangle';
+      g.gain.setValueAtTime(0.12, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
+      osc.start(); osc.stop(ctx.currentTime + 0.18);
+      step++;
+    }, 250);
+  } catch(e) {}
+}
+function showWaitOverlay(callback) {
+  const wo = document.getElementById('waitOverlay');
+  const wp = document.getElementById('waitProgress');
+  wo.classList.add('active');
+  wp.style.width = '0%';
+  playWaitSound();
+  let progress = 0;
+  const interval = setInterval(() => {
+    progress += 2;
+    wp.style.width = progress + '%';
+    if (progress >= 100) {
+      clearInterval(interval);
+      setTimeout(() => { wo.classList.remove('active'); callback(); }, 200);
+    }
+  }, 80);
 }
 function spawnCoins(n, isBonus) {
   const ems = isBonus ? ['💰','🪙','✨','🌟','💎'] : ['💵','💴'];
@@ -334,7 +386,7 @@ function closeModal() { document.getElementById('saveModal').classList.remove('a
 function confirmSave() {
   const amtInput = document.getElementById('saveAmount').value.trim();
   const amt = parseInt(amtInput);
-  if (!amt || amt <= 0) { alert('請輸入正確的金額！'); return; }
+  if (!amt || amt < 100 || amt > 1000) { alert('請輸入100～1000元的金額！'); return; }
   const note = document.getElementById('saveNote').value.trim() || '存錢';
   closeModal();
   const units = Math.floor(amt / 100);
@@ -358,25 +410,25 @@ function confirmSave() {
   const btn = document.getElementById('saveBtn');
   btn.style.transform = 'translateY(8px)';
   setTimeout(() => btn.style.transform = '', 300);
-  if (isWin) {
-    spawnCoins(45, true);
-    playCoin(3);
-    showWinOverlay(amt, totalBonus, finalTotal, winCount);
-    spawnFloat('+$' + finalTotal.toLocaleString(), '#FFD700');
-    showWinCard(amt, totalBonus, finalTotal, winCount);
-  } else {
-    spawnCoins(15, false);
-    playLose();
-    showLoseOverlay(amt);
-    spawnFloat('+$' + amt.toLocaleString(), '#FFA500');
-  }
-  renderAll();
-  if (!isWin) {
-    setTimeout(() => {
-      const lo = document.getElementById('loseOverlay');
-      if (lo.classList.contains('active')) closeLoseOverlay();
-    }, 3000);
-  }
+  showWaitOverlay(() => {
+    if (isWin) {
+      spawnCoins(45, true);
+      playCoin(18);
+      showWinOverlay(amt, totalBonus, finalTotal, winCount);
+      spawnFloat('+$' + finalTotal.toLocaleString(), '#FFD700');
+      showWinCard(amt, totalBonus, finalTotal, winCount);
+    } else {
+      spawnCoins(15, false);
+      playLose();
+      showLoseOverlay(amt);
+      spawnFloat('+$' + amt.toLocaleString(), '#FFA500');
+      setTimeout(() => {
+        const lo = document.getElementById('loseOverlay');
+        if (lo.classList.contains('active')) closeLoseOverlay();
+      }, 3000);
+    }
+    renderAll();
+  });
 }
 function showWinCard(amt, bonus, total, wc) {
   const wc_ = document.getElementById('winCard');
