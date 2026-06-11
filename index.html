@@ -218,7 +218,7 @@ button:active{transform:translateY(3px)!important}
 </div>
 <div class="mo" id="resetModal">
   <div class="mb">
-    <h3>🔄 重置遊戲</h3>
+    <h3>💰 金額歸零</h3>
     <div class="sub">請輸入管理密碼</div>
     <input type="password" id="resetPwd" placeholder="密碼" maxlength="20" style="ime-mode:disabled">
     <div class="btns">
@@ -500,8 +500,13 @@ function doReset() {
   const pwd = document.getElementById('resetPwd').value.trim();
   if (pwd !== '8888') { alert('密碼錯誤！'); document.getElementById('resetPwd').value = ''; return; }
   closeResetModal();
-  localStorage.removeItem('gyc_savings');
-  location.reload();
+  const d = gD();
+  d.total = 0;
+  d.saved = 0;
+  d.wins = 0;
+  d.bonusTotal = 0;
+  sD(d);
+  renderAll();
 }
 renderAll();
 </script>
