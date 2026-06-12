@@ -132,6 +132,13 @@ button:active{transform:translateY(3px)!important}
 .wait-progress{height:100%;background:linear-gradient(90deg,#FFD700,#FFA500);border-radius:10px;transition:width 0.1s}
 .wait-sub{font-size:14px;color:rgba(255,255,255,0.6)}
 
+
+.fruit-wrap{margin:0 18px 14px;position:relative;z-index:1}
+.fruit-btn{display:flex;align-items:center;gap:12px;padding:14px 18px;background:linear-gradient(145deg,#1a0a2e,#2d1b4e);border:2px solid rgba(255,215,0,.3);border-radius:18px;text-decoration:none;color:#fff;transition:transform .15s,box-shadow .15s}
+.fruit-btn:active{transform:translateY(2px)}
+.fruit-icon{font-size:32px}
+.fruit-text{font-size:17px;font-weight:900;color:#FFD700}
+.fruit-sub{font-size:12px;color:rgba(255,255,255,.5);margin-left:auto}
 </style>
 </head>
 <body>
@@ -164,6 +171,13 @@ button:active{transform:translateY(3px)!important}
       <div class="sb-sub">🎰 25% 幸運中獎機會</div>
     </div>
   </button>
+</div>
+<div class="fruit-wrap">
+  <a href="fruit.html" class="fruit-btn">
+    <span class="fruit-icon">🍉</span>
+    <span class="fruit-text">水果盤</span>
+    <span class="fruit-sub">🔮 100P / 次</span>
+  </a>
 </div>
 <div class="win-card" id="winCard">
   <div class="wc-box">
