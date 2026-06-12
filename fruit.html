@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🍉 水果盤 - 存錢發大財</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+.bg{position:fixed;inset:0;background:linear-gradient(135deg,#1a1a2e,#16213e,#0d0620);z-index:0}
+.hdr{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 18px;background:linear-gradient(180deg,rgba(255,215,0,.95),rgba(255,165,0,.85));display:flex;justify-content:space-between;align-items:center;border-radius:0 0 22px 22px;box-shadow:0 4px 16px rgba(255,165,0,.4)}
+.hdr-l{display:flex;align-items:center;gap:8px}
+.hdr-l .icon{font-size:22px}
+.hdr-l .title{font-size:16px;font-weight:900;color:#1a1a2e}
+.hdr-r{display:flex;align-items:center;gap:12px}
+.pearl-box{background:rgba(0,0,0,.15);border-radius:10px;padding:6px 12px;font-size:13px;font-weight:700;color:#1a1a2e}
+.back-btn{background:rgba(0,0,0,.2);border:none;border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;color:#1a1a2e;font-weight:700}
+.main{padding:80px 16px 20px;display:flex;flex-direction:column;align-items:center;position:relative;z-index:1}
+.slot-frame{background:linear-gradient(145deg,#1a1a3e,#2d1b4e);border:3px solid #FFD700;border-radius:20px;padding:18px;width:100%;max-width:320px;box-shadow:0 0 40px rgba(255,215,0,.3)}
+.slot-title{text-align:center;font-size:15px;font-weight:900;color:#FFD700;margin-bottom:12px}
+.slot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px}
+.slot-cell{aspect-ratio:1;background:linear-gradient(145deg,#2a2a4a,#1a1a3a);border:2px solid #555;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:38px;position:relative;overflow:hidden}
+.slot-cell::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.05),transparent 50%)}
+.slot-cell.winner{border-color:#FFD700;animation:pulse 0.4s}
+@keyframes pulse{0%,100%{box-shadow:0 0 8px #FFD700}50%{box-shadow:0 0 25px #FFD700}}
+.spin-btn{width:100%;padding:14px;border:none;border-radius:14px;background:linear-gradient(180deg,#FF8C00,#FF6600);color:#fff;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 #B34A00;transition:transform .1s}
+.spin-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #B34A00}
+.spin-btn:disabled{background:#555;box-shadow:0 4px 0 #333;cursor:not-allowed}
+.result-box{margin-top:12px;text-align:center;font-size:14px;font-weight:700;min-height:24px}
+.result-box.win{color:#2ECC71}
+.result-box.lose{color:#FF6B6B}
+.info-bar{display:flex;justify-content:space-between;width:100%;max-width:320px;margin-top:14px;font-size:12px;color:rgba(255,255,255,.6)}
+.cost{color:#FFD700;font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="hdr">
+  <div class="hdr-l"><span class="icon">🍉</span><span class="title">水果盤</span></div>
+  <div class="hdr-r">
+    <div class="pearl-box">🔮 <span id="pearlVal">0</span> P</div>
+    <button class="back-btn" onclick="location.href='index.html'">← 返回</button>
+  </div>
+</div>
+<div class="main">
+  <div class="slot-frame">
+    <div class="slot-title">🎰 每次消耗 100P</div>
+    <div class="slot-grid">
+      <div class="slot-cell" id="c0">🍒</div>
+      <div class="slot-cell" id="c1">🍊</div>
+      <div class="slot-cell" id="c2">🍇</div>
+      <div class="slot-cell" id="c3">🍉</div>
+      <div class="slot-cell" id="c4">🔔</div>
+      <div class="slot-cell" id="c5">⭐</div>
+      <div class="slot-cell" id="c6">7️⃣</div>
+      <div class="slot-cell" id="c7">💎</div>
+      <div class="slot-cell" id="c8">🍒</div>
+    </div>
+    <button class="spin-btn" id="spinBtn" onclick="doSpin()">🎰 轉動 (100P)</button>
+    <div class="result-box" id="resultBox"></div>
+  </div>
+  <div class="info-bar">
+    <span>💰 美元: <span id="usdVal">0</span></span>
+    <span class="cost">報名費 100P / 次</span>
+  </div>
+</div>
+<script>
+const SYMS=['🍒','🍊','🍇','🍉','🔔','⭐','7️⃣','💎'];
+const WGTS=[28,23,18,12,8,5,2,0.5];
+const LINES=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+const MULT={'🍒':3,'🍊':5,'🍇':8,'🍉':15,'🔔':25,'⭐':50,'7️⃣':100,'💎':250};
+
+function gD(){return JSON.parse(localStorage.getItem('gyc_savings')||'{}')}
+function sD(d){localStorage.setItem('gyc_savings',JSON.stringify(d))}
+function gp(){const d=gD();return d.pearls||0}
+function sp(v){const d=gD();d.pearls=v;sD(d);refresh()}
+
+function refresh(){
+  document.getElementById('pearlVal').textContent=gp().toLocaleString();
+  const d=gD();
+  document.getElementById('usdVal').textContent=(d.total||0).toLocaleString();
+}
+
+function rSym(){
+  let r=Math.random()*WGTS.reduce((a,b)=>a+b,0);
+  for(let i=0;i<WGTS.length;i++){r-=WGTS[i];if(r<=0)return SYMS[i];}
+  return SYMS[0];
+}
+
+function doSpin(){
+  if(gp()<100){alert('珍珠幣不足！需要100P');return}
+  sp(gp()-100);
+  const btn=document.getElementById('spinBtn');
+  btn.disabled=true; btn.textContent='轉動中...';
+  let sc=0;
+  const iv=setInterval(()=>{
+    sc++;
+    for(let i=0;i<9;i++)document.getElementById('c'+i).textContent=rSym();
+    if(sc>=15){clearInterval(iv);finishSpin();btn.disabled=false;btn.textContent='🎰 轉動 (100P)';}
+  },80);
+}
+
+function finishSpin(){
+  const grid=Array.from({length:9},(_,i)=>document.getElementById('c'+i).textContent);
+  document.querySelectorAll('.slot-cell').forEach(c=>c.classList.remove('winner'));
+  let wins=[];
+  LINES.forEach((l,i)=>{
+    const [a,b,c]=[grid[l[0]],grid[l[1]],grid[l[2]]];
+    if(a===b&&b===c){wins.push({sym:a,line:l});l.forEach(j=>document.getElementById('c'+j).classList.add('winner'));}
+  });
+  const rb=document.getElementById('resultBox');
+  if(wins.length>0){
+    const winAmt=wins.reduce((s,w)=>s+100*MULT[w.sym]*wins.length,0);
+    sp(gp()+winAmt);
+    rb.className='result-box win';
+    rb.textContent='🎉 '+wins[0].sym+wins[0].sym+wins[0].sym+' 中獎！ +'+winAmt.toLocaleString()+'P';
+    playW();playCoin();
+  }else{
+    rb.className='result-box lose';
+    rb.textContent='😅 沒中獎...再接再厲！';
+    playL();
+  }
+}
+
+function playW(){try{const c=new(window.AudioContext||window.webkitAudioContext)();[523,659,784,1047].forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=f;o.type='square';g.gain.setValueAtTime(.12,c.currentTime+i*.15);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+i*.15+.25);o.start(c.currentTime+i*.15);o.stop(c.currentTime+i*.15+.3);});setTimeout(()=>c.close(),2000);}catch(e){}}
+
+function playL(){try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=300;o.frequency.linearRampToValueAtTime(150,c.currentTime+.4);g.gain.setValueAtTime(.08,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.4);o.start();o.stop(c.currentTime+.4);setTimeout(()=>c.close(),500);}catch(e){}}
+
+function playCoin(){try{const c=new(window.AudioContext||window.webkitAudioContext)();let n=0;const iv=setInterval(()=>{if(n>=6){clearInterval(iv);c.close();return}for(let j=0;j<3;j++){const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=1200+j*200;o.type='square';g.gain.setValueAtTime(.1,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.08);o.start(c.currentTime);o.stop(c.currentTime+.1);}n++;},1000);}catch(e){}}
+
+window.onload=function(){
+  const d=gD();if(!d.pearls)d.pearls=1000;
+  if(!d.total)d.total=0;
+  sD(d);refresh();
+};
+</script>
+</body>
+</html>
