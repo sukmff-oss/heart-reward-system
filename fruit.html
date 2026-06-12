@@ -107,34 +107,54 @@ function doSpin(){
   sp(gp()-100);
   const btn=document.getElementById('spinBtn');
   btn.disabled=true; btn.textContent='轉動中...';
+  document.getElementById('resultBox').textContent='';
+  document.querySelectorAll('.slot-cell').forEach(c=>c.classList.remove('winner'));
   let sc=0;
   const iv=setInterval(()=>{
     sc++;
-    for(let i=0;i<9;i++){document.getElementById('c'+i).textContent=rSym();playTick();}
-    if(sc>=15){clearInterval(iv);finishSpin();btn.disabled=false;btn.textContent='🎰 轉動 (100P)';}
-  },80);
+    for(let i=0;i<9;i++)document.getElementById('c'+i).textContent=rSym();
+    if(sc%3===0)playTick();
+    if(sc>=18){clearInterval(iv);finishSpin();}
+  },70);
 }
 
 function finishSpin(){
   const grid=Array.from({length:9},(_,i)=>document.getElementById('c'+i).textContent);
   document.querySelectorAll('.slot-cell').forEach(c=>c.classList.remove('winner'));
   let wins=[];
-  LINES.forEach((l,i)=>{
+  LINES.forEach((l)=>{
     const [a,b,c]=[grid[l[0]],grid[l[1]],grid[l[2]]];
-    if(a===b&&b===c){wins.push({sym:a,line:l});l.forEach(j=>document.getElementById('c'+j).classList.add('winner'));}
+    if(a===b&&b===c){wins.push({sym:a,line:l});}
   });
-  const rb=document.getElementById('resultBox');
+  // Stagger highlight winning cells
   if(wins.length>0){
-    const winAmt=wins.reduce((s,w)=>s+100*MULT[w.sym]*wins.length,0);
-    sp(gp()+winAmt);
-    rb.className='result-box win';
-    rb.textContent='🎉 '+wins[0].sym+wins[0].sym+wins[0].sym+' 中獎！ +'+winAmt.toLocaleString()+'P';
-    playWinSound();playCoin();
+    wins.forEach((win,wi)=>{
+      win.line.forEach((cellIdx,ci)=>{
+        setTimeout(()=>{
+          const cell=document.getElementById('c'+cellIdx);
+          cell.classList.add('winner');
+          playStopSound();
+        }, wi*200 + ci*80);
+      });
+    });
+    const winAmt=wins.reduce((s,w)=>s+100*MULT[w.sym],0);
+    setTimeout(()=>{
+      sp(gp()+winAmt);
+      const rb=document.getElementById('resultBox');
+      rb.className='result-box win';
+      rb.textContent='🎉 '+wins[0].sym+wins[0].sym+wins[0].sym+' 中獎！ +'+winAmt.toLocaleString()+'P';
+      playWinSound();
+      setTimeout(playCoin,300);
+    }, wins.length*200+300);
   }else{
-    rb.className='result-box lose';
-    rb.textContent='😅 沒中獎...再接再厲！';
-    playLoseSound();
+    setTimeout(()=>{
+      const rb=document.getElementById('resultBox');
+      rb.className='result-box lose';
+      rb.textContent='😅 沒中獎...再接再厲！';
+      playLoseSound();
+    },100);
   }
+  setTimeout(()=>{document.getElementById('spinBtn').disabled=false;document.getElementById('spinBtn').textContent='🎰 轉動 (100P)';},500);
 }
 
 function playTick(){try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=600+Math.random()*200;o.type='square';g.gain.setValueAtTime(0.06,c.currentTime);g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+0.04);o.start();o.stop(c.currentTime+0.05);setTimeout(()=>c.close(),100);}catch(e){}}
