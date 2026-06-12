@@ -275,7 +275,7 @@ function initReels(){
 function doSpin(){
   if(isSpinning)return;
   if(gp()<currentBet){alert('珍珠幣不足！');return}
-  isSpinning=true;sp(gp()-currentBet);
+  isSpinning=true;nudgeCount=0;sp(gp()-currentBet);
   document.getElementById('resultBox').textContent='';
   document.querySelectorAll('.win-line').forEach(el=>el.classList.remove('hit'));
   document.querySelectorAll('.lamp').forEach(el=>el.classList.remove('on'));
@@ -328,7 +328,7 @@ function finishSpin(){
   }else{
     setTimeout(()=>{let rb=document.getElementById('resultBox');rb.className='result-box lose';rb.textContent='* TRY AGAIN!';playLoseSound()},150);
   }
-  setTimeout(()=>{let btn=document.getElementById('spinBtn');btn.classList.remove('spinning');btn.disabled=false;document.getElementById('nudgeBtn').classList.remove('disabled');},500);
+  setTimeout(()=>{isSpinning=false;let btn=document.getElementById('spinBtn');btn.classList.remove('spinning');btn.disabled=false;document.getElementById('nudgeBtn').classList.remove('disabled');},500);
 }
 function doNudge(){
   if(isSpinning||nudgeCount>=1)return;
