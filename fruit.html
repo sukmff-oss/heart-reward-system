@@ -40,9 +40,7 @@ body{font-family:system-ui,sans-serif;overflow-x:hidden}
 .corner.left{background:#FF6600;box-shadow:0 0 10px #FF6600;animation:lampBlink 1s infinite}
 .corner.right{background:#FFD700;box-shadow:0 0 10px #FFD700;animation:lampBlink 1s infinite;animation-delay:.5s}
 .led-strip{height:6px;flex:1;margin:0 12px;border-radius:3px;background:linear-gradient(90deg,#FF0000,#FFFF00,#00FF00,#00FFFF,#0000FF,#FF00FF,#FF0000);background-size:200% 100%;animation:ledMove 2s linear infinite}
-.win-line-bar{display:flex;justify-content:center;gap:6px;margin-bottom:14px}
-.win-line{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:4px 8px;font-size:11px;color:rgba(255,255,255,.6);transition:all .3s}
-.win-line.hit{background:#FFD700;color:#1a1a2e;font-weight:900;border-color:#FFD700;box-shadow:0 0 10px rgba(255,215,0,.5)}
+
 .frame-bottom{display:flex;align-items:center;gap:10px}
 .side-panel{flex:1}
 .lamp-box{display:flex;flex-direction:column;gap:4px}
@@ -52,12 +50,13 @@ body{font-family:system-ui,sans-serif;overflow-x:hidden}
 .grid-svg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10;overflow:visible}
 .grid-svg .wl{stroke:#FFD700;stroke-width:4;fill:none;stroke-linecap:round;stroke-dasharray:300;animation:drawLine .4s ease-out forwards}
 .slot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%}
-.slot-cell{position:relative;aspect-ratio:1;background:linear-gradient(145deg,#1a1a3e,#0d0d2e);border:2px solid #555;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.cell-strip{position:absolute;left:0;width:100%;display:flex;flex-direction:column;will-change:transform}
-.cell-strip.blurred{filter:blur(3px);transition:filter .3s}
-.sym-cell{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:40px;flex-shrink:0;background:linear-gradient(145deg,#1a1a3e,#0d0d2e)}
-.sym-display{position:relative;z-index:2;font-size:42px;transition:transform .1s}
-.slot-cell.winner{animation:winGlow .5s ease-out;border-color:#FFD700!important}
+.cell-wrapper{background:#fff;height:72px;border-radius:8px;overflow:hidden;position:relative;box-shadow:inset 0 12px 10px rgba(0,0,0,0.85),inset 0 -12px 10px rgba(0,0,0,0.85);border:2px solid #333}
+.cell{height:100%;width:100%;display:flex;justify-content:center;align-items:center;font-size:36px;color:#000;transform:translateY(0)}
+.spinning{animation:verticalScroll3D .25s infinite linear}
+@keyframes verticalScroll3D{0%{transform:translateY(-50px) scaleY(0.7) scaleX(0.9);filter:blur(1px) brightness(0.7)}50%{transform:translateY(0) scaleY(1.1) scaleX(1);filter:blur(0px) brightness(1.2)}100%{transform:translateY(50px) scaleY(0.7) scaleX(0.9);filter:blur(1px) brightness(0.7)}}
+.win-glow{animation:redFlash .4s infinite alternate!important;border:3px solid #ff3333!important;background:#ffe6e6!important;box-shadow:0 0 15px rgba(255,51,51,.8)!important;transform:scale(1.08)}
+@keyframes redFlash{from{filter:brightness(1)}to{filter:brightness(1.2)}}
+.slot-cell.winner .cell{animation:none!important}
 .spin-btn{flex:2;padding:14px;border:none;border-radius:16px;background:linear-gradient(180deg,#FF8C00,#FF4500);color:#fff;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 6px 0 #B34A00,0 8px 20px rgba(255,69,0,.4);transition:all .1s;display:flex;flex-direction:column;align-items:center;gap:2px}
 .spin-btn:active{transform:translateY(4px);box-shadow:0 2px 0 #B34A00}
 .spin-btn:disabled{background:#555;box-shadow:0 4px 0 #333;cursor:not-allowed}
@@ -136,18 +135,19 @@ body{font-family:system-ui,sans-serif;overflow-x:hidden}
       </div>
       <div class="grid-area">
         <svg class="grid-svg" id="gridSvg" viewBox="0 0 320 320"></svg>
-        <div class="slot-grid" id="slotGrid"></div>
+        <div class="slot-grid" id="slotGrid">
+          <div class="cell-wrapper"><div class="cell" id="c0">🍒</div></div>
+          <div class="cell-wrapper"><div class="cell" id="c1">🍊</div></div>
+          <div class="cell-wrapper"><div class="cell" id="c2">🍇</div></div>
+          <div class="cell-wrapper"><div class="cell" id="c3">🍉</div></div>
+          <div class="cell-wrapper"><div class="cell" id="c4">🔔</div></div>
+          <div class="cell-wrapper"><div class="cell" id="c5">⭐</div></div>
+          <div class="cell-wrapper"><div class="cell" id="c6">⑦</div></div>
+          <div class="cell-wrapper"><div class="cell" id="c7">💎</div></div>
+          <div class="cell-wrapper"><div class="cell" id="c8">🍒</div></div>
+        </div>
       </div>
-      <div class="win-line-bar">
-        <div class="win-line" data-line="0">&#x4E0A;</div>
-        <div class="win-line" data-line="1">&#x4E2D;</div>
-        <div class="win-line" data-line="2">&#x4E0B;</div>
-        <div class="win-line" data-line="3">&#x5DE6;</div>
-        <div class="win-line" data-line="4">&#x4E2D;</div>
-        <div class="win-line" data-line="5">&#x53F3;</div>
-        <div class="win-line" data-line="6">X</div>
-        <div class="win-line" data-line="7">X</div>
-      </div>
+
       <div class="frame-bottom">
         <div class="side-panel left">
           <div class="lamp-box">
@@ -156,7 +156,7 @@ body{font-family:system-ui,sans-serif;overflow-x:hidden}
             <div class="lamp" id="lamp3"></div>
           </div>
         </div>
-        <button class="spin-btn" id="spinBtn" onclick="doSpin()">
+        <button class="spin-btn" id="spinBtn" onclick="startSpin()">
           <span class="btn-icon">🎰</span>
           <span class="btn-text">SPIN</span>
           <span class="btn-cost" id="btnCost">100P</span>
@@ -223,8 +223,6 @@ const MULT={};
 SYMS.forEach((s,i)=>{MULT[s]=Math.pow(2,i+1)*1.5});
 MULT[SYMS[0]]=3;MULT[SYMS[1]]=5;MULT[SYMS[2]]=8;MULT[SYMS[3]]=15;MULT[SYMS[4]]=25;MULT[SYMS[5]]=50;MULT[SYMS[6]]=100;MULT[SYMS[7]]=250;
 const LINES=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-const STRIP_LEN=40;
-const CELL_SIZE=94;
 let currentBet=100;
 let isSpinning=false;
 let jpAmount=0;
@@ -246,145 +244,81 @@ function refresh(){
 function rSym(){let r=Math.random()*WGTS.reduce((a,b)=>a+b,0);for(let i=0;i<WGTS.length;i++){r-=WGTS[i];if(r<=0)return SYMS[i]}return SYMS[0]}
 
 function buildGrid(){
-  const grid=document.getElementById('slotGrid');
-  grid.innerHTML='';
   for(let i=0;i<9;i++){
-    const cell=document.createElement('div');
-    cell.className='slot-cell';
-    cell.id='c'+i;
-    const strip=document.createElement('div');
-    strip.className='cell-strip';
-    strip.id='strip'+i;
-    const display=document.createElement('div');
-    display.className='sym-display';
-    display.id='disp'+i;
-    display.textContent=rSym();
-    strip.appendChild(display);
-    cell.appendChild(strip);
-    grid.appendChild(cell);
+    const c=document.getElementById('c'+i);
+    if(c)c.innerText=rSym();
   }
 }
 
 function setBet(b){currentBet=b;document.getElementById('betVal').textContent=b;document.getElementById('btnCost').textContent=b+'P';document.querySelectorAll('.bet-opt').forEach(el=>{el.classList.toggle('active',el.textContent==(b==1000?'MAX':b+''))})}
 
-function doSpin(){
+function startSpin(){
   if(isSpinning)return;
   if(gp()<currentBet){alert('珍珠幣不足！');return}
   isSpinning=true;nudgeCount=0;sp(gp()-currentBet);
   document.getElementById('resultBox').textContent='';
-  document.querySelectorAll('.win-line').forEach(el=>el.classList.remove('hit'));
+  document.getElementById('resultBox').className='result-box';
   document.querySelectorAll('.lamp').forEach(el=>el.classList.remove('on'));
-  document.querySelectorAll('.slot-cell').forEach(el=>el.classList.remove('winner'));
   let btn=document.getElementById('spinBtn');
-  btn.classList.add('spinning');btn.disabled=true;
+  btn.disabled=true;
   document.getElementById('nudgeBtn').classList.add('disabled');
-  finalGrid=Array.from({length:9},()=>rSym());
 
-  // Build full strips for each cell
-  let strips={};
+  const cells=[];
   for(let i=0;i<9;i++){
-    let strip=[];
-    for(let j=0;j<STRIP_LEN;j++){
-      // Insert final symbol at positions 10, 20, 30
-      if(j==10||j==20||j==30) strip.push(finalGrid[i]);
-      else strip.push(rSym());
-    }
-    strips[i]=strip;
+    const cell=document.getElementById('c'+i);
+    if(cell){cell.className='cell';cells.push(cell)}
   }
 
-  // Start each cell spinning
-  for(let i=0;i<9;i++){
-    let stripEl=document.getElementById('strip'+i);
-    stripEl.classList.add('blurred');
-    // Fill strip with symbols
-    stripEl.innerHTML='';
-    strips[i].forEach(sym=>{
-      let d=document.createElement('div');
-      d.className='sym-cell';
-      d.textContent=sym;
-      stripEl.appendChild(d);
+  // Fast symbol shuffling during spin
+  let ticks=0;
+  const spinInt=setInterval(()=>{
+    cells.forEach(c=>{if(c)c.innerText=SYMS[Math.floor(Math.random()*SYMS.length)]});
+    playTick();
+    ticks++;
+    if(ticks>=12){clearInterval(spinInt);stopAndCheck()}
+  },200);
+
+  function stopAndCheck(){
+    const finalGrid=[];
+    cells.forEach((c,i)=>{
+      if(c){c.classList.remove('spinning');finalGrid.push(c.innerText)}
     });
-    // Start at random offset
-    let offset=Math.floor(Math.random()*STRIP_LEN)*CELL_SIZE;
-    stripEl.style.transform='translateY(-'+offset+'px)';
-  }
 
-  // After blur phase, start deceleration with cubic-bezier
-  setTimeout(()=>{
-    for(let i=0;i<9;i++){
-      let stripEl=document.getElementById('strip'+i);
-      stripEl.classList.remove('blurred');
-      let duration=1.5+i*0.15;
-      stripEl.style.transition='transform '+duration+'s cubic-bezier(0.1,0.9,0.2,1.03)';
-      stripEl.style.transform='translateY(-'+(10*CELL_SIZE)+'px)';
-      playTick();
-    }
-  },600);
-
-  // Stop each cell one by one, settle to final position
-  let stopTimes=[1800,2100,2400,1200,1500,1800,1000,1300,1600];
-  for(let i=0;i<9;i++){
-    let t=stopTimes[i];
-    (function(idx){
-      setTimeout(()=>{
-        let stripEl=document.getElementById('strip'+idx);
-        // Freeze and rebuild at final position with bounce
-        stripEl.style.transition='none';
-        stripEl.innerHTML='';
-        for(let j=0;j<5;j++){
-          let d=document.createElement('div');
-          d.className='sym-cell';
-          d.textContent=j===2?finalGrid[idx]:rSym();
-          stripEl.appendChild(d);
-        }
-        // Bounce settle: go past then bounce back
-        stripEl.style.transition='transform 0.1s ease-out';
-        stripEl.style.transform='translateY(-'+CELL_SIZE+'px)';
-        setTimeout(()=>{
-          stripEl.style.transition='transform 0.15s cubic-bezier(0.2,1.5,0.4,1)';
-          stripEl.style.transform='translateY(0px)';
-          // Update display symbol
-          let disp=document.getElementById('disp'+idx);
-          if(disp)disp.textContent=finalGrid[idx];
-          playStopSound();
-        },100);
-        playTick();
-      },t);
-    })(i);
-  }
-
-  setTimeout(finishSpin,2800);
-}
-
-function finishSpin(){
-  let grid=Array.from({length:9},(_,i)=>finalGrid[i]);
-  let wins=[];
-  LINES.forEach((l,lineIdx)=>{
-    let[a,b,c]=[grid[l[0]],grid[l[1]],grid[l[2]]];
-    if(a===b&&b===c){wins.push({sym:a,line:l,lineIdx})}
-  });
-  if(wins.length>0){
-    wins.forEach((w,wi)=>{
-      setTimeout(()=>{
-        w.line.forEach((cellIdx)=>{
-          let cell=document.getElementById('c'+cellIdx);
-          if(cell)cell.classList.add('winner');
-          playStopSound();
-          document.querySelectorAll('.win-line')[w.lineIdx].classList.add('hit');
-        });
-        let lamp=document.getElementById('lamp'+(wi+1));
-        if(lamp)lamp.classList.add('on');
-      },wi*250);
+    const winLines=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    let winCount=0;
+    let winCells=new Set();
+    winLines.forEach(line=>{
+      const[a,b,c]=[finalGrid[line[0]],finalGrid[line[1]],finalGrid[line[2]]];
+      if(a===b&&b===c){winCount++;line.forEach(idx=>winCells.add(idx))}
     });
-    let winAmt=wins.reduce((s,w)=>s+currentBet*MULT[w.sym],0);
-    jpAmount+=Math.floor(winAmt*0.05);
-    let newMax=Math.max(maxWin,winAmt);
-    if(newMax>maxWin){maxWin=newMax;localStorage.setItem('fruit_max',maxWin)}
-    setTimeout(()=>{sp(gp()+winAmt);let rb=document.getElementById('resultBox');rb.className='result-box win';rb.textContent=grid[0]+grid[1]+grid[2]+' +'+winAmt.toLocaleString()+'P';playWinSound();triggerParticles();drawWinLines(wins);setTimeout(()=>triggerMoneyPop(winAmt),400)},wins.length*250+100);
-  }else{
-    setTimeout(()=>{let rb=document.getElementById('resultBox');rb.className='result-box lose';rb.textContent='TRY AGAIN!';playLoseSound()},150);
+
+    if(winCount>0){
+      winCells.forEach(idx=>{
+        const cell=document.getElementById('c'+idx);
+        if(cell){const wrapper=cell.parentElement;if(wrapper)wrapper.classList.add('win-glow')}
+      });
+      let winAmt=winCount*currentBet*(MULT[finalGrid[Array.from(winCells)[0]]]||3);
+      jpAmount+=Math.floor(winAmt*0.05);
+      let newMax=Math.max(maxWin,winAmt);
+      if(newMax>maxWin){maxWin=newMax;localStorage.setItem('fruit_max',maxWin)}
+      setTimeout(()=>{
+        sp(gp()+winAmt);
+        let rb=document.getElementById('resultBox');
+        rb.className='result-box win';
+        rb.textContent='🎉 連線成功！大贏 '+winAmt.toLocaleString()+' P！！';
+        playWinSound();triggerParticles();triggerMoneyPop(winAmt);
+      },200);
+    }else{
+      setTimeout(()=>{
+        let rb=document.getElementById('resultBox');
+        rb.className='result-box lose';
+        rb.textContent='❌ 沒有連線，再接再厲！';
+        playLoseSound();
+      },150);
+    }
+
+    setTimeout(()=>{isSpinning=false;document.getElementById('spinBtn').disabled=false;document.getElementById('nudgeBtn').classList.remove('disabled')},400);
   }
-  setTimeout(()=>{isSpinning=false;let btn=document.getElementById('spinBtn');btn.classList.remove('spinning');btn.disabled=false;document.getElementById('nudgeBtn').classList.remove('disabled')},500);
 }
 
 function doNudge(){
@@ -392,8 +326,11 @@ function doNudge(){
   if(gp()<currentBet*0.5){alert('珍珠幣不足！');return}
   sp(gp()-currentBet*0.5);nudgeCount=1;
   let targetIdx=Math.floor(Math.random()*9);
-  let stripEl=document.getElementById('strip'+targetIdx);
-  if(stripEl)stripEl.style.transform='translateY(-'+CELL_SIZE+'px)';
+  let cell=document.getElementById('c'+targetIdx);
+  if(cell)cell.classList.add('spinning');
+  setTimeout(()=>{
+    if(cell)cell.classList.remove('spinning');
+  },500);
 }
 
 function drawWinLines(wins){
