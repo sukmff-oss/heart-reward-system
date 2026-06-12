@@ -1,276 +1,363 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>🍉 水果盤 - 存錢發大財</title>
+<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Royal Fruit Slot</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-.bg{position:fixed;inset:0;background:linear-gradient(135deg,#1a1a2e,#16213e,#0d0620);z-index:0}
-.hdr{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 18px;background:linear-gradient(180deg,rgba(255,215,0,.95),rgba(255,165,0,.85));display:flex;justify-content:space-between;align-items:center;border-radius:0 0 22px 22px;box-shadow:0 4px 16px rgba(255,165,0,.4)}
+*{margin:0;padding:0;box-sizing:border-box;user-select:none}
+body{font-family:system-ui,sans-serif;overflow-x:hidden}
+.bg{position:fixed;inset:0;background:linear-gradient(135deg,#0a0118,#1a0a2e,#0d1a3a);z-index:0}
+.stars{position:fixed;inset:0;z-index:1;pointer-events:none}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 2s infinite}
+@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}
+.hdr{position:fixed;top:0;left:0;right:0;z-index:100;padding:10px 16px;background:linear-gradient(180deg,#FFD700,#FF8C00);display:flex;justify-content:space-between;align-items:center;border-radius:0 0 20px 20px;box-shadow:0 4px 20px rgba(255,140,0,.5)}
 .hdr-l{display:flex;align-items:center;gap:8px}
-.hdr-l .icon{font-size:22px}
-.hdr-l .title{font-size:16px;font-weight:900;color:#1a1a2e}
-.hdr-r{display:flex;align-items:center;gap:12px}
-.pearl-box{background:rgba(0,0,0,.15);border-radius:10px;padding:6px 12px;font-size:13px;font-weight:700;color:#1a1a2e}
-.back-btn{background:rgba(0,0,0,.2);border:none;border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;color:#1a1a2e;font-weight:700}
-.main{padding:80px 16px 20px;display:flex;flex-direction:column;align-items:center;position:relative;z-index:1}
-.slot-frame{background:linear-gradient(145deg,#1a1a3e,#2d1b4e);border:3px solid #FFD700;border-radius:20px;padding:18px;width:100%;max-width:320px;box-shadow:0 0 40px rgba(255,215,0,.3)}
-.slot-title{text-align:center;font-size:15px;font-weight:900;color:#FFD700;margin-bottom:12px}
-.slot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px}
-.slot-cell{aspect-ratio:1;background:linear-gradient(145deg,#2a2a4a,#1a1a3a);border:2px solid #555;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:38px;position:relative;overflow:hidden}
-.slot-cell::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.05),transparent 50%)}
-.slot-cell.winner{border-color:#FFD700;animation:pulse 0.4s}
-@keyframes pulse{0%,100%{box-shadow:0 0 8px #FFD700}50%{box-shadow:0 0 25px #FFD700}}
-.spin-btn{width:100%;padding:14px;border:none;border-radius:14px;background:linear-gradient(180deg,#FF8C00,#FF6600);color:#fff;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 #B34A00;transition:transform .1s}
-.spin-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #B34A00}
+.hdr-l .icon{font-size:20px}
+.hdr-l .title{font-size:15px;font-weight:900;color:#1a1a2e}
+.hdr-r{display:flex;align-items:center;gap:8px}
+.pearl-box{background:rgba(0,0,0,.15);border-radius:8px;padding:5px 10px;font-size:12px;font-weight:700;color:#1a1a2e}
+.bet-box{background:rgba(0,0,0,.15);border-radius:8px;padding:5px 10px;font-size:12px;font-weight:700;color:#1a1a2e}
+.bet-label{font-size:10px;opacity:.7}
+.bet-val{font-size:14px;font-weight:900}
+.back-btn,.recharge-btn{background:rgba(0,0,0,.2);border:none;border-radius:8px;padding:5px 10px;font-size:12px;font-weight:700;cursor:pointer;color:#1a1a2e}
+.main{padding:75px 16px 20px;display:flex;flex-direction:column;align-items:center;position:relative;z-index:2;gap:14px}
+.jp-banner{background:linear-gradient(135deg,#1a0a2e,#2d1b4e);border:2px solid #FFD700;border-radius:14px;padding:10px 20px;display:flex;align-items:center;gap:12px;cursor:pointer;width:100%;max-width:340px;transition:transform .2s}
+.jp-banner:hover{transform:scale(1.02)}
+.jp-label{font-size:13px;color:#FFD700;font-weight:700}
+.jp-amount{font-size:20px;font-weight:900;color:#FFD700;text-shadow:0 0 10px rgba(255,215,0,.5)}
+.jp-hint{font-size:11px;color:rgba(255,255,255,.5);margin-left:auto}
+.slot-machine{width:100%;max-width:360px}
+.machine-frame{background:linear-gradient(145deg,#1a1a3e,#2d1b4e);border:4px solid #FFD700;border-radius:24px;padding:20px 16px;position:relative;box-shadow:0 0 50px rgba(255,215,0,.3),inset 0 0 30px rgba(255,215,0,.05)}
+.frame-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.corner{width:20px;height:20px;border:3px solid #FFD700;border-radius:50%;animation:lampBlink 1s infinite}
+.corner.left{background:#FF6600;box-shadow:0 0 10px #FF6600}
+.corner.right{background:#FFD700;box-shadow:0 0 10px #FFD700;animation-delay:.5s}
+@keyframes lampBlink{0%,100%{opacity:1}50%{opacity:.4}}
+.led-strip{height:6px;flex:1;margin:0 12px;border-radius:3px;background:linear-gradient(90deg,#FF0000,#FFFF00,#00FF00,#00FFFF,#0000FF,#FF00FF,#FF0000);background-size:200% 100%;animation:ledMove 2s linear infinite}
+@keyframes ledMove{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+.reel-area{display:flex;gap:8px;justify-content:center;margin-bottom:12px}
+.reel{width:90px;height:90px;background:#0a0a1e;border:3px solid #333;border-radius:12px;overflow:hidden;position:relative;box-shadow:inset 0 0 20px rgba(0,0,0,.8)}
+.reel::before{content:"";position:absolute;inset:0;border:1px solid rgba(255,215,0,.2);border-radius:10px;pointer-events:none;z-index:2}
+.reel-inner{display:flex;flex-direction:column;transition:top .08s}
+.reel-cell{height:90px;display:flex;align-items:center;justify-content:center;font-size:48px;flex-shrink:0;background:linear-gradient(145deg,#1a1a3e,#0d0d2e)}
+.reel-cell.winner{animation:winGlow .5s ease-out}
+@keyframes winGlow{0%,100%{box-shadow:inset 0 0 10px #FFD700}50%{box-shadow:inset 0 0 30px #FFD700,0 0 20px #FF8C00}}
+.win-line-bar{display:flex;justify-content:center;gap:6px;margin-bottom:14px}
+.win-line{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:4px 8px;font-size:11px;color:rgba(255,255,255,.6);transition:all .3s}
+.win-line.hit{background:#FFD700;color:#1a1a2e;font-weight:900;border-color:#FFD700;box-shadow:0 0 10px rgba(255,215,0,.5)}
+.frame-bottom{display:flex;align-items:center;gap:10px}
+.side-panel{flex:1}
+.lamp-box{display:flex;flex-direction:column;gap:4px}
+.lamp{width:16px;height:16px;border-radius:50%;background:#333;transition:all .3s}
+.lamp.on{background:#FF6600;box-shadow:0 0 10px #FF6600,0 0 20px #FF6600}
+.spin-btn{flex:2;padding:14px;border:none;border-radius:16px;background:linear-gradient(180deg,#FF8C00,#FF4500);color:#fff;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 6px 0 #B34A00,0 8px 20px rgba(255,69,0,.4);transition:all .1s;display:flex;flex-direction:column;align-items:center;gap:2px}
+.spin-btn:active{transform:translateY(4px);box-shadow:0 2px 0 #B34A00}
 .spin-btn:disabled{background:#555;box-shadow:0 4px 0 #333;cursor:not-allowed}
-.result-box{margin-top:12px;text-align:center;font-size:14px;font-weight:700;min-height:24px}
-.result-box.win{color:#2ECC71}
-.result-box.lose{color:#FF6B6B}
-
-
-.win-particles{position:fixed;inset:0;pointer-events:none;z-index:150;overflow:hidden}
-.particle{position:absolute;width:10px;height:10px;border-radius:50%;animation:fall 1.5s ease-out forwards}
-@keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
-.money-pop{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:32px;font-weight:900;color:#FFD700;text-shadow:0 0 20px rgba(255,215,0,.8);animation:popUp .8s ease-out forwards;z-index:160;pointer-events:none}
-@keyframes popUp{0%{transform:translate(-50%,-50%) scale(0);opacity:0}50%{transform:translate(-50%,-50%) scale(1.3);opacity:1}100%{transform:translate(-50%,-50%) scale(1);opacity:0}
-.recharge-btn{background:rgba(0,0,0,.2);border:none;border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;color:#1a1a2e;font-weight:700}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:none;align-items:center;justify-content:center}
+.spin-btn.spinning{animation:btnPulse .3s infinite alternate}
+@keyframes btnPulse{from{box-shadow:0 6px 0 #B34A00,0 8px 20px rgba(255,69,0,.4)}to{box-shadow:0 6px 0 #B34A00,0 8px 40px rgba(255,69,0,.8)}}
+.btn-icon{font-size:20px}
+.btn-text{letter-spacing:3px;font-size:16px}
+.btn-cost{font-size:11px;opacity:.8;font-weight:400}
+.nudge-btn{background:linear-gradient(180deg,#444,#222);border:2px solid #555;border-radius:10px;padding:8px;display:flex;flex-direction:column;align-items:center;cursor:pointer;transition:all .2s}
+.nudge-btn:hover{background:linear-gradient(180deg,#555,#333);border-color:#FFD700}
+.nudge-btn span:first-child{font-size:18px}
+.nudge-label{font-size:8px;color:rgba(255,255,255,.5);letter-spacing:1px}
+.nudge-btn.disabled{opacity:.4;cursor:not-allowed}
+.result-box{margin-top:8px;text-align:center;font-size:15px;font-weight:700;min-height:28px;padding:6px 14px;border-radius:10px;width:100%;max-width:340px}
+.result-box.win{color:#2ECC71;background:rgba(46,204,113,.12);border:1px solid rgba(46,204,113,.3)}
+.result-box.lose{color:#FF6B6B;background:rgba(255,107,107,.12);border:1px solid rgba(255,107,107,.3)}
+.bet-panel{width:100%;max-width:340px;background:rgba(255,255,255,.05);border-radius:16px;padding:14px}
+.bet-title{text-align:center;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:10px;font-weight:700;letter-spacing:2px}
+.bet-options{display:flex;gap:8px}
+.bet-opt{flex:1;padding:10px 4px;border:2px solid rgba(255,255,255,.15);border-radius:10px;background:rgba(255,255,255,.05);color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;text-align:center}
+.bet-opt:hover{border-color:#FFD700;background:rgba(255,215,0,.1)}
+.bet-opt.active{background:linear-gradient(180deg,#FFD700,#FF8C00);color:#1a1a2e;border-color:#FFD700;box-shadow:0 0 15px rgba(255,215,0,.4)}
+.info-row{display:flex;gap:10px;width:100%;max-width:340px}
+.stat-box{flex:1;background:rgba(255,255,255,.05);border-radius:12px;padding:10px;text-align:center}
+.stat-label{display:block;font-size:11px;color:rgba(255,255,255,.5);margin-bottom:4px}
+.stat-val{font-size:16px;font-weight:900;color:#FFD700}
+.paytable-btn{background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.3);border-radius:12px;padding:10px 24px;color:#FFD700;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.paytable-btn:hover{background:rgba(255,215,0,.2)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
 .modal.show{display:flex}
-.modal-cnt{background:linear-gradient(145deg,#1a1a3e,#2d1b4e);border:2px solid #FFD700;border-radius:18px;padding:24px;width:90%;max-width:320px;text-align:center}
+.modal-cnt{background:linear-gradient(145deg,#1a1a3e,#2d1b4e);border:2px solid #FFD700;border-radius:20px;padding:24px;width:90%;max-width:340px;text-align:center;animation:scaleIn .2s ease-out}
 .modal-cnt h3{color:#FFD700;font-size:18px;margin-bottom:16px}
-.r-opt{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.08);border-radius:12px;padding:12px 16px;margin-bottom:10px;cursor:pointer;border:2px solid transparent;transition:border-color .2s}
-.r-opt:hover{border-color:#FFD700}
+.bal-row{display:flex;justify-content:space-between;margin-bottom:12px;font-size:13px;color:rgba(255,255,255,.7);padding:8px 12px;background:rgba(0,0,0,.2);border-radius:8px}
+.bal-row span:last-child{color:#FFD700;font-weight:700}
+.r-opt{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.08);border-radius:12px;padding:12px 16px;margin-bottom:8px;cursor:pointer;border:2px solid transparent;transition:all .2s}
+.r-opt:hover:not(.disabled){border-color:#FFD700;transform:translateX(4px)}
 .r-opt .r-left{color:#fff;font-size:14px;font-weight:700}
 .r-opt .r-right{color:#FFD700;font-size:13px;font-weight:900}
 .r-opt.disabled{opacity:.4;cursor:not-allowed}
 .close-btn{margin-top:12px;width:100%;padding:10px;border:none;border-radius:10px;background:#555;color:#fff;font-size:14px;cursor:pointer}
-.bal-row{display:flex;justify-content:space-between;margin-bottom:16px;font-size:13px;color:rgba(255,255,255,.7)}
-.bal-row span:last-child{color:#FFD700;font-weight:700}
-.info-bar{display:flex;justify-content:space-between;width:100%;max-width:320px;margin-top:14px;font-size:12px;color:rgba(255,255,255,.6)}
-.cost{color:#FFD700;font-weight:700}
+.win-particles{position:fixed;inset:0;pointer-events:none;z-index:150;overflow:hidden}
+.particle{position:absolute;border-radius:50%;animation:confettiFall 1.5s ease-out forwards}
+.money-pop{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:36px;font-weight:900;color:#FFD700;text-shadow:0 0 20px rgba(255,215,0,.8);animation:moneyBurst .8s ease-out forwards;z-index:160;pointer-events:none}
+.jackpot-modal{text-align:center}
+.jp-display{font-size:48px;font-weight:900;color:#FFD700;text-shadow:0 0 30px #FFD700;margin:20px 0;animation:jackpotPulse 1s infinite}
+.jp-history{text-align:left;max-height:200px;overflow-y:auto;margin-top:16px}
+.jp-item{padding:8px 12px;background:rgba(0,0,0,.2);border-radius:8px;margin-bottom:6px;font-size:12px;color:rgba(255,255,255,.7);display:flex;justify-content:space-between}
+.jp-item span:last-child{color:#FFD700;font-weight:700}
+.pt-table{width:100%;border-collapse:collapse}
+.pt-table th{color:#FFD700;font-size:12px;padding:8px;text-align:center;border-bottom:1px solid rgba(255,215,0,.2)}
+.pt-table td{padding:8px;text-align:center;font-size:14px;color:#fff}
+.pt-table tr:nth-child(even){background:rgba(255,255,255,.05)}
+.pt-sym{font-size:20px}
 </style>
 </head>
 <body>
-
 <div class="bg"></div>
+<div class="stars" id="stars"></div>
 <div class="hdr">
-  <div class="hdr-l"><span class="icon">🍉</span><span class="title">水果盤</span></div>
+  <div class="hdr-l"><span class="icon">&#x1F349;</span><span class="title">皇家水果盤</span></div>
   <div class="hdr-r">
-    <div class="pearl-box">🔮 <span id="pearlVal">0</span> P</div>
-    <button class="back-btn" onclick="location.href='index.html'">← 返回</button>
-    <button class="recharge-btn" onclick="openRecharge()">💰 充值</button>
+    <div class="pearl-box">&#x1F48E; <span id="pearlVal">0</span> P</div>
+    <div class="bet-box"><span class="bet-label">BET</span><span class="bet-val" id="betVal">100</span></div>
+    <button class="recharge-btn" onclick="openRecharge()">&#x1F4B0;</button>
+    <button class="back-btn" onclick="location.href='index.html'">&#x2190;</button>
   </div>
 </div>
 <div class="main">
-  <div class="slot-frame">
-    <div class="slot-title">🎰 每次消耗 100P</div>
-    <div class="slot-grid">
-      <div class="slot-cell" id="c0">🍒</div>
-      <div class="slot-cell" id="c1">🍊</div>
-      <div class="slot-cell" id="c2">🍇</div>
-      <div class="slot-cell" id="c3">🍉</div>
-      <div class="slot-cell" id="c4">🔔</div>
-      <div class="slot-cell" id="c5">⭐</div>
-      <div class="slot-cell" id="c6">7️⃣</div>
-      <div class="slot-cell" id="c7">💎</div>
-      <div class="slot-cell" id="c8">🍒</div>
-    </div>
-    <button class="spin-btn" id="spinBtn" onclick="doSpin()">🎰 轉動 (100P)</button>
-    <div class="result-box" id="resultBox"></div>
+  <div class="jp-banner" onclick="showJackpot()">
+    <span class="jp-label">&#x1F3B0; 彩金池</span>
+    <span class="jp-amount" id="jpAmount">$0</span>
+    <span class="jp-hint">點我查看</span>
   </div>
-  <div class="info-bar">
-    <span>💰 美元: <span id="usdVal">0</span></span>
-    <span class="cost">報名費 100P / 次</span>
+  <div class="slot-machine">
+    <div class="machine-frame">
+      <div class="frame-top">
+        <div class="corner left"></div>
+        <div class="led-strip"></div>
+        <div class="corner right"></div>
+      </div>
+      <div class="reel-area">
+        <div class="reel" id="reel0"><div class="reel-inner" id="reelInner0"></div></div>
+        <div class="reel" id="reel1"><div class="reel-inner" id="reelInner1"></div></div>
+        <div class="reel" id="reel2"><div class="reel-inner" id="reelInner2"></div></div>
+      </div>
+      <div class="win-line-bar">
+        <div class="win-line" data-line="0">&#x4E0A;</div>
+        <div class="win-line" data-line="1">&#x4E2D;</div>
+        <div class="win-line" data-line="2">&#x4E0B;</div>
+        <div class="win-line" data-line="3">&#x5DE6;</div>
+        <div class="win-line" data-line="4">&#x4E2D;</div>
+        <div class="win-line" data-line="5">&#x53F3;</div>
+        <div class="win-line" data-line="6">X</div>
+        <div class="win-line" data-line="7">X</div>
+      </div>
+      <div class="frame-bottom">
+        <div class="side-panel left">
+          <div class="lamp-box">
+            <div class="lamp" id="lamp1"></div>
+            <div class="lamp" id="lamp2"></div>
+            <div class="lamp" id="lamp3"></div>
+          </div>
+        </div>
+        <button class="spin-btn" id="spinBtn" onclick="doSpin()">
+          <span class="btn-icon">&#x1F3B0;</span>
+          <span class="btn-text">SPIN</span>
+          <span class="btn-cost" id="btnCost">100P</span>
+        </button>
+        <div class="side-panel right">
+          <div class="nudge-btn" id="nudgeBtn" onclick="doNudge()" title="Nudge">
+            <span>&#x2B06;</span>
+            <span class="nudge-label">NUDGE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="result-box" id="resultBox"></div>
+  <div class="bet-panel">
+    <div class="bet-title">BET LEVEL</div>
+    <div class="bet-options" id="betOptions">
+      <button class="bet-opt active" onclick="setBet(100)">100</button>
+      <button class="bet-opt" onclick="setBet(200)">200</button>
+      <button class="bet-opt" onclick="setBet(500)">500</button>
+      <button class="bet-opt" onclick="setBet(1000)">MAX</button>
+    </div>
+  </div>
+  <div class="info-row">
+    <div class="stat-box"><span class="stat-label">&#x1F4B0; 美元</span><span class="stat-val" id="usdVal">0</span></div>
+    <div class="stat-box"><span class="stat-label">&#x1F3B2; 勝率</span><span class="stat-val">25%</span></div>
+    <div class="stat-box"><span class="stat-label">&#x1F3C6; 最高</span><span class="stat-val" id="maxWin">0</span></div>
+  </div>
+  <div class="paytable-btn" onclick="showPaytable()">&#x1F4CB; 赔率表</div>
+</div>
+<div class="modal" id="rechargeModal">
+  <div class="modal-cnt">
+    <h3>&#x1F4B0; 珍珠幣充值</h3>
+    <div class="bal-row"><span>&#x1F4B0; 美元餘額</span><span id="modalUsd">0</span></div>
+    <div class="bal-row"><span>&#x1F48E; 珍珠幣</span><span id="modalPearl">0 P</span></div>
+    <div class="r-opt" onclick="doRecharge(100)"><span class="r-left">$100</span><span class="r-right">10,000 P</span></div>
+    <div class="r-opt" onclick="doRecharge(200)"><span class="r-left">$200</span><span class="r-right">20,000 P</span></div>
+    <div class="r-opt" onclick="doRecharge(500)"><span class="r-left">$500</span><span class="r-right">50,000 P</span></div>
+    <div class="r-opt" onclick="doRecharge(1000)"><span class="r-left">$1,000</span><span class="r-right">100,000 P</span></div>
+    <button class="close-btn" onclick="closeRecharge()">關閉</button>
+  </div>
+</div>
+<div class="modal" id="jackpotModal">
+  <div class="modal-cnt jackpot-modal">
+    <h3>&#x1F3B0; 彩金池</h3>
+    <div class="jp-display" id="jpDisplay">$0</div>
+    <div class="jp-history" id="jpHistory"></div>
+    <button class="close-btn" onclick="closeJackpot()">關閉</button>
+  </div>
+</div>
+<div class="modal" id="paytableModal">
+  <div class="modal-cnt">
+    <h3>&#x1F3B0; 赔率表</h3>
+    <table class="pt-table"><thead><tr><th>符號</th><th>x3</th><th>x4</th><th>x5</th></tr></thead>
+    <tbody>
+      <tr><td class="pt-sym">&#x1F352;</td><td>3</td><td>10</td><td>30</td></tr>
+      <tr><td class="pt-sym">&#x1F34A;</td><td>5</td><td>15</td><td>50</td></tr>
+      <tr><td class="pt-sym">&#x1F347;</td><td>8</td><td>25</td><td>80</td></tr>
+      <tr><td class="pt-sym">&#x1F349;</td><td>15</td><td>50</td><td>150</td></tr>
+      <tr><td class="pt-sym">&#x1F514;</td><td>25</td><td>75</td><td>250</td></tr>
+      <tr><td class="pt-sym">&#x2B50;</td><td>50</td><td>150</td><td>500</td></tr>
+      <tr><td class="pt-sym">&#x37; &#xFE0F;</td><td>100</td><td>300</td><td>1000</td></tr>
+      <tr><td class="pt-sym">&#x1F48E;</td><td>250</td><td>750</td><td>2500</td></tr>
+    </tbody>
+    </table>
+    <button class="close-btn" onclick="closePaytable()">關閉</button>
   </div>
 </div>
 <script>
-const SYMS=['🍒','🍊','🍇','🍉','🔔','⭐','7️⃣','💎'];
+const SYMS=[String.fromCodePoint(0x1F352),String.fromCodePoint(0x1F34A),String.fromCodePoint(0x1F347),String.fromCodePoint(0x1F349),String.fromCodePoint(0x1F514),String.fromCodePoint(0x2B50),String.fromCodePoint(0x1F51F),String.fromCodePoint(0x1F48E)];
 const WGTS=[28,23,18,12,8,5,2,0.5];
+const MULT={};
+SYMS.forEach((s,i)=>{MULT[s]=Math.pow(2,i+1)*1.5});
+MULT[SYMS[0]]=3;MULT[SYMS[1]]=5;MULT[SYMS[2]]=8;MULT[SYMS[3]]=15;MULT[SYMS[4]]=25;MULT[SYMS[5]]=50;MULT[SYMS[6]]=100;MULT[SYMS[7]]=250;
 const LINES=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-const MULT={'🍒':3,'🍊':5,'🍇':8,'🍉':15,'🔔':25,'⭐':50,'7️⃣':100,'💎':250};
-
-function gD(){return JSON.parse(localStorage.getItem('gyc_savings')||'{}')}
-function sD(d){localStorage.setItem('gyc_savings',JSON.stringify(d))}
-function gp(){const d=gD();return d.pearls||0}
-function sp(v){const d=gD();d.pearls=v;sD(d);refresh()}
-
+let currentBet=100,isSpinning=false,jpAmount=0,jpHistory=[],maxWin=0,nudgeCount=0;
+let reelStates=[null,null,null],finalGrid=[];
+function gD(){return JSON.parse(localStorage.getItem('gyc_savings')||'{}')};
+function sD(d){localStorage.setItem('gyc_savings',JSON.stringify(d))};
+function gp(){const d=gD();return d.pearls||0};
+function sp(v){const d=gD();d.pearls=v;sD(d);refresh()};
 function refresh(){
   document.getElementById('pearlVal').textContent=gp().toLocaleString();
-  const d=gD();
-  document.getElementById('usdVal').textContent=(d.total||0).toLocaleString();
+  const d=gD();document.getElementById('usdVal').textContent=(d.total||0).toLocaleString();
+  document.getElementById('jpAmount').textContent='$'+jpAmount.toLocaleString();
+  if(maxWin)document.getElementById('maxWin').textContent=maxWin.toLocaleString();
 }
-
-function rSym(){
-  let r=Math.random()*WGTS.reduce((a,b)=>a+b,0);
-  for(let i=0;i<WGTS.length;i++){r-=WGTS[i];if(r<=0)return SYMS[i];}
-  return SYMS[0];
-}
-
-function doSpin(){
-  if(gp()<100){alert('珍珠幣不足！需要100P');return}
-  sp(gp()-100);
-  const btn=document.getElementById('spinBtn');
-  btn.disabled=true; btn.textContent='轉動中...';
-  document.getElementById('resultBox').textContent='';
-  document.querySelectorAll('.slot-cell').forEach(c=>c.classList.remove('winner'));
-  let sc=0;
-  const iv=setInterval(()=>{
-    sc++;
-    for(let i=0;i<9;i++)document.getElementById('c'+i).textContent=rSym();
-    if(sc%3===0)playTick();
-    if(sc>=18){clearInterval(iv);finishSpin();}
-  },70);
-}
-
-function finishSpin(){
-  const grid=Array.from({length:9},(_,i)=>document.getElementById('c'+i).textContent);
-  document.querySelectorAll('.slot-cell').forEach(c=>c.classList.remove('winner'));
-  let wins=[];
-  LINES.forEach((l)=>{
-    const [a,b,c]=[grid[l[0]],grid[l[1]],grid[l[2]]];
-    if(a===b&&b===c){wins.push({sym:a,line:l});}
-  });
-  // Stagger highlight winning cells
-  if(wins.length>0){
-    wins.forEach((win,wi)=>{
-      win.line.forEach((cellIdx,ci)=>{
-        setTimeout(()=>{
-          const cell=document.getElementById('c'+cellIdx);
-          cell.classList.add('winner');
-          playStopSound();
-        }, wi*200 + ci*80);
-      });
-    });
-    const winAmt=wins.reduce((s,w)=>s+100*MULT[w.sym],0);
-    setTimeout(()=>{
-      sp(gp()+winAmt);
-      const rb=document.getElementById('resultBox');
-      rb.className='result-box win';
-      rb.textContent='🎉 '+wins[0].sym+wins[0].sym+wins[0].sym+' 中獎！ +'+winAmt.toLocaleString()+'P';triggerParticles();setTimeout(()=>triggerMoneyPop(winAmt),400);
-      playWinSound();
-      setTimeout(playCoin,300);
-    }, wins.length*200+300);
-  }else{
-    setTimeout(()=>{
-      const rb=document.getElementById('resultBox');
-      rb.className='result-box lose';
-      rb.textContent='😅 沒中獎...再接再厲！';
-      playLoseSound();
-    },100);
+function rSym(){let r=Math.random()*WGTS.reduce((a,b)=>a+b,0);for(let i=0;i<WGTS.length;i++){r-=WGTS[i];if(r<=0)return SYMS[i];}return SYMS[0];}
+function setBet(b){currentBet=b;document.getElementById('betVal').textContent=b;document.getElementById('btnCost').textContent=b+'P';document.querySelectorAll('.bet-opt').forEach(el=>{el.classList.toggle('active',el.textContent==(b==1000?'MAX':b+''))})};
+function buildReelHTML(reelIdx,offset){let html='';for(let i=0;i<REEL_SYM_COUNT;i++){let sym=rSym();if(i===offset){sym=finalGrid[reelIdx]||sym}html+='<div class="reel-cell">'+sym+'</div>'}return html};
+function initReels(){
+  for(let r=0;r<3;r++){
+    let inner=document.getElementById('reelInner'+r);
+    inner.innerHTML=buildReelHTML(r,Math.floor(REEL_SYM_COUNT/2));
   }
-  setTimeout(()=>{document.getElementById('spinBtn').disabled=false;document.getElementById('spinBtn').textContent='🎰 轉動 (100P)';},500);
 }
-
-function playTick(){try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=600+Math.random()*200;o.type='square';g.gain.setValueAtTime(0.06,c.currentTime);g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+0.04);o.start();o.stop(c.currentTime+0.05);setTimeout(()=>c.close(),100);}catch(e){}}
-
-function playStopSound(){try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=200;o.type='triangle';g.gain.setValueAtTime(0.15,c.currentTime);g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+0.15);o.start();o.stop(c.currentTime+0.2);setTimeout(()=>c.close(),300);}catch(e){}}
-
-function playWinSound(){
-  try{
-    const c=new(window.AudioContext||window.webkitAudioContext)();
-    [523,659,784,1047].forEach((freq,i)=>{
-      const o=c.createOscillator(),g=c.createGain();
-      o.connect(g);g.connect(c.destination);
-      o.frequency.value=freq;o.type='square';
-      g.gain.setValueAtTime(0.12,c.currentTime+i*0.18);
-      g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+i*0.18+0.3);
-      o.start(c.currentTime+i*0.18);o.stop(c.currentTime+i*0.18+0.35);
+function doSpin(){
+  if(isSpinning)return;
+  if(gp()<currentBet){alert('珍珠幣不足！');return}
+  isSpinning=true;sp(gp()-currentBet);
+  document.getElementById('resultBox').textContent='';
+  document.querySelectorAll('.win-line').forEach(el=>el.classList.remove('hit'));
+  document.querySelectorAll('.lamp').forEach(el=>el.classList.remove('on'));
+  let btn=document.getElementById('spinBtn');
+  btn.classList.add('spinning');
+  btn.disabled=true;
+  document.getElementById('nudgeBtn').classList.add('disabled');
+  finalGrid=Array.from({length:9},()=>rSym());
+  let spinCount=0,stopOrder=[0,1,2];
+  let spinIntervals=[];
+  let stopTimes=[20,28,36];
+  stopOrder.forEach((reelIdx,order)=>{
+    let iv=setInterval(()=>{
+      let inner=document.getElementById('reelInner'+reelIdx);
+      let cells=inner.querySelectorAll('.reel-cell');
+      let cur=parseInt(inner.style.top||'0');
+      inner.style.top=(cur+90)%(90*REEL_SYM_COUNT)+'px';
+      if(spinCount%4===0&&order<2)playTick();
+      spinCount++;
+      if(spinCount>=stopTimes[reelIdx]){
+        clearInterval(iv);
+        let grid=finalGrid.slice(reelIdx*3,(reelIdx+1)*3);
+        let html='';for(let i=0;i<REEL_SYM_COUNT;i++){let sym=i%3===0?grid[0]:i%3===1?grid[1]:grid[2];html+='<div class="reel-cell">'+sym+'</div>'}
+        inner.innerHTML=html;
+        inner.style.top='0px';
+        if(order<2)playStopSound();
+      }
+    },60);
+    spinIntervals.push(iv);
+  });
+  setTimeout(()=>{isSpinning=false;btn.classList.remove('spinning');btn.disabled=false;document.getElementById('nudgeBtn').classList.remove('disabled');finishSpin()},2400);
+}
+function finishSpin(){
+  let cells=[];
+  for(let r=0;r<3;r++){let inner=document.getElementById('reelInner'+r);cells.push(...inner.querySelectorAll('.reel-cell'))}
+  let grid=Array.from({length:9},(_,i)=>cells[i]?cells[i].textContent:SYMS[0]);
+  let wins=[];
+  LINES.forEach((l,lineIdx)=>{
+    let [a,b,c]=[grid[l[0]],grid[l[1]],grid[l[2]]];
+    if(a===b&&b===c){wins.push({sym:a,line:l,lineIdx})};
+  });
+  if(wins.length>0){
+    wins.forEach((w,wi)=>{
+      setTimeout(()=>{
+        w.line.forEach((cellIdx,ci)=>{
+          cells[cellIdx].classList.add('winner');
+          playStopSound();
+          document.querySelectorAll('.win-line')[w.lineIdx].classList.add('hit');
+        });
+        document.getElementById('lamp'+(wi+1)).classList.add('on');
+      },wi*250);
     });
-    const bass=c.createOscillator(),bg=c.createGain();
-    bass.connect(bg);bg.connect(c.destination);
-    bass.frequency.value=80;bass.type='sawtooth';
-    bg.gain.setValueAtTime(0.15,c.currentTime+0.3);
-    bg.gain.exponentialRampToValueAtTime(0.001,c.currentTime+1.2);
-    bass.start(c.currentTime+0.3);bass.stop(c.currentTime+1.3);
-    setTimeout(()=>c.close(),2000);
-  }catch(e){}
+    let winAmt=wins.reduce((s,w)=>s+currentBet*MULT[w.sym],0);
+    jpAmount+=Math.floor(winAmt*0.05);
+    let newMax=Math.max(maxWin,winAmt);
+    if(newMax>maxWin){maxWin=newMax;localStorage.setItem('fruit_max',maxWin)}
+    setTimeout(()=>{sp(gp()+winAmt);let rb=document.getElementById('resultBox');rb.className='result-box win';rb.textContent='🎉 '+wins[0].sym+wins[0].sym+wins[0].sym+' +'+winAmt.toLocaleString()+'P';playWinSound();triggerParticles();setTimeout(()=>triggerMoneyPop(winAmt),400)},wins.length*250+100);
+  }else{
+    setTimeout(()=>{let rb=document.getElementById('resultBox');rb.className='result-box lose';rb.textContent='😔 沒中獎...再接再厲！';playLoseSound()},150);
+  }
 }
-
-
+function doNudge(){
+  if(isSpinning||nudgeCount>=1)return;
+  if(gp()<currentBet*0.5){alert("珍珠幣不足！");return}
+  sp(gp()-currentBet*0.5);nudgeCount=1;
+  let targetReel=Math.floor(Math.random()*3);
+  let inner=document.getElementById("reelInner"+targetReel);
+  let html="";for(let i=0;i<REEL_SYM_COUNT;i++){let sym=rSym();html+="<div class=reel-cell>"+sym+"</div>"};
+  inner.innerHTML=html;inner.style.top="0px";
+}
 function triggerParticles(){
-  const container=document.createElement('div');
-  container.className='win-particles';
-  document.body.appendChild(container);
-  const colors=['#FFD700','#FF8C00','#FF6600','#FFE44D','#FFA500'];
-  for(let i=0;i<40;i++){
-    const p=document.createElement('div');
-    p.className='particle';
-    p.style.left=Math.random()*100+'vw';
-    p.style.top=Math.random()*30+'vh';
+  let container=document.createElement("div");container.className="win-particles";document.body.appendChild(container);
+  let colors=["#FFD700","#FF8C00","#FF6600","#FFE44D","#FFA500","#FF69B4"];
+  for(let i=0;i<50;i++){
+    let p=document.createElement("div");p.className="particle";
+    p.style.left=Math.random()*100+"vw";p.style.top=Math.random()*30+"vh";
     p.style.background=colors[Math.floor(Math.random()*colors.length)];
-    p.style.animationDelay=Math.random()*0.5+'s';
-    p.style.width=(Math.random()*8+6)+'px';
-    p.style.height=p.style.width;
+    p.style.animationDelay=Math.random()*0.5+"s";p.style.width=(Math.random()*10+6)+"px";p.style.height=p.style.width;
     container.appendChild(p);
   }
   setTimeout(()=>container.remove(),2000);
 }
 function triggerMoneyPop(amount){
-  const pop=document.createElement('div');
-  pop.className='money-pop';
-  pop.textContent='+$'+amount.toLocaleString();
-  document.body.appendChild(pop);
+  let pop=document.createElement("div");pop.className="money-pop";pop.textContent="+$P"+amount.toLocaleString();document.body.appendChild(pop);
   setTimeout(()=>pop.remove(),800);
 }
-function playLoseSound(){
-  try{
-    const c=new(window.AudioContext||window.webkitAudioContext)();
-    const o=c.createOscillator(),g=c.createGain();
-    o.connect(g);g.connect(c.destination);
-    o.frequency.value=350;o.frequency.linearRampToValueAtTime(100,c.currentTime+0.6);
-    o.type='sine';
-    g.gain.setValueAtTime(0.08,c.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+0.6);
-    o.start();o.stop(c.currentTime+0.65);
-    setTimeout(()=>c.close(),700);
-  }catch(e){}
-}
-
-
-function playCoin(){try{const c=new(window.AudioContext||window.webkitAudioContext)();let n=0;const iv=setInterval(()=>{if(n>=6){clearInterval(iv);c.close();return}for(let j=0;j<3;j++){const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=1200+j*200;o.type='square';g.gain.setValueAtTime(.1,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.08);o.start(c.currentTime);o.stop(c.currentTime+.1);}n++;},1000);}catch(e){}}
-
-function openRecharge(){const d=gD();document.getElementById('modalUsd').textContent='$'+((d.total||0)-Number(d.withdrawn||0)).toLocaleString();document.getElementById('modalPearl').textContent=gp().toLocaleString()+' P';document.getElementById('rechargeModal').classList.add('show');updateRechargeOptions();}
-function closeRecharge(){document.getElementById('rechargeModal').classList.remove('show')}
-function updateRechargeOptions(){const d=gD();const usd=(d.total||0)-Number(d.withdrawn||0);document.querySelectorAll('.r-opt').forEach(el=>{const cost=Number(el.getAttribute('onclick').match(/\d+/)[0]);el.classList.toggle('disabled',usd<cost);});}
-function doRecharge(cost){const d=gD();const usd=(d.total||0)-Number(d.withdrawn||0);if(usd<cost){alert('美元不足！');return}sp(gp()+cost*100);d.withdrawn=(d.withdrawn||0)+cost;sD(d);refresh();updateRechargeOptions();document.getElementById('modalUsd').textContent='$'+((d.total||0)-Number(d.withdrawn||0)).toLocaleString();document.getElementById('modalPearl').textContent=gp().toLocaleString()+' P';}
+function playTick(){try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=600+Math.random()*200;o.type="square";g.gain.setValueAtTime(.06,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.04);o.start();o.stop(c.currentTime+.05);setTimeout(()=>c.close(),100)}catch(e){}}
+function playStopSound(){try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=200;o.type="triangle";g.gain.setValueAtTime(.15,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.15);o.start();o.stop(c.currentTime+.2);setTimeout(()=>c.close(),300)}catch(e){}}
+function playWinSound(){try{const c=new(window.AudioContext||window.webkitAudioContext)();[523,659,784,1047].forEach((freq,i)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=freq;o.type="square";g.gain.setValueAtTime(.12,c.currentTime+i*.18);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+i*.18+.3);o.start(c.currentTime+i*.18);o.stop(c.currentTime+i*.18+.35)});const bass=c.createOscillator(),bg=c.createGain();bass.connect(bg);bg.connect(c.destination);bass.frequency.value=80;bass.type="sawtooth";bg.gain.setValueAtTime(.15,c.currentTime+.3);bg.gain.exponentialRampToValueAtTime(.001,c.currentTime+1.2);bass.start(c.currentTime+.3);bass.stop(c.currentTime+1.3);setTimeout(()=>c.close(),2000)}catch(e){}}
+function playLoseSound(){try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=350;o.frequency.linearRampToValueAtTime(100,c.currentTime+.6);o.type="sine";g.gain.setValueAtTime(.08,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.6);o.start();o.stop(c.currentTime+.65);setTimeout(()=>c.close(),700)}catch(e){}}
+function openRecharge(){const d=gD();document.getElementById("modalUsd").textContent="$"+((d.total||0)-Number(d.withdrawn||0)).toLocaleString();document.getElementById("modalPearl").textContent=gp().toLocaleString()+" P";document.getElementById("rechargeModal").classList.add("show");updateRechargeOptions()}
+function closeRecharge(){document.getElementById("rechargeModal").classList.remove("show")}
+function updateRechargeOptions(){const d=gD();const usd=(d.total||0)-Number(d.withdrawn||0);document.querySelectorAll(".r-opt").forEach(el=>{const cost=Number(el.getAttribute("onclick").match(/\d+/)[0]);el.classList.toggle("disabled",usd<cost)})}
+function doRecharge(cost){const d=gD();const usd=(d.total||0)-Number(d.withdrawn||0);if(usd<cost){alert("美元不足！");return}sp(gp()+cost*100);d.withdrawn=(d.withdrawn||0)+cost;sD(d);refresh();updateRechargeOptions();document.getElementById("modalUsd").textContent="$"+((d.total||0)-Number(d.withdrawn||0)).toLocaleString();document.getElementById("modalPearl").textContent=gp().toLocaleString()+" P"}
+function showJackpot(){document.getElementById("jpDisplay").textContent="$"+jpAmount.toLocaleString();let histEl=document.getElementById("jpHistory");if(jpHistory.length===0){histEl.innerHTML="<div style=text-align:center;color:rgba(255,255,255,.4);padding:20px>尚無記錄</div>"}else{histEl.innerHTML=jpHistory.slice(-10).reverse().map(h=>"<div class=jp-item><span>"+h.date+"</span><span>+$"+h.amount.toLocaleString()+"</span></div>").join("")}document.getElementById("jackpotModal").classList.add("show")}
+function closeJackpot(){document.getElementById("jackpotModal").classList.remove("show")}
+function showPaytable(){document.getElementById("paytableModal").classList.add("show")}
+function closePaytable(){document.getElementById("paytableModal").classList.remove("show")}
+function createStars(){let s=document.getElementById("stars");for(let i=0;i<60;i++){let star=document.createElement("div");star.className="star";star.style.left=Math.random()*100+"%";star.style.top=Math.random()*100+"%";star.style.animationDelay=Math.random()*2+"s";star.style.width=(Math.random()*2+1)+"px";star.style.height=star.style.width;s.appendChild(star)}}
 window.onload=function(){
   const d=gD();if(!d.pearls)d.pearls=1000;
   if(!d.total)d.total=0;
-  sD(d);refresh();
-};
+  sD(d);
+  maxWin=parseInt(localStorage.getItem("fruit_max")||"0");
+  jpAmount=parseInt(localStorage.getItem("fruit_jp")||"0");
+  createStars();initReels();refresh();
+}
 </script>
-
-<div class="modal" id="rechargeModal">
-  <div class="modal-cnt">
-    <h3>💰 珍珠幣充值</h3>
-    <div class="bal-row">
-      <span>💵 美元餘額</span>
-      <span id="modalUsd">0</span>
-    </div>
-    <div class="bal-row">
-      <span>🔮 珍珠幣</span>
-      <span id="modalPearl">0 P</span>
-    </div>
-    <div class="r-opt" onclick="doRecharge(100)">
-      <span class="r-left">$100 →</span>
-      <span class="r-right">10,000 P</span>
-    </div>
-    <div class="r-opt" onclick="doRecharge(200)">
-      <span class="r-left">$200 →</span>
-      <span class="r-right">20,000 P</span>
-    </div>
-    <div class="r-opt" onclick="doRecharge(500)">
-      <span class="r-left">$500 →</span>
-      <span class="r-right">50,000 P</span>
-    </div>
-    <div class="r-opt" onclick="doRecharge(1000)">
-      <span class="r-left">$1,000 →</span>
-      <span class="r-right">100,000 P</span>
-    </div>
-    <button class="close-btn" onclick="closeRecharge()">關閉</button>
-  </div>
-</div>
 </body>
 </html>
