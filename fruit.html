@@ -417,7 +417,7 @@ function startSpin(){
       },150);
     }
 
-    setTimeout(()=>{isSpinning=false;document.getElementById('spinBtn').disabled=false;document.getElementById('nudgeBtn').classList.remove('disabled');if(autoMode){if(autoInterval)clearInterval(autoInterval);autoInterval=setInterval(autoSpinCheck,2500)}},400);
+    setTimeout(()=>{isSpinning=false;document.getElementById('spinBtn').disabled=false;document.getElementById('nudgeBtn').classList.remove('disabled');if(autoMode){if(autoInterval)clearInterval(autoInterval);autoInterval=setInterval(autoSpinCheck,2000)}},400);
   }
 }
 
