@@ -335,7 +335,7 @@ function setBet(b){currentBet=b;document.getElementById('betVal').textContent=b;
 
 function startSpin(){
   if(isSpinning)return;
-  if(gp()<currentBet){alert('珍珠幣不足！');if(autoInterval){clearInterval(autoInterval);autoInterval=null};return}
+  if(gp()<currentBet){alert('珍珠幣不足！');if(autoInterval){clearInterval(autoInterval);autoInterval=null};autoMode=false;document.getElementById('autoBtn').textContent='🔄 自動';document.getElementById('autoBtn').style.background='linear-gradient(180deg,#333,#222)';document.getElementById('autoBtn').style.borderColor='#555';return}
   isSpinning=true;nudgeCount=0;sp(gp()-currentBet);
   document.getElementById('resultBox').textContent='';
   document.getElementById('resultBox').className='result-box';
@@ -392,8 +392,10 @@ function startSpin(){
       rb.textContent='🎉 連線成功！大贏 '+winAmt.toLocaleString()+' P！！';
       playWinSound();triggerParticles();triggerMoneyPop(winAmt);
       if(autoMode){
-        if(autoInterval)clearInterval(autoInterval);
-        autoInterval=setInterval(autoSpinCheck,10000);
+      if(autoInterval){clearInterval(autoInterval);autoInterval=null}
+      autoMode=false;
+      const btn=document.getElementById('autoBtn');
+      btn.textContent='🔄 自動';btn.style.background='linear-gradient(180deg,#333,#222)';btn.style.borderColor='#555';
       }
     }else{
       setTimeout(()=>{
