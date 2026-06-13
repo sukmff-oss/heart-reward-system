@@ -304,6 +304,17 @@ function clearWinLines(){
   if(svg)svg.innerHTML='';
 }
 
+function autoSpinCheck(){
+  if(autoMode&&!isSpinning&&gp()>=currentBet)startSpin();
+  else if(autoMode&&!isSpinning&&gp()<currentBet){
+    if(autoInterval){clearInterval(autoInterval);autoInterval=null}
+    autoMode=false;
+    const btn=document.getElementById('autoBtn');
+    btn.textContent='🔄 自動';btn.style.background='linear-gradient(180deg,#333,#222)';btn.style.borderColor='#555';
+    alert('珍珠幣不足！');
+  }
+}
+
 function gD(){return JSON.parse(localStorage.getItem('gyc_savings')||'{}')}
 function sD(d){localStorage.setItem('gyc_savings',JSON.stringify(d))}
 function gp(){const d=gD();return d.pearls||0}
