@@ -277,9 +277,31 @@ function toggleAuto(){
   }
 }
 
-function autoSpinCheck(){
-  if(autoMode&&!isSpinning&&gp()>=currentBet)startSpin();
-  else if(autoMode&&!isSpinning&&gp()<currentBet){alert('珍珠幣不足！');toggleAuto()}
+function drawWinLines(lines){
+  const svg=document.getElementById('gridSvg');
+  if(!svg)return;
+  svg.innerHTML='';
+  const map=[[53,53],[160,53],[267,53],[53,160],[160,160],[267,160],[53,267],[160,267],[267,267]];
+  const colors=['#FFD700','#FF6600','#00FFFF','#FF00FF','#FFFF00','#00FF00','#FF3366','#66FF33'];
+  lines.forEach((line,i)=>{
+    const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    const pts=line.map(idx=>map[idx]);
+    let d='M'+pts[0][0]+','+pts[0][1];
+    for(let j=1;j<pts.length;j++)d+='L'+pts[j][0]+','+pts[j][1];
+    p.setAttribute('d',d);
+    p.setAttribute('class','wl');
+    p.style.stroke=colors[i%colors.length];
+    p.style.strokeWidth='5';
+    p.style.strokeDasharray='300';
+    p.style.strokeDashoffset='300';
+    p.style.filter='drop-shadow(0 0 6px '+colors[i%colors.length]+')';
+    p.style.animation='drawLine .4s ease-out forwards';
+    svg.appendChild(p);
+  });
+}
+function clearWinLines(){
+  const svg=document.getElementById('gridSvg');
+  if(svg)svg.innerHTML='';
 }
 
 function gD(){return JSON.parse(localStorage.getItem('gyc_savings')||'{}')}
@@ -318,6 +340,7 @@ function startSpin(){
   document.getElementById('resultBox').textContent='';
   document.getElementById('resultBox').className='result-box';
   document.querySelectorAll('.win-glow').forEach(el=>el.classList.remove('win-glow'));
+  clearWinLines();
   document.querySelectorAll('.lamp').forEach(el=>el.classList.remove('on'));
   let btn=document.getElementById('spinBtn');
   btn.disabled=true;
@@ -361,17 +384,17 @@ function startSpin(){
       jpAmount+=Math.floor(winAmt*0.05);
       let newMax=Math.max(maxWin,winAmt);
       if(newMax>maxWin){maxWin=newMax;localStorage.setItem('fruit_max',maxWin)}
-      setTimeout(()=>{
-        sp(gp()+winAmt);
-        let rb=document.getElementById('resultBox');
-        rb.className='result-box win';
-        rb.textContent='🎉 連線成功！大贏 '+winAmt.toLocaleString()+' P！！';
-        playWinSound();triggerParticles();triggerMoneyPop(winAmt);
-        if(autoMode){
-          if(autoInterval)clearInterval(autoInterval);
-          autoInterval=setInterval(autoSpinCheck,10000);
-        }
-      },200);
+      const winningLines=winLines.filter(line=>finalGrid[line[0]]===finalGrid[line[1]]&&finalGrid[line[1]]===finalGrid[line[2]]);
+      drawWinLines(winningLines);
+      sp(gp()+winAmt);
+      let rb=document.getElementById('resultBox');
+      rb.className='result-box win';
+      rb.textContent='🎉 連線成功！大贏 '+winAmt.toLocaleString()+' P！！';
+      playWinSound();triggerParticles();triggerMoneyPop(winAmt);
+      if(autoMode){
+        if(autoInterval)clearInterval(autoInterval);
+        autoInterval=setInterval(autoSpinCheck,10000);
+      }
     }else{
       setTimeout(()=>{
         let rb=document.getElementById('resultBox');
