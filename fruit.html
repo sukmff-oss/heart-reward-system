@@ -432,7 +432,103 @@ function triggerMoneyPop(amount){
 
 function playTick(){try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=130;o.type='triangle';g.gain.setValueAtTime(.15,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.08);o.start();o.stop(c.currentTime+.09);setTimeout(()=>c.close(),150)}catch(e){}}
 function playStopSound(){try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=200;o.type='triangle';g.gain.setValueAtTime(.15,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.15);o.start();o.stop(c.currentTime+.2);setTimeout(()=>c.close(),300)}catch(e){}}
-function playWinSound(){try{const c=new(window.AudioContext||window.webkitAudioContext)();const now=c.currentTime;for(let r=0;r<5;r++){const chord=[523.25,659.25,783.99,1046.50];chord.forEach((freq,idx)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='square';o.frequency.setValueAtTime(freq*(1+r*0.12),now+r*0.12+idx*0.03);g.gain.setValueAtTime(.06,now+r*0.12+idx*0.03);g.gain.exponentialRampToValueAtTime(.001,now+r*0.12+idx*0.03+.2);o.start(now+r*0.12+idx*0.03);o.stop(now+r*0.12+idx*0.03+.2)})}setTimeout(()=>c.close(),1500)}catch(e){}}
+function playWinSound(){
+  try{
+    const c=new(window.AudioContext||window.webkitAudioContext)();
+    const now=c.currentTime;
+
+    // ── 煙火爆炸 (0s-3s) ──
+    for(let i=0;i<6;i++){
+      const t=i*0.45+0.05;
+      const freq=150+Math.random()*300;
+      const osc=c.createOscillator(),g=c.createGain();
+      osc.connect(g);g.connect(c.destination);
+      osc.type='sawtooth';osc.frequency.setValueAtTime(freq,c.currentTime+t);
+      osc.frequency.exponentialRampToValueAtTime(40,c.currentTime+t+0.15);
+      g.gain.setValueAtTime(.4,c.currentTime+t);
+      g.gain.exponentialRampToValueAtTime(.001,c.currentTime+t+0.2);
+      osc.start(c.currentTime+t);osc.stop(c.currentTime+t+0.25);
+      // 火花粒子
+      for(let j=0;j<4;j++){
+        const ts=t+Math.random()*0.1;
+        const o2=c.createOscillator(),g2=c.createGain();
+        o2.connect(g2);g2.connect(c.destination);
+        o2.type='square';o2.frequency.value=800+Math.random()*1200;
+        g2.gain.setValueAtTime(.15,c.currentTime+ts);
+        g2.gain.exponentialRampToValueAtTime(.001,c.currentTime+ts+0.08);
+        o2.start(c.currentTime+ts);o2.stop(c.currentTime+ts+0.1);
+      }
+    }
+
+    // ── 歡呼聲：白噪音爆發 + 上升音 (2s-7s) ──
+    for(let r=0;r<5;r++){
+      const t=2+r*0.9;
+      // 噪音層
+      const bufLen=c.sampleRate*0.6;
+      const buf=c.createBuffer(1,bufLen,c.sampleRate);
+      const data=buf.getChannelData(0);
+      for(let i=0;i<bufLen;i++)data[i]=(Math.random()*2-1)*0.3;
+      const src=c.createBufferSource();src.buffer=buf;
+      const gn=c.createGain();src.connect(gn);gn.connect(c.destination);
+      gn.gain.setValueAtTime(.25,c.currentTime+t);
+      gn.gain.exponentialRampToValueAtTime(.001,c.currentTime+t+0.6);
+      src.start(c.currentTime+t);src.stop(c.currentTime+t+0.65);
+      // 歡呼和弦：do-mi-sol-c5 遞進
+      const chord=[261.63,329.63,392.00,523.25,659.25,783.99];
+      chord.forEach((freq,idx)=>{
+        const o=c.createOscillator(),g=c.createGain();
+        o.connect(g);g.connect(c.destination);
+        o.type='triangle';
+        o.frequency.setValueAtTime(freq*(1+r*0.06),c.currentTime+t+idx*0.04);
+        g.gain.setValueAtTime(.1,c.currentTime+t+idx*0.04);
+        g.gain.exponentialRampToValueAtTime(.001,c.currentTime+t+idx*0.04+.5);
+        o.start(c.currentTime+t+idx*0.04);o.stop(c.currentTime+t+idx*0.04+.55);
+      });
+    }
+
+    // ── 尖叫聲：高頻 sweep (5s-9s) ──
+    for(let i=0;i<4;i++){
+      const t=5+i*1.1;
+      const o=c.createOscillator(),g=c.createGain();
+      o.connect(g);g.connect(c.destination);
+      o.type='sine';
+      o.frequency.setValueAtTime(1200+i*200,c.currentTime+t);
+      o.frequency.linearRampToValueAtTime(2800+i*150,c.currentTime+t+0.4);
+      o.frequency.linearRampToValueAtTime(900,c.currentTime+t+0.7);
+      g.gain.setValueAtTime(.18,c.currentTime+t);
+      g.gain.exponentialRampToValueAtTime(.001,c.currentTime+t+0.75);
+      o.start(c.currentTime+t);o.stop(c.currentTime+t+0.8);
+      // 和聲
+      const o2=c.createOscillator(),g2=c.createGain();
+      o2.connect(g2);g2.connect(c.destination);
+      o2.type='triangle';
+      o2.frequency.setValueAtTime(1800+i*250,c.currentTime+t+0.05);
+      o2.frequency.linearRampToValueAtTime(3500+i*200,c.currentTime+t+0.5);
+      g2.gain.setValueAtTime(.1,c.currentTime+t+0.05);
+      g2.gain.exponentialRampToValueAtTime(.001,c.currentTime+t+0.55);
+      o2.start(c.currentTime+t+0.05);o2.stop(c.currentTime+t+0.6);
+    }
+
+    // ── 結尾震撼音 (9s-10.5s) ──
+    const endOsc=c.createOscillator(),endG=c.createGain();
+    endOsc.connect(endG);endG.connect(c.destination);
+    endOsc.type='sawtooth';
+    endOsc.frequency.setValueAtTime(80,c.currentTime+9);
+    endOsc.frequency.linearRampToValueAtTime(200,c.currentTime+9.8);
+    endG.gain.setValueAtTime(.3,c.currentTime+9);
+    endG.gain.exponentialRampToValueAtTime(.001,c.currentTime+10.5);
+    endOsc.start(c.currentTime+9);endOsc.stop(c.currentTime+10.6);
+    // 最後一聲鑔
+    const hho=c.createOscillator(),hhg=c.createGain();
+    hho.connect(hhg);hhg.connect(c.destination);
+    hho.type='square';hho.frequency.value=10000;
+    hhg.gain.setValueAtTime(.2,c.currentTime+9.8);
+    hhg.gain.exponentialRampToValueAtTime(.001,c.currentTime+10.2);
+    hho.start(c.currentTime+9.8);hho.stop(c.currentTime+10.3);
+
+    setTimeout(()=>c.close(),11500);
+  }catch(e){}
+}
 function playLoseSound(){try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sawtooth';o.frequency.setValueAtTime(200,c.currentTime);o.frequency.linearRampToValueAtTime(90,c.currentTime+.3);g.gain.setValueAtTime(.1,c.currentTime);g.gain.exponentialRampToValueAtTime(.01,c.currentTime+.3);o.start();o.stop(c.currentTime+.3);setTimeout(()=>c.close(),400)}catch(e){}}
 
 function openRecharge(){const d=gD();document.getElementById('modalUsd').textContent='$'+((d.total||0)-Number(d.withdrawn||0)).toLocaleString();document.getElementById('modalPearl').textContent=gp().toLocaleString()+' P';document.getElementById('rechargeModal').classList.add('show');updateRechargeOptions()}
