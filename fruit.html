@@ -358,6 +358,10 @@ function startSpin(){
         rb.className='result-box win';
         rb.textContent='🎉 連線成功！大贏 '+winAmt.toLocaleString()+' P！！';
         playWinSound();triggerParticles();triggerMoneyPop(winAmt);
+        if(autoMode){
+          if(autoInterval)clearInterval(autoInterval);
+          autoInterval=setInterval(autoSpinCheck,5000);
+        }
       },200);
     }else{
       setTimeout(()=>{
@@ -426,7 +430,7 @@ function triggerMoneyPop(amount){
   setTimeout(()=>pop.remove(),800);
 }
 
-function playTick(){try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=130;o.type='triangle';g.gain.setValueAtTime(.1,c.currentTime);g.gain.exponentialRampToValueAtTime(.01,c.currentTime+.06);o.start();o.stop(c.currentTime+.06);setTimeout(()=>c.close(),100)}catch(e){}}
+function playTick(){try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=130;o.type='triangle';g.gain.setValueAtTime(.15,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.08);o.start();o.stop(c.currentTime+.09);setTimeout(()=>c.close(),150)}catch(e){}}
 function playStopSound(){try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=200;o.type='triangle';g.gain.setValueAtTime(.15,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.15);o.start();o.stop(c.currentTime+.2);setTimeout(()=>c.close(),300)}catch(e){}}
 function playWinSound(){try{const c=new(window.AudioContext||window.webkitAudioContext)();const now=c.currentTime;for(let r=0;r<5;r++){const chord=[523.25,659.25,783.99,1046.50];chord.forEach((freq,idx)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='square';o.frequency.setValueAtTime(freq*(1+r*0.12),now+r*0.12+idx*0.03);g.gain.setValueAtTime(.06,now+r*0.12+idx*0.03);g.gain.exponentialRampToValueAtTime(.001,now+r*0.12+idx*0.03+.2);o.start(now+r*0.12+idx*0.03);o.stop(now+r*0.12+idx*0.03+.2)})}setTimeout(()=>c.close(),1500)}catch(e){}}
 function playLoseSound(){try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sawtooth';o.frequency.setValueAtTime(200,c.currentTime);o.frequency.linearRampToValueAtTime(90,c.currentTime+.3);g.gain.setValueAtTime(.1,c.currentTime);g.gain.exponentialRampToValueAtTime(.01,c.currentTime+.3);o.start();o.stop(c.currentTime+.3);setTimeout(()=>c.close(),400)}catch(e){}}
